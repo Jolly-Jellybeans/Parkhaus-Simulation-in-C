@@ -1,0 +1,19 @@
+# Compiled binaries
+*.out
+*.exe
+*.app
+*.bin
+
+# Object files
+*.o
+
+# Visual Studio artifacts
+*.v2
+*.vsidx
+*.suo
+DocumentLayout.json
+
+# folders
+build/
+obj/
+bin/
