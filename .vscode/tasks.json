@@ -7,9 +7,10 @@
             "command": "cc",
             "args": [
                 "-g",
-                "${file}",
+                "-I${workspaceFolder}/include",
+                "${workspaceFolder}/source/*.c",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${workspaceFolder}/parkhaus_sim"
             ],
             "group": {
                 "kind": "build",
