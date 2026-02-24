@@ -3,6 +3,12 @@
 #include "vehicle.h"
 #include "queue.h"
 //Hier Programm:
+/**
+ * @brief Erstellt eine neue Parkhausstruktur mit einer gegebenen Anzahl an Stellplätzen.
+ *
+ * @param[in] slot_count Anzahl der verfügbaren Stellplätze im Parkhaus.
+ * @return Zeiger auf die erzeugte Parkhausstruktur oder NULL bei Fehler.
+ */
 ParkingGarage *parking_garage_create(int slot_count);
 void parking_garage_destroy(ParkingGarage *p_garage);
 ParkingResult parking_garage_park(ParkingGarage *p_garage,const Vehicle *p_vehicle,int current_time);
