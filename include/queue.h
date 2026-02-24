@@ -31,5 +31,11 @@ bool queue_enqueue(Queue *p_queue,const Vehicle *p_vehicle);
  * @return true bei Erfolg, false wenn die Queue leer ist.
  */
 bool queue_dequeue(Queue *p_queue,Vehicle *p_out_vehicle);
+/**
+ * @brief Prüft, ob die Warteschlange leer ist.
+ *
+ * @param[in] p_queue Zu prüfende Queue.
+ * @return true, wenn keine Fahrzeuge warten, sonst false.
+ */
 bool queue_is_empty(const Queue *p_queue);
 #endif /* QUEUE_H */
