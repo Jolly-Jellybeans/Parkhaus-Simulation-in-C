@@ -35,5 +35,12 @@ ParkingResult parking_garage_park(ParkingGarage *p_garage,const Vehicle *p_vehic
  * @return Ergebnisstatus des Ausparkens.
  */
 ParkingResult parking_garage_unpark(ParkingGarage *p_garage,const char *p_license_plate,int current_time);
+/**
+ * @brief Entfernt alle Fahrzeuge mit geplanter Abfahrtszeit (<= current_time).
+ *
+ * @param[in,out] p_garage Parkhausstruktur, in der die Abfahrten geprüft werden.
+ * @param[in] current_time Aktueller Simulationszeitpunkt.
+ * @return Anzahl der entfernten Fahrzeuge.
+ */
 int parking_garage_remove_departing(ParkingGarage *p_garage,int current_time);
 #endif /* PARKING_GARAGE_H */
