@@ -14,6 +14,12 @@ void statistics_init(Statistics *p_statistics);
  * @param[in,out] p_statistics Statistikstruktur, die aktualisiert wird.
  */
 void statistics_on_queued(Statistics *p_statistics);
+/**
+ * @brief Aktualisiert Statistikdaten, wenn ein wartendes Fahrzeug einen Parkplatz bekommt.
+ *
+ * @param[in,out] p_statistics Statistikstruktur, die aktualisiert wird.
+ * @param[in] wait_duration Wartezeit in Zeiteinheiten, die das Fahrzeug in der Queue verbracht hat.
+ */
 void statistics_on_parked_from_queue(Statistics *p_statistics,int wait_duration);
 void statistics_on_departure(Statistics *p_statistics,int park_duration);
 void statistics_step_update(Statistics *p_statistics,int occupied_slots,int total_slots);
