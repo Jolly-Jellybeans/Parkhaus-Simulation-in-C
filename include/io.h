@@ -29,5 +29,11 @@ bool read_vehicle_from_user(Vehicle *p_vehicle);
  * @return Kein Rückgabewert.
  */
 void print_parking_garage_status(const ParkingGarage *p_garage);
+/**
+ * @brief Gibt eine Meldung zum Ergebnis eines Parkvorgangs in der Konsole aus.
+ *
+ * @param[in] result Ergebnisstatus des Parkvorgangs.
+ * @return Kein Rückgabewert.
+ */
 void print_result_message(ParkingResult result);
 #endif /* IO_H */
