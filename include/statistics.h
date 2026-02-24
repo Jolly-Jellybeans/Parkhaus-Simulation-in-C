@@ -8,6 +8,11 @@
  * @param[out] p_statistics Zeiger auf die Statistikstruktur, die zurückgesetzt wird.
  */
 void statistics_init(Statistics *p_statistics);
+/**
+ * @brief Aktualisiert Statistikdaten, wenn ein Fahrzeug in die Warteschlange aufgenommen wird.
+ *
+ * @param[in,out] p_statistics Statistikstruktur, die aktualisiert wird.
+ */
 void statistics_on_queued(Statistics *p_statistics);
 void statistics_on_parked_from_queue(Statistics *p_statistics,int wait_duration);
 void statistics_on_departure(Statistics *p_statistics,int park_duration);
