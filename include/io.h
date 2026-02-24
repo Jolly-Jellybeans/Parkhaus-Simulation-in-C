@@ -15,6 +15,12 @@ void print_menu(void);
  * @return Eingegebene Menüoption als Ganzzahl.
  */
 int read_menu_choice(void);
+/**
+ * @brief Liest die Fahrzeugdaten vom Benutzer ein und speichert sie in der übergebenen Struktur.
+ *
+ * @param[out] p_vehicle Zeiger auf die Fahrzeugstruktur, die mit Benutzereingaben gefüllt wird.
+ * @return true, wenn die Eingabe erfolgreich war, sonst false.
+ */
 bool read_vehicle_from_user(Vehicle *p_vehicle);
 void print_parking_garage_status(const ParkingGarage *p_garage);
 void print_result_message(ParkingResult result);
