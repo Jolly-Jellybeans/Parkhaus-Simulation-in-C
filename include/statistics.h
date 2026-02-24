@@ -21,6 +21,12 @@ void statistics_on_queued(Statistics *p_statistics);
  * @param[in] wait_duration Wartezeit in Zeiteinheiten, die das Fahrzeug in der Queue verbracht hat.
  */
 void statistics_on_parked_from_queue(Statistics *p_statistics,int wait_duration);
+/**
+ * @brief Aktualisiert Statistikdaten nach der Abfahrt eines Fahrzeugs.
+ *
+ * @param[in,out] p_statistics Statistikstruktur, die aktualisiert wird.
+ * @param[in] park_duration Parkdauer des Fahrzeugs, das das Parkhaus verlässt.
+ */
 void statistics_on_departure(Statistics *p_statistics,int park_duration);
 void statistics_step_update(Statistics *p_statistics,int occupied_slots,int total_slots);
 void statistics_print(const Statistics *p_statistics);
