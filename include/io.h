@@ -9,6 +9,11 @@
  * @return Kein Rückgabewert.
  */
 void print_menu(void);
+/**
+ * @brief Liest die Menüauswahl des Benutzers von der Konsole ein.
+ *
+ * @return Eingegebene Menüoption als Ganzzahl.
+ */
 int read_menu_choice(void);
 bool read_vehicle_from_user(Vehicle *p_vehicle);
 void print_parking_garage_status(const ParkingGarage *p_garage);
