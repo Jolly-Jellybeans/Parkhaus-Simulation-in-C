@@ -10,6 +10,12 @@
  * @return Zeiger auf die erzeugte Parkhausstruktur oder NULL bei Fehler.
  */
 ParkingGarage *parking_garage_create(int slot_count);
+/**
+ * @brief Gibt alle Ressourcen eines Parkhauses frei.
+ *
+ * @param[in,out] p_garage Zeiger auf die zu zerstörende Parkhausstruktur.
+ * @return Kein Rückgabewert.
+ */
 void parking_garage_destroy(ParkingGarage *p_garage);
 ParkingResult parking_garage_park(ParkingGarage *p_garage,const Vehicle *p_vehicle,int current_time);
 ParkingResult parking_garage_unpark(ParkingGarage *p_garage,const char *p_license_plate,int current_time);
