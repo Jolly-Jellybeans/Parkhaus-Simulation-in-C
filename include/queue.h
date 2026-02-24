@@ -15,6 +15,13 @@ Queue *queue_create(void);
  * @return Kein Rückgabewert.
  */
 void queue_destroy(Queue *p_queue);
+/**
+ * @brief Fügt ein Fahrzeug ans Ende der Warteschlange an.
+ *
+ * @param[in,out] p_queue Zielwarteschlange.
+ * @param[in] p_vehicle Fahrzeugdaten zum Hinzufügen.
+ * @return true bei Erfolg, false wenn die Queue voll ist.
+ */
 bool queue_enqueue(Queue *p_queue,const Vehicle *p_vehicle);
 bool queue_dequeue(Queue *p_queue,Vehicle *p_out_vehicle);
 bool queue_is_empty(const Queue *p_queue);
