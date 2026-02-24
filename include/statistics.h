@@ -36,5 +36,10 @@ void statistics_on_departure(Statistics *p_statistics,int park_duration);
  * @param[in] total_slots Gesamtanzahl verfügbarer Stellplätze.
  */
 void statistics_step_update(Statistics *p_statistics,int occupied_slots,int total_slots);
+/**
+ * @brief Gibt die gesammelten Statistikwerte auf der Konsole aus.
+ *
+ * @param[in] p_statistics Statistikstruktur, die ausgegeben wird.
+ */
 void statistics_print(const Statistics *p_statistics);
 #endif /* STATISTICS_H */
