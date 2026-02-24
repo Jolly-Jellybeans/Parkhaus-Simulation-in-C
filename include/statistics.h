@@ -28,6 +28,13 @@ void statistics_on_parked_from_queue(Statistics *p_statistics,int wait_duration)
  * @param[in] park_duration Parkdauer des Fahrzeugs, das das Parkhaus verlässt.
  */
 void statistics_on_departure(Statistics *p_statistics,int park_duration);
+/**
+ * @brief Aktualisiert zeitabhängige Werte wie Auslastung in jedem Simulationsschritt.
+ *
+ * @param[in,out] p_statistics Statistikstruktur, die aktualisiert wird.
+ * @param[in] occupied_slots Aktuell belegte Stellplätze.
+ * @param[in] total_slots Gesamtanzahl verfügbarer Stellplätze.
+ */
 void statistics_step_update(Statistics *p_statistics,int occupied_slots,int total_slots);
 void statistics_print(const Statistics *p_statistics);
 #endif /* STATISTICS_H */
