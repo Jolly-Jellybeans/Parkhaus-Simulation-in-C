@@ -26,6 +26,14 @@ void parking_garage_destroy(ParkingGarage *p_garage);
  * @return Ergebnisstatus des Parkversuchs.
  */
 ParkingResult parking_garage_park(ParkingGarage *p_garage,const Vehicle *p_vehicle,int current_time);
+/**
+ * @brief Löst ein geparktes Fahrzeug über das Kennzeichen und aktualisiert den Status.
+ *
+ * @param[in,out] p_garage Parkhausstruktur, aus der das Fahrzeug entfernt wird.
+ * @param[in] p_license_plate Kennzeichen des zu entfernenden Fahrzeugs.
+ * @param[in] current_time Aktueller Simulationszeitpunkt.
+ * @return Ergebnisstatus des Ausparkens.
+ */
 ParkingResult parking_garage_unpark(ParkingGarage *p_garage,const char *p_license_plate,int current_time);
 int parking_garage_remove_departing(ParkingGarage *p_garage,int current_time);
 #endif /* PARKING_GARAGE_H */
