@@ -2,6 +2,11 @@
 #define QUEUE_H
 #include "vehicle.h"
 //Hier Programm:
+/**
+ * @brief Erstellt eine neue Fahrzeugwarteschlange.
+ *
+ * @return Zeiger auf die erzeugte Queue oder NULL bei Misserfolg.
+ */
 Queue *queue_create(void);
 void queue_destroy(Queue *p_queue);
 bool queue_enqueue(Queue *p_queue,const Vehicle *p_vehicle);
