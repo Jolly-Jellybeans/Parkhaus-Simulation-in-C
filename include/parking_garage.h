@@ -17,6 +17,14 @@ ParkingGarage *parking_garage_create(int slot_count);
  * @return Kein Rückgabewert.
  */
 void parking_garage_destroy(ParkingGarage *p_garage);
+/**
+ * @brief Versuch, ein Fahrzeug im Parkhaus einzuparken.
+ *
+ * @param[in,out] p_garage Parkhausstruktur, in der der Parkplatz gesucht wird.
+ * @param[in] p_vehicle Fahrzeugdaten, die eingeparkt werden sollen.
+ * @param[in] current_time Aktueller Simulationszeitpunkt.
+ * @return Ergebnisstatus des Parkversuchs.
+ */
 ParkingResult parking_garage_park(ParkingGarage *p_garage,const Vehicle *p_vehicle,int current_time);
 ParkingResult parking_garage_unpark(ParkingGarage *p_garage,const char *p_license_plate,int current_time);
 int parking_garage_remove_departing(ParkingGarage *p_garage,int current_time);
