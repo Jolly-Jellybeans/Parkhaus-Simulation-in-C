@@ -2,7 +2,19 @@
 #define PARKING_GARAGE_H
 #include "vehicle.h"
 #include "queue.h"
+
 //Hier Programm:
+
+typedef struct
+{
+    int slot_count;            // Gesamtanzahl der Stellplätze
+    int occupied_count;        // Anzahl aktueller belegter Stellplätze
+    Vehicle *p_slots;          // Dynamisches Array von Stellplätzen
+    Queue *p_queue;            // Warteschlange für Fahrzeuge bei vollem Parkhaus 
+}ParkingGarage
+
+/* -- Funktion prototypes -- */
+
 ParkingGarage *parking_garage_create(int slot_count);
 void parking_garage_destroy(ParkingGarage *p_garage);
 ParkingResult parking_garage_park(ParkingGarage *p_garage,const Vehicle *p_vehicle,int current_time);
