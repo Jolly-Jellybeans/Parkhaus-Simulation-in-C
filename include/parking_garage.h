@@ -2,6 +2,7 @@
 #define PARKING_GARAGE_H
 #include "vehicle.h"
 #include "queue.h"
+
 //Hier Programm:
 /**
  * @brief Erstellt eine neue Parkhausstruktur mit einer gegebenen Anzahl an Stellplätzen.
