@@ -2,10 +2,44 @@
 #define STATISTICS_H
 #include "parking_garage.h"
 //Hier Programm:
+/**
+ * @brief Initialisiert die Statistikdaten vor dem Start der Simulation.
+ *
+ * @param[out] p_statistics Zeiger auf die Statistikstruktur, die zurückgesetzt wird.
+ */
 void statistics_init(Statistics *p_statistics);
+/**
+ * @brief Aktualisiert Statistikdaten, wenn ein Fahrzeug in die Warteschlange aufgenommen wird.
+ *
+ * @param[in,out] p_statistics Statistikstruktur, die aktualisiert wird.
+ */
 void statistics_on_queued(Statistics *p_statistics);
+/**
+ * @brief Aktualisiert Statistikdaten, wenn ein wartendes Fahrzeug einen Parkplatz bekommt.
+ *
+ * @param[in,out] p_statistics Statistikstruktur, die aktualisiert wird.
+ * @param[in] wait_duration Wartezeit in Zeiteinheiten, die das Fahrzeug in der Queue verbracht hat.
+ */
 void statistics_on_parked_from_queue(Statistics *p_statistics,int wait_duration);
+/**
+ * @brief Aktualisiert Statistikdaten nach der Abfahrt eines Fahrzeugs.
+ *
+ * @param[in,out] p_statistics Statistikstruktur, die aktualisiert wird.
+ * @param[in] park_duration Parkdauer des Fahrzeugs, das das Parkhaus verlässt.
+ */
 void statistics_on_departure(Statistics *p_statistics,int park_duration);
+/**
+ * @brief Aktualisiert zeitabhängige Werte wie Auslastung in jedem Simulationsschritt.
+ *
+ * @param[in,out] p_statistics Statistikstruktur, die aktualisiert wird.
+ * @param[in] occupied_slots Aktuell belegte Stellplätze.
+ * @param[in] total_slots Gesamtanzahl verfügbarer Stellplätze.
+ */
 void statistics_step_update(Statistics *p_statistics,int occupied_slots,int total_slots);
+/**
+ * @brief Gibt die gesammelten Statistikwerte auf der Konsole aus.
+ *
+ * @param[in] p_statistics Statistikstruktur, die ausgegeben wird.
+ */
 void statistics_print(const Statistics *p_statistics);
 #endif /* STATISTICS_H */
