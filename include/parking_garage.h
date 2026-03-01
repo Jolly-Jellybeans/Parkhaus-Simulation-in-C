@@ -3,6 +3,26 @@
 #include "vehicle.h"
 #include "queue.h"
 
+// Hier Programm:
+
+/* typedef struct
+{
+    int slot_count;          // Gesamtanzahl der Stellplätze
+    int occupied_count;      // Anzahl aktuell belegter Stellplätze
+    Vehicle *p_slots;        // Dynamisches Array: Stellplätze
+    Queue *p_queue;          // Warteschlange für Fahrzeuge
+} ParkingGarage;
+*/
+
+TYPE Parking Garage
+    slot_count               // Gesamtanzahl der Stellplätze
+    occupied_count           // Anzahl aktuell belegter Stellplätze
+    p_slots                  // Dynamisches Array: Stellplätze
+    p_queue                  // Warteschlange für Fahrzeuge
+
+END TYPE
+
+
 /**
  * @brief Ergebnis eines Parkversuchs.
  */
