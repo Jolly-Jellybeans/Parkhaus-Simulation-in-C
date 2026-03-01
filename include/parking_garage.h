@@ -24,6 +24,28 @@ END TYPE
 
 
 /**
+ * @brief Ergebnis eines Parkversuchs.
+ */
+// typedef enum
+// {
+//     PARKING_SUCCESS,
+//     PARKING_QUEUED,
+//     PARKING_QUEUE_FULL,
+//     PARKING_INVALID
+// } ParkingResult;
+
+
+TYPE ParkingResult
+
+    PARKING_SUCCESS        // Fahrzeug wurde erfolgreich eingeparkt
+    PARKING_QUEUED         // Fahrzeug wurde in Warteschlange aufgenommen
+    PARKING_QUEUE_FULL     // Parkhaus und Warteschlange voll
+    PARKING_INVALID        // Ungültige Fahrzeugdaten
+
+END TYPE
+
+//Hier Programm:
+/**
  * @brief Erstellt eine neue Parkhausstruktur mit einer gegebenen Anzahl an Stellplätzen.
  *
  * @param[in] slot_count Anzahl der verfügbaren Stellplätze im Parkhaus.
