@@ -42,4 +42,16 @@ FUNCTION node_destroy(node)
         Speicher für node freigeben
     END IF
 END FUNCTION
+
+// Erstellt eine neue Warteschlange
+FUNCTION queue_create()
+    queue ← Speicher für Queue-Struktur allozieren
+    
+    IF queue ungleich NULL THEN
+        queue.head ← NULL
+        queue.tail ← NULL
+    END IF
+    
+    RETURN queue
+END FUNCTION
 */
