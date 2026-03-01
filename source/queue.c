@@ -35,4 +35,11 @@ FUNCTION node_create(vehicle)
     
     RETURN node
 END FUNCTION
+
+// Gibt einen Knoten sicher frei
+FUNCTION node_destroy(node)
+    IF node ungleich NULL THEN
+        Speicher für node freigeben
+    END IF
+END FUNCTION
 */
