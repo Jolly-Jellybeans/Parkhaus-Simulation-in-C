@@ -132,4 +132,18 @@ FUNCTION queue_dequeue(queue, out_vehicle)
     
     RETURN TRUE
 END FUNCTION
+
+// Prüft auf Leere
+FUNCTION queue_is_empty(queue)
+    IF queue ist NULL THEN
+        RETURN TRUE
+    END IF
+    
+    // Queue ist leer, wenn Head NULL ist
+    IF queue.head ist NULL THEN
+        RETURN TRUE
+    ELSE
+        RETURN FALSE
+    END IF
+END FUNCTION
 */
