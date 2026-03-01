@@ -6,13 +6,23 @@
 /**
  * @brief Ergebnis eines Parkversuchs.
  */
-typedef enum
-{
-    PARKING_SUCCESS,    /**< Fahrzeug wurde erfolgreich eingeparkt. */
-    PARKING_QUEUED,     /**< Parkhaus voll – Fahrzeug wurde in die Warteschlange aufgenommen. */
-    PARKING_QUEUE_FULL, /**< Parkhaus und Warteschlange voll – Fahrzeug abgewiesen. */
-    PARKING_INVALID     /**< Ungültige Fahrzeugdaten oder Parameter. */
-} ParkingResult;
+// typedef enum
+// {
+//     PARKING_SUCCESS,
+//     PARKING_QUEUED,
+//     PARKING_QUEUE_FULL,
+//     PARKING_INVALID
+// } ParkingResult;
+
+
+TYPE ParkingResult
+
+    PARKING_SUCCESS        // Fahrzeug wurde erfolgreich eingeparkt
+    PARKING_QUEUED         // Fahrzeug wurde in Warteschlange aufgenommen
+    PARKING_QUEUE_FULL     // Parkhaus und Warteschlange voll
+    PARKING_INVALID        // Ungültige Fahrzeugdaten
+
+END TYPE
 
 //Hier Programm:
 /**
