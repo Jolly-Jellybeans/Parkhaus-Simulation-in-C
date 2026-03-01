@@ -105,4 +105,31 @@ FUNCTION queue_enqueue(queue, vehicle)
 
     RETURN TRUE
 END FUNCTION
+
+// Entfernt das vorderste Fahrzeug
+FUNCTION queue_dequeue(queue, out_vehicle)
+    // Prüfen ob Queue existiert, Zielstruktur da ist oder Queue leer ist
+    IF queue ist NULL ODER out_vehicle ist NULL ODER queue.head ist NULL THEN
+        RETURN FALSE
+    END IF
+
+    // Den ersten Knoten merken
+    temp_node ← queue.head
+    
+    // Daten in die Zielstruktur kopieren
+    out_vehicle ← temp_node.data
+
+    // Head weitersetzen (auf das zweite Element)
+    queue.head ← temp_node.next
+
+    // Sonderfall: Wenn Liste jetzt leer ist (Head ist NULL), muss auch Tail NULL sein
+    IF queue.head ist NULL THEN
+        queue.tail ← NULL
+    END IF
+
+    // Alten Knoten mit Hilfsfunktion freigeben
+    CALL node_destroy(temp_node)
+    
+    RETURN TRUE
+END FUNCTION
 */
