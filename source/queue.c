@@ -76,4 +76,33 @@ FUNCTION queue_destroy(queue)
     // Container selbst freigeben
     Speicher für queue freigeben
 END FUNCTION
+
+// Fügt ein Fahrzeug am Ende hinzu
+FUNCTION queue_enqueue(queue, vehicle)
+    // Sicherheitschecks
+    IF queue ist NULL ODER vehicle ist NULL THEN
+        RETURN FALSE
+    END IF
+
+    // Nutze Hilfsfunktion zum Erstellen (kapselt malloc)
+    new_node ← CALL node_create(vehicle)
+    
+    // Prüfen, ob Speicher voll war
+    IF new_node ist NULL THEN
+        RETURN FALSE
+    END IF
+
+    // Einfügen am Ende (Tail)
+    IF queue.tail ist NULL THEN
+        // Fall: Liste war leer -> Head und Tail zeigen auf neuen Knoten
+        queue.head ← new_node
+        queue.tail ← new_node
+    ELSE
+        // Fall: Liste nicht leer -> Anfügen und Tail aktualisieren
+        queue.tail.next ← new_node
+        queue.tail ← new_node
+    END IF
+
+    RETURN TRUE
+END FUNCTION
 */
