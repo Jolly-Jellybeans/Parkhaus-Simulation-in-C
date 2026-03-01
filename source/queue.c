@@ -22,4 +22,17 @@ STRUCTURE Queue
     tail: Zeiger auf QueueNode // Ende der Schlange (Einfügen)
 END STRUCTURE
 
+// Erzeugt einen neuen Knoten und initialisiert ihn
+FUNCTION node_create(vehicle)
+    // 1. Speicher reservieren
+    node ← Speicher für QueueNode allozieren
+    
+    // 2. Prüfen und Daten kopieren
+    IF node ungleich NULL THEN
+        node.data ← vehicle
+        node.next ← NULL
+    END IF
+    
+    RETURN node
+END FUNCTION
 */
