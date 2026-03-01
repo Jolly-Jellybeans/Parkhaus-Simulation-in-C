@@ -54,4 +54,26 @@ FUNCTION queue_create()
     
     RETURN queue
 END FUNCTION
+
+// Löscht die gesamte Warteschlange
+FUNCTION queue_destroy(queue)
+    IF queue ist NULL THEN
+        RETURN
+    END IF
+
+    current ← queue.head
+    
+    // Iteriere durch die Liste und lösche jeden Knoten
+    WHILE current ungleich NULL DO
+        next_node ← current.next
+        
+        // Nutze Hilfsfunktion zum Löschen
+        CALL node_destroy(current)
+        
+        current ← next_node
+    END WHILE
+
+    // Container selbst freigeben
+    Speicher für queue freigeben
+END FUNCTION
 */
