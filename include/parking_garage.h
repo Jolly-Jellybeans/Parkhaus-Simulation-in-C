@@ -3,6 +3,17 @@
 #include "vehicle.h"
 #include "queue.h"
 
+/**
+ * @brief Ergebnis eines Parkversuchs.
+ */
+typedef enum
+{
+    PARKING_SUCCESS,    /**< Fahrzeug wurde erfolgreich eingeparkt. */
+    PARKING_QUEUED,     /**< Parkhaus voll – Fahrzeug wurde in die Warteschlange aufgenommen. */
+    PARKING_QUEUE_FULL, /**< Parkhaus und Warteschlange voll – Fahrzeug abgewiesen. */
+    PARKING_INVALID     /**< Ungültige Fahrzeugdaten oder Parameter. */
+} ParkingResult;
+
 //Hier Programm:
 /**
  * @brief Erstellt eine neue Parkhausstruktur mit einer gegebenen Anzahl an Stellplätzen.
