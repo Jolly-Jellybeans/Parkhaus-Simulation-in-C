@@ -16,4 +16,10 @@ STRUCTURE QueueNode
     next: Zeiger auf QueueNode // Verweis auf das nächste Element
 END STRUCTURE
 
+// Definition der Warteschlange (Queue)
+STRUCTURE Queue
+    head: Zeiger auf QueueNode // Anfang der Schlange (Entnahme)
+    tail: Zeiger auf QueueNode // Ende der Schlange (Einfügen)
+END STRUCTURE
+
 */
