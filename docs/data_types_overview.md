@@ -4,7 +4,7 @@ This document provides an overview of all custom data types used in the Parking 
 ## 1. Vehicle (include/vehicle.h)
 
 **Purpose**
-Represents a vehicle in the parking system.
+Represents a single vehicle in the parking simulation.
 
 **Attributes**
 - 'int id' -- Unique identifier of the vehicle
@@ -15,6 +15,7 @@ Represents a vehicle in the parking system.
 - Queue
 - ParkingGarage
 - IO Module
+- Simulation logic
 
 ---
 
@@ -24,14 +25,16 @@ Represents a vehicle in the parking system.
 Represents the waiting queue for vehicles when the parking garage is full.
 
 **Structure:**  
-Currently not publicly defined in the header file.
+QueueNode:
+- Stores a Vehicle
+- Pointer to next node
 
-**Main Functions:**
-- queue_create
-- queue_destroy
-- queue_enqueue
-- queue_dequeue
-- queue_is_empty
+Queue:
+- Pointer to first element (head)
+- Pointer to last element (head)
+
+**Used by:**
+- ParkingGarage
 
 ---
 
@@ -40,31 +43,53 @@ Currently not publicly defined in the header file.
 **Purpose:**  
 Represents the complete parking garage including parking slots and waiting queue.
 
-**Main Functions:**
-- parking_garage_create
-- parking_garage_destroy
-- parking_garage_park
-- parking_garage_unpark
-- parking_garage_remove_departing
+**Attributes:**
+- int slot_count -- Total number of parking slots
+- int occupied_count -- Currently occupied slots
+- Vehicle* p_slots -- Dynamic array of parking slots
+- Queue* p_queue -- Waiting queue for vehicles
+
+**Used by:**
+- Main program
+- Simulation
+- IO Module
+- Statistics
 
 ---
 
-## 4. Statistics (include/statistics.h)
+## 4. ParkingResult (include/parking_garage.h)
 
-**Purpose:**  
-Handles statistical tracking of parking events.
+**Purpose:**
+Describes the result of a parking attempt.
 
-**Main Functions:**
-- statistics_init
-- statistics_on_queued
-- statistics_on_parked_from_queue
-- statistics_on_departure
-- statistics_step_update
-- statistics_print
+**Type:**
+-enum ParkingResult
+
+**Possible Values:**
+- PARKING_SUCCESS -- Vehicle successfully parked
+- PARKING_QUEUED -- Vehicle added to waiting queue
+- PARKING_QUEUE_FULL -- Queue is full
+- PARKING_INVALID -- Invalid vehicle data
+
+**Used by:
+- ParkingGarage
+- IO Module
 
 ---
 
-## 5. ParkingResult
+## 5. Statistics (include/statistics.h)
 
 **Purpose:**  
-Represents the result of parking or unparking operations.
+Stores statistical data about the parking simulation
+
+**Typical Attributes:**
+- Total vehicles processed
+- Vehicles parked
+- Vehicles rejected
+- Average parking time
+- Utilizaion rate
+
+**Uses by:**
+- Simulation
+- Main programm
+- Output module
