@@ -26,6 +26,23 @@ FUNCTION ValidateMenuInput(input)
    END FUNCTION
 */
 
+/*
+   FUNCTION ValidateVehicleData(vehicle)
+
+       IF vehicle.id is invalid THEN
+           RETURN invalid
+       END IF
+
+       IF vehicle.remaining_duration <= 0 THEN
+           RETURN invalid
+       END IF
+
+       RETURN valid
+
+   END FUNCTION
+
+*/
+
 
 static void clear_input_buffer(void);
 
