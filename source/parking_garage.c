@@ -27,6 +27,20 @@ FUNCTION find_free_slot_index(p_garage)
 
 END FUNCTION
 
+FUNCTION clear_slot(p_slot)
+
+    IF p_slot = NULL
+    THEN RETURN
+    END IF
+
+    p_slot.vehicle.id ← 0
+    p_slot.vehicle.remaining_duration ← 0
+    p_slot.vehicle.entry_time ← 0
+    p_slot.departure_time ← 0
+    p_slot.is_occupied ← false
+
+END FUNCTION
+
 FUNCTION parking_garage_park(p_garage, p_vehicle, current_time)
 
     IF p_garage = NULL OR p_vehicle = NULL OR NOT vehicle_is_valid(p_vehicle) 
