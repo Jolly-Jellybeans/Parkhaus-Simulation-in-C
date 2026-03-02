@@ -39,5 +39,22 @@ Queue:
 ---
 
 ## 3. ParkingGarage (include/parking_garage.h)
+
+**Purpose:**  
+Represents the complete parking garage including parking slots and waiting queue.
+
+**Attributes:**
+- int slot_count -- Total number of parking slots
+- int occupied_count -- Currently occupied slots
+- Vehicle* p_slots -- Dynamic array of parking slots
+- Queue* p_queue -- Waiting queue for vehicles
+
+**Used by:**
+- Main program
+- Simulation
+- IO Module
+- Statistics
+
+---
 ## 4. ParkingResult (include/parking_garage.h)
 ## 5. Statistics (include/statistics.h)
