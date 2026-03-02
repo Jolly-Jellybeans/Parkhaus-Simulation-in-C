@@ -11,14 +11,17 @@
 
 FUNCTION read_menu_choice                    // Function checks if menu input is valid
 
+      READ input from user 
+      
        IF input is not numeric THEN          // If user did not enter a number
-           DISPLAY error message             // Show error message
-           RETURN invalid                    // Stop and mark as invalid
+           PRINT "Please enter a number."    // show error message
+           CLEAR input buffer                // remove wrong chars
+           CONTINUE                          // ask again
        END IF
 
        IF input < 0 OR input > 4 THEN        // If number is outside allowed range
-           DISPLAY "Invalid menu option"     // Tell user the opinion is wrong
-           RETURN invalid                    // Mark input as invalid
+           PRINT "Invalid menu option"       // Tell user the opinion is wrong
+           CONTINUE                          // Mark input as invalid
        END IF
 
        RETURN input
