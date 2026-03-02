@@ -6,58 +6,11 @@
 
 
 
-//int main(void)
-// {
-//      bool running = true;
-//
-//      ParkingGarage *garage = parking_garage_create(10);
-//      Statistics stats;
-//      statistic_init(&stats);
-//
-//      while (running)
-//      {
-//          print_menu();
-//          int choice = read_menu_choice();
-//          
-//          switch (choice)
-//          {
-//              case 1:
-//                  // Fahrzeug einparken
-//                  break;
-//
-//              case 2:
-//                  // Abfahrten verarbeiten
-//                  break;
-//
-//              case 3:
-//                  print_parking_garage_status(garage);
-//                  break;
-//
-//              case 4:
-//                  statistics_print(&stats);
-//                  break;
-//
-//              case 0:
-//                  running = false;
-//                  break;
-//
-//              default:
-//                  printf("Ungültige Eingabe!\n);
-//                  break;
-//            }
-//      }
-//
-//      parking_garage_destroy(garage);
-//      return 0;
-//  }
-
-
-
 // -----------------------------------------------
 // PSEUDOCODE
 //------------------------------------------------
 
-PROGRAM Main
+BEGIN Menu Logic
 
     CREATE parking garage with fixed number of slots
     INITIALIZE statistics structure
@@ -67,7 +20,9 @@ PROGRAM Main
     WHILE running DO
 
         DISPLAY main menu
-        READ user choice
+        PROMPT user for input
+        READ user choice from input
+        VALIDATE user input
 
         IF choice == 1 THEN
             READ vehicle data from user
