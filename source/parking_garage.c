@@ -61,3 +61,4 @@ FUNCTION parking_garage_remove_departing(p_garage, current_time)
     RETURN removed_count
 
 END FUNCTION
+}
