@@ -76,3 +76,19 @@ Describes the result of a parking attempt.
 
 ---
 ## 5. Statistics (include/statistics.h)
+
+**Purpose:**  
+Stores statistical data about the parking simulation
+
+**Typical Attributes:**
+- Total vehicles processed
+- Vehicles parked
+- Vehicles rejected
+- Average parking time
+- Utilizaion rate
+
+**Uses by:**
+- Simulation
+- Main programm
+- Output module
+
