@@ -9,6 +9,24 @@ static int find_free_slot_index(const ParkingGarage *p_garage);
  */
 static void clear_slot(ParkingSlot *p_slot);
 
+FUNCTION find_free_slot_index(p_garage)
+
+    IF p_garage = NULL OR p_garage.p_slots = NULL
+    THEN RETURN -1
+    END IF
+
+    FOR i ← 0 TO p_garage.slot_count - 1
+
+        IF p_garage.p_slots[i].is_occupied = false
+        THEN RETURN i
+        END IF
+
+    END FOR
+
+    RETURN -1
+
+END FUNCTION
+
 FUNCTION parking_garage_park(p_garage, p_vehicle, current_time)
 
     IF p_garage = NULL OR p_vehicle = NULL OR NOT vehicle_is_valid(p_vehicle) 
