@@ -57,4 +57,22 @@ Represents the complete parking garage including parking slots and waiting queue
 
 ---
 ## 4. ParkingResult (include/parking_garage.h)
+
+**Purpose:**
+Describes the result of a parking attempt.
+
+**Type:**
+-enum ParkingResult
+
+**Possible Values:**
+- PARKING_SUCCESS -- Vehicle successfully parked
+- PARKING_QUEUED -- Vehicle added to waiting queue
+- PARKING_QUEUE_FULL -- Queue is full
+- PARKING_INVALID -- Invalid vehicle data
+
+**Used by:
+- ParkingGarage
+- IO Module
+
+---
 ## 5. Statistics (include/statistics.h)
