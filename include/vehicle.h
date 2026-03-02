@@ -1,13 +1,21 @@
 #ifndef VEHICLE_H
 #define VEHICLE_H
 
-
+/*
 typedef struct
 {
   int id;
   int remaining_duration;
   int entry_time;
 } Vehicle; 
+*/
+
+TYPE Vehicle
+    id : Integer
+    remaining_duration : Integer
+    entry_time : Integer
+END TYPE
+
   
 /**
  * @brief Prüft, ob eine Fahrzeugstruktur gültige Werte enthält.
