@@ -3,6 +3,47 @@
 #include "vehicle.h"
 #include "queue.h"
 
+// Hier Programm:
+
+/* typedef struct
+{
+    int slot_count;          // Gesamtanzahl der Stellplätze
+    int occupied_count;      // Anzahl aktuell belegter Stellplätze
+    Vehicle *p_slots;        // Dynamisches Array: Stellplätze
+    Queue *p_queue;          // Warteschlange für Fahrzeuge
+} ParkingGarage;
+*/
+
+TYPE Parking Garage
+    slot_count               // Gesamtanzahl der Stellplätze
+    occupied_count           // Anzahl aktuell belegter Stellplätze
+    p_slots                  // Dynamisches Array: Stellplätze
+    p_queue                  // Warteschlange für Fahrzeuge
+
+END TYPE
+
+
+/**
+ * @brief Ergebnis eines Parkversuchs.
+ */
+// typedef enum
+// {
+//     PARKING_SUCCESS,
+//     PARKING_QUEUED,
+//     PARKING_QUEUE_FULL,
+//     PARKING_INVALID
+// } ParkingResult;
+
+
+TYPE ParkingResult
+
+    PARKING_SUCCESS        // Fahrzeug wurde erfolgreich eingeparkt
+    PARKING_QUEUED         // Fahrzeug wurde in Warteschlange aufgenommen
+    PARKING_QUEUE_FULL     // Parkhaus und Warteschlange voll
+    PARKING_INVALID        // Ungültige Fahrzeugdaten
+
+END TYPE
+
 //Hier Programm:
 /**
  * @brief Erstellt eine neue Parkhausstruktur mit einer gegebenen Anzahl an Stellplätzen.
