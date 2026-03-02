@@ -75,22 +75,6 @@ FUNCTION read_simulation_parameters
 END FUNCTION
 */
 
-/*
-   FUNCTION vehicle_is_valid(vehicle)                  // Function checks if vehicle data is correct
-
-       IF vehicle.id is invalid THEN                      // Check if vehicle ID is wrong or empty
-           RETURN invalid                                 // Stop and mark vehicle as invalid
-       END IF
-
-       IF vehicle.remaining_duration <= 0 THEN            // Check if parking time is zero
-           RETURN invalid                                 // Mark vehicle as invalid
-       END IF
-
-       RETURN true
-
-   END FUNCTION
-
-*/
 
 
 static void clear_input_buffer(void);
