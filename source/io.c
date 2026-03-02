@@ -9,7 +9,7 @@
   PSEUDOCODE - Input validation
 ---------------------------------------------
 
-FUNCTION ValidateMenuInput(input)            // Function checks if menu input is valid
+FUNCTION read_menu_choice                    // Function checks if menu input is valid
 
        IF input is not numeric THEN          // If user did not enter a number
            DISPLAY error message             // Show error message
@@ -21,13 +21,13 @@ FUNCTION ValidateMenuInput(input)            // Function checks if menu input is
            RETURN invalid                    // Mark input as invalid
        END IF
 
-       RETURN valid
+       RETURN input
 
    END FUNCTION
 */
 
 /*
-   FUNCTION ValidateVehicleData(vehicle)                  // Function checks if vehicle data is correct
+   FUNCTION vehicle_is_valid(vehicle)                  // Function checks if vehicle data is correct
 
        IF vehicle.id is invalid THEN                      // Check if vehicle ID is wrong or empty
            RETURN invalid                                 // Stop and mark vehicle as invalid
@@ -37,7 +37,7 @@ FUNCTION ValidateMenuInput(input)            // Function checks if menu input is
            RETURN invalid                                 // Mark vehicle as invalid
        END IF
 
-       RETURN valid
+       RETURN true
 
    END FUNCTION
 
