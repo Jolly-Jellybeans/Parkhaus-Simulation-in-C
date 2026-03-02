@@ -11,6 +11,8 @@
 
 FUNCTION read_menu_choice                    // Function checks if menu input is valid
 
+  LOOP forever                               // keep asking until valid input
+  
       READ input from user 
       
        IF input is not numeric THEN          // If user did not enter a number
@@ -26,6 +28,8 @@ FUNCTION read_menu_choice                    // Function checks if menu input is
 
        RETURN input
 
+  END LOOP
+
    END FUNCTION
 */
 
@@ -37,7 +41,7 @@ FUNCTION read_simulation_parameters
         IF slot_count is not numeric OR slot_count <= 0 THEN
             PRINT "Slot count must be a positive number."
         END IF
-    WHILE slot_count is invalid
+    WHILE slot_count is invalid                      //repeat until valid
 
     // max_parking_duration
     DO
@@ -71,7 +75,7 @@ FUNCTION read_simulation_parameters
         END IF
     WHILE seed is invalid
 
-    RETURN all parameters
+    RETURN all parameters                            // return validated values
 END FUNCTION
 */
 
