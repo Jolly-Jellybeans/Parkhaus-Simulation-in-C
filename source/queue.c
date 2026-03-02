@@ -59,6 +59,7 @@ END FUNCTION
 FUNCTION queue_destroy(queue)
     IF queue ist NULL THEN
         RETURN
+    queue ← NULL
     END IF
 
     current ← queue.head
