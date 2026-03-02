@@ -1,7 +1,10 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 #include "vehicle.h"
+#include <stdbool.h>
 //Hier Programm:
+typedef struct QueueNode QueueNode;
+typedef struct Queue Queue;
 /**
  * @brief Erstellt eine neue Fahrzeugwarteschlange.
  *
