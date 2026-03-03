@@ -50,14 +50,18 @@ END FUNCTION
 
 FUNCTION parking_garage_park(p_garage, p_vehicle, current_time)
 
+    // Eingaben prüfen: Ohne gültiges Parkhaus oder gültige Fahrzeugdaten
+    // ist kein Parkvorgang möglich.
     IF p_garage = NULL OR p_vehicle = NULL OR NOT vehicle_is_valid(p_vehicle) 
     THEN RETURN PARKING_INVALID
     END IF
 
+    // Zuerst versuchen, einen direkten freien Stellplatz zu finden.
     free_index ← find_free_slot_index(p_garage)
 
     IF free_index ≥ 0 THEN
 
+        // Fahrzeug auf den freien Stellplatz übernehmen und Parkzeit festlegen.
         slot ← p_garage.p_slots[free_index]
 
         slot.vehicle ← p_vehicle
@@ -65,15 +69,18 @@ FUNCTION parking_garage_park(p_garage, p_vehicle, current_time)
         slot.departure_time ← current_time + p_vehicle.remaining_duration
         slot.is_occupied ← true
 
+        // Belegung erhöhen und erfolgreichen Parkvorgang melden.
         p_garage.occupied_count ← p_garage.occupied_count + 1
 
         RETURN PARKING_SUCCESS
     END IF
 
+    // Kein Platz frei: Fahrzeug in die Warteschlange einreihen.
     IF queue_enqueue(p_garage.p_queue, p_vehicle) 
     THEN RETURN PARKING_QUEUED
     END IF
 
+    // Falls auch das Einreihen fehlschlägt, ist die Queue voll.
     RETURN PARKING_QUEUE_FULL
 
 END FUNCTION
