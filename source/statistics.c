@@ -104,3 +104,49 @@ FUNCTION statistics_step_update(p_statistics, occupied_slots, total_slots)
     END IF
 
 END FUNCTION
+
+FUNCTION statistics_print(p_statistics)
+
+    IF p_statistics = NULL
+    THEN
+        RETURN
+    END IF
+
+    avg_occupancy_percent ← 0.0
+    IF p_statistics.occupancy_samples > 0
+    THEN
+        avg_occupancy_percent ←
+            (p_statistics.occupancy_ratio_sum
+             / p_statistics.occupancy_samples) * 100.0
+    END IF
+
+    avg_park_duration ← 0.0
+    IF p_statistics.departed_vehicle_count > 0
+    THEN
+        avg_park_duration ←
+            p_statistics.total_park_duration
+            / p_statistics.departed_vehicle_count
+    END IF
+
+    avg_wait_duration ← 0.0
+    IF p_statistics.queued_vehicle_count_served > 0
+    THEN
+        avg_wait_duration ←
+            p_statistics.total_wait_duration
+            / p_statistics.queued_vehicle_count_served
+    END IF
+
+    PRINT "==================== Statistik ===================="
+    PRINT "1) Aktuell parkende Autos       : ",
+          p_statistics.currently_parked
+    PRINT "2) Durchschnittliche Auslastung : ",
+          avg_occupancy_percent, "%"
+    PRINT "3) Kumuliert wartende Fahrzeuge : ",
+          p_statistics.queued_vehicle_count_cumulative
+    PRINT "4) Durchschnittliche Parkdauer  : ",
+          avg_park_duration
+    PRINT "5) Durchschnittliche Wartedauer : ",
+          avg_wait_duration
+    PRINT "==================================================="
+
+END FUNCTION
