@@ -211,15 +211,19 @@ END FUNCTION
 
 FUNCTION statistics_print(p_statistics)
 
+    // Sicherheitsprüfung: Ohne gültige Statistikstruktur keine Ausgabe.
     IF p_statistics = NULL
     THEN
         RETURN
     END IF
 
+    // Enddurchschnitte vorbereiten und mit 0 initialisieren,
+    // damit die Ausgabe auch ohne Daten definiert bleibt.
     avg_parked_vehicles ← 0.0
     avg_queued_vehicles ← 0.0
     avg_occupancy_percent ← 0.0
 
+    // Zeitliche Mittelwerte über alle erfassten Simulationsschritte.
     IF p_statistics.time_samples > 0
     THEN
         avg_parked_vehicles ←
@@ -232,6 +236,7 @@ FUNCTION statistics_print(p_statistics)
 
     END IF
 
+    // Durchschnittliche prozentuale Auslastung nur bei gültigen Samples.
     IF p_statistics.occupancy_samples > 0
     THEN
         avg_occupancy_percent ←
@@ -239,6 +244,7 @@ FUNCTION statistics_print(p_statistics)
              / p_statistics.occupancy_samples) * 100.0
     END IF
 
+    // Durchschnittliche Parkdauer über alle abgefahrenen Fahrzeuge.
     avg_park_duration ← 0.0
     IF p_statistics.departed_vehicle_count > 0
     THEN
@@ -247,6 +253,7 @@ FUNCTION statistics_print(p_statistics)
             / p_statistics.departed_vehicle_count
     END IF
 
+    // Durchschnittliche Wartedauer über alle bedienten Queue-Fahrzeuge.
     avg_wait_duration ← 0.0
     IF p_statistics.queued_vehicle_count_served > 0
     THEN
@@ -255,6 +262,7 @@ FUNCTION statistics_print(p_statistics)
             / p_statistics.queued_vehicle_count_served
     END IF
 
+    // Finale Gesamtauswertung am Ende der Simulation ausgeben.
         PRINT "==================== Gesamt-Statistik ===================="
         PRINT "1) Durchschnittl. parkende Autos     : ", avg_parked_vehicles, " Fahrzeuge"
         PRINT "2) Durchschnittl. Auslastung         : ", avg_occupancy_percent, " Prozent"
