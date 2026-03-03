@@ -9,6 +9,7 @@ static int find_free_slot_index(const ParkingGarage *p_garage);
  */
 static void clear_slot(ParkingSlot *p_slot);
 
+/*
 FUNCTION find_free_slot_index(p_garage)
 
     // Sicherheitsprüfung: Ohne gültiges Parkhaus oder Slot-Array
@@ -113,4 +114,4 @@ FUNCTION parking_garage_remove_departing(p_garage, current_time)
     RETURN removed_count
 
 END FUNCTION
-}
+*/
