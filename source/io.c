@@ -42,10 +42,41 @@ FUNCTION read_menu_choice                    // Function checks if menu input is
 
        RETURN input
 
-  END LOOP
-
-   END FUNCTION
+    END LOOP
+  END FUNCTION
 */
+/*
+--------------------------------------------------
+  FUNCTION print_parking_garage_status(p_garage)
+--------------------------------------------------
+  IF p_garage is NULL THEN
+      PRINT "Error: No garage data."
+      RETURN
+  END IF
+
+  PRINT "==== Parking Garage Status ==="
+  PRINT "Total slots: " p_garage.total_slots
+  PRINT "Occupied slots: " p_garage.occupied_slots
+  PRINT "Free slots: " (total_slots - occupied_slots)
+
+  PRINT "Vehicles currently parked:"
+  FOR each slot in p_garage.slots DO
+      IF slot contains a vehicle THEN
+          PRINT "Slot X: Vehicle ID = ..., Remaining = ..."
+      ELSE
+          PRINT "Slot X: empty"
+      END IF
+  END FOR
+
+  PRINT "Waiting queue:"
+  IF queue is empty  THEN
+      PRINT "No vehicles waiting."
+  ELSE
+      PRINT "Vehicles waiting: ..."
+  END IF
+END FUNCTION
+*/  
+
 
 /*
 FUNCTION read_simulation_parameters
