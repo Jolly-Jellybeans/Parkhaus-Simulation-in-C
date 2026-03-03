@@ -32,10 +32,15 @@ END FUNCTION
 
 FUNCTION statistics_on_queued(p_statistics)
 
+    // Sicherheitsprüfung: Ohne gültige Statistikstruktur keine Verarbeitung.
     IF p_statistics = NULL
     THEN
         RETURN
     END IF
+
+    // Aktuell kein direkter Zähler-Update nötig:
+    // Die Kennzahl "wartende Fahrzeuge" wird pro Zeitschritt in
+    // statistics_step_update(...) über die aktuelle Queue-Länge erfasst.
 
 END FUNCTION
 
