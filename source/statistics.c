@@ -71,19 +71,24 @@ END FUNCTION
 
 FUNCTION statistics_on_departure(p_statistics, park_duration)
 
+    // Sicherheitsprüfung: Ohne gültige Statistikstruktur keine Verarbeitung.
     IF p_statistics = NULL
     THEN
         RETURN
     END IF
 
+    // Negative Parkzeiten sind fachlich ungültig und werden auf 0 begrenzt.
     IF park_duration < 0
     THEN
         park_duration ← 0
     END IF
 
+    // Parkdauer des ausgefahrenen Fahrzeugs aufsummieren.
     p_statistics.total_park_duration ←
         p_statistics.total_park_duration + park_duration
 
+    // Anzahl ausgefahrener Fahrzeuge erhöhen
+    // (Basis für durchschnittliche Parkdauer).
     p_statistics.departed_vehicle_count ←
         p_statistics.departed_vehicle_count + 1
 
