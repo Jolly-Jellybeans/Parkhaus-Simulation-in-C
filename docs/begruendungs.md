@@ -55,13 +55,6 @@ Alle Funktionen zur Benutzerinteraktion sind hier gebündelt. Dadurch bleibt die
 Änderungen am Menü oder Ausgabeformat haben keinen Einfluss auf die Simulation selbst.  
 Gleichzeitig wird die Testbarkeit erhöht, da Logik unabhängig von Konsolenein- oder -ausgaben geprüft werden kann.
 
-### Vehicle-Modul  
-(`vehicle_is_valid`)
-
-Die zentrale Validierungsfunktion stellt sicher, dass fehlerhafte oder unplausible Fahrzeugdaten frühzeitig erkannt werden.  
-Nachgelagerte Prozesse wie Parken oder Warteschlangenverwaltung müssen dadurch keine redundanten Prüfungen enthalten.  
-Dies erhöht Robustheit und Konsistenz des Systems.
-
 ### Queue-Modul  
 (`queue_create`, `queue_destroy`, `queue_enqueue`, `queue_dequeue`, `queue_is_empty`)
 

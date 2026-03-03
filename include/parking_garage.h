@@ -13,7 +13,7 @@
     Queue *p_queue;          // Warteschlange für Fahrzeuge
 } ParkingGarage;
 */
-
+/*
 TYPE Parking Garage
     slot_count               // Gesamtanzahl der Stellplätze
     occupied_count           // Anzahl aktuell belegter Stellplätze
@@ -21,7 +21,7 @@ TYPE Parking Garage
     p_queue                  // Warteschlange für Fahrzeuge
 
 END TYPE
-
+*/
 
 /**
  * @brief Ergebnis eines Parkversuchs.
@@ -34,7 +34,7 @@ END TYPE
 //     PARKING_INVALID
 // } ParkingResult;
 
-
+/*
 TYPE ParkingResult
 
     PARKING_SUCCESS        // Fahrzeug wurde erfolgreich eingeparkt
@@ -43,7 +43,7 @@ TYPE ParkingResult
     PARKING_INVALID        // Ungültige Fahrzeugdaten
 
 END TYPE
-
+*/
 //Hier Programm:
 /**
  * @brief Erstellt eine neue Parkhausstruktur mit einer gegebenen Anzahl an Stellplätzen.
