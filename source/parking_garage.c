@@ -87,16 +87,21 @@ END FUNCTION
 
 FUNCTION parking_garage_remove_departing(p_garage, current_time)
 
+    // Sicherheitsprüfung: Ohne gültiges Parkhaus können keine Abfahrten verarbeitet werden.
     IF p_garage = NULL
     THEN RETURN 0
     END IF
 
+    // Zählt, wie viele Fahrzeuge in diesem Schritt entfernt wurden.
     removed_count ← 0
 
+    // Alle Stellplätze durchlaufen und Fahrzeuge entfernen,
+    // deren Abfahrtszeit erreicht oder überschritten ist.
     FOR i ← 0 TO p_garage.slot_count - 1
 
         IF p_garage.p_slots[i].is_occupied = true AND p_garage.p_slots[i].departure_time ≤ current_time
         THEN
+            // Stellplatz leeren und Belegungszähler aktualisieren.
             clear_slot(p_garage.p_slots[i])
             p_garage.occupied_count ← p_garage.occupied_count - 1
             removed_count ← removed_count + 1
@@ -104,6 +109,7 @@ FUNCTION parking_garage_remove_departing(p_garage, current_time)
 
     END FOR
 
+    // Anzahl der tatsächlich entfernten Fahrzeuge zurückgeben.
     RETURN removed_count
 
 END FUNCTION
