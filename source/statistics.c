@@ -7,11 +7,14 @@ FUNCTION statistics_init(p_statistics)
     END IF
 
     p_statistics.currently_parked ← 0
+    p_statistics.currently_queued ← 0
+
+    p_statistics.parked_vehicle_count_sum ← 0
+    p_statistics.queued_vehicle_count_sum ← 0
+    p_statistics.time_samples ← 0
 
     p_statistics.occupancy_ratio_sum ← 0.0
     p_statistics.occupancy_samples ← 0
-
-    p_statistics.queued_vehicle_count_cumulative ← 0
     p_statistics.queued_vehicle_count_served ← 0
 
     p_statistics.total_park_duration ← 0
@@ -27,9 +30,6 @@ FUNCTION statistics_on_queued(p_statistics)
     THEN
         RETURN
     END IF
-
-    p_statistics.queued_vehicle_count_cumulative ←
-        p_statistics.queued_vehicle_count_cumulative + 1
 
 END FUNCTION
 
@@ -73,7 +73,7 @@ FUNCTION statistics_on_departure(p_statistics, park_duration)
 
 END FUNCTION
 
-FUNCTION statistics_step_update(p_statistics, occupied_slots, total_slots)
+FUNCTION statistics_step_update(p_statistics, occupied_slots, total_slots, queued_vehicles)
 
     IF p_statistics = NULL
     THEN
@@ -90,7 +90,22 @@ FUNCTION statistics_step_update(p_statistics, occupied_slots, total_slots)
         occupied_slots ← total_slots
     END IF
 
+    IF queued_vehicles < 0
+    THEN
+        queued_vehicles ← 0
+    END IF
+
     p_statistics.currently_parked ← occupied_slots
+    p_statistics.currently_queued ← queued_vehicles
+
+    p_statistics.parked_vehicle_count_sum ←
+        p_statistics.parked_vehicle_count_sum + occupied_slots
+
+    p_statistics.queued_vehicle_count_sum ←
+        p_statistics.queued_vehicle_count_sum + queued_vehicles
+
+    p_statistics.time_samples ←
+        p_statistics.time_samples + 1
 
     IF total_slots > 0
     THEN
@@ -112,7 +127,22 @@ FUNCTION statistics_print(p_statistics)
         RETURN
     END IF
 
+    avg_parked_vehicles ← 0.0
+    avg_queued_vehicles ← 0.0
     avg_occupancy_percent ← 0.0
+
+    IF p_statistics.time_samples > 0
+    THEN
+        avg_parked_vehicles ←
+            p_statistics.parked_vehicle_count_sum
+            / p_statistics.time_samples
+
+        avg_queued_vehicles ←
+            p_statistics.queued_vehicle_count_sum
+            / p_statistics.time_samples
+
+    END IF
+
     IF p_statistics.occupancy_samples > 0
     THEN
         avg_occupancy_percent ←
@@ -137,12 +167,12 @@ FUNCTION statistics_print(p_statistics)
     END IF
 
     PRINT "==================== Statistik ===================="
-    PRINT "1) Aktuell parkende Autos       : ",
-          p_statistics.currently_parked
+        PRINT "1) Ø parkende Autos             : ",
+            avg_parked_vehicles
     PRINT "2) Durchschnittliche Auslastung : ",
           avg_occupancy_percent, "%"
-    PRINT "3) Kumuliert wartende Fahrzeuge : ",
-          p_statistics.queued_vehicle_count_cumulative
+        PRINT "3) Ø wartende Fahrzeuge         : ",
+            avg_queued_vehicles
     PRINT "4) Durchschnittliche Parkdauer  : ",
           avg_park_duration
     PRINT "5) Durchschnittliche Wartedauer : ",
