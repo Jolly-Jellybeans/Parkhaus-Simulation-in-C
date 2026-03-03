@@ -11,36 +11,33 @@
 ---------------------------------------------
 ---------------------------------------------
 
---------------------------------------------------------------
-FUNCTION print_menu
---------------------------------------------------------------
-    PRINT "Please choose an option:"
-    PRINT "Enter a number and press Enter"   // tells user how to input
+FUNCTION user_input(description) RETURNS integer
+    PRINT description                   // show prompt text to the user
+
+    LOOP forever                        // keep asking until input is valid
+        READ value
+
+        IF value is not numeric THEN
+            PRINT "Please enter a number."
+            CONTINUE                    // ask again
+        END IF
+
+        RETURN value                    // valid number was entered
+    END LOOP
 END FUNCTION
 
---------------------------------------------------------------
-FUNCTION read_menu_choice                    // Function checks if menu input is valid
---------------------------------------------------------------
 
-  LOOP forever                               // keep asking until valid input
-  
-      READ input from user 
-      
-       IF input is not numeric THEN          // If user did not enter a number
-           PRINT "Please enter a number."    // show error message
-           CLEAR input buffer                // remove wrong chars
-           CONTINUE                          // ask again
-       END IF
+FUNCTION get_config_from_user() RETURNS SimulationConfig
+    NEW config (Type SimulationConfig)  // create new config object
 
-       IF input < 0 OR input > 4 THEN        // If number is outside allowed range
-           PRINT "Invalid menu option"       // Tell user the opinion is wrong
-           CONTINUE                          // Mark input as invalid
-       END IF
+    config.slots            <- CALL user_input("Anzahl der Stellplätze: ")
+    config.max_park_duration<- CALL user_input("Maximale Parkdauer (pro Auto): ")
+    config.sim_duration     <- CALL user_input("Gesamte Simulationsdauer: ")
+    config.arrival_prob     <- CALL user_input("Ankunftswahrscheinlichkeit (0-100): ")
+    config.seed             <- CALL user_input("Zufalls-Seed (z.B. 42): ")
 
-       RETURN input
-
-    END LOOP
-  END FUNCTION
+    RETURN config                      // return all user values
+END FUNCTION
 */
 /*
 -----------------------------------------------------------
