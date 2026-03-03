@@ -1,4 +1,5 @@
 #include "statistics.h"
+/*
 FUNCTION statistics_init(p_statistics)
 
     // Sicherheitsprüfung: Ohne gültige Zielstruktur gibt es nichts zu initialisieren.
@@ -272,3 +273,4 @@ FUNCTION statistics_print(p_statistics)
         PRINT "==========================================================="
 
 END FUNCTION
+*/
