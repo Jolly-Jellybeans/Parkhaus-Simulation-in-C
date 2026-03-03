@@ -2,40 +2,60 @@
 
 
 
-### 1. Durchschnittliche prozentuale Auslastung (gesamter Zeitraum)
+### 1. Parkende Autos
 
-Beschreibt die mittlere Auslastung des Parkhauses über die gesamte Simulationsdauer in Prozent der Gesamtkapazität.  
+Beschreibt die Anzahl der belegten Stellplätze im Parkhaus.
 
-Diese Kennzahl dient der Bewertung der allgemeinen Systemeffizienz. Sie zeigt, ob das Parkhaus überwiegend unter-, optimal- oder überausgelastet war. Eine dauerhaft hohe durchschnittliche Auslastung deutet auf eine konstant hohe Nachfrage hin, während eine niedrige Auslastung auf Überkapazität schließen lässt. Sie bildet somit die Grundlage für eine langfristige Kapazitätsbewertung.
+Diese Kennzahl gibt an, wie viele Fahrzeuge sich zu einem bestimmten Zeitpunkt im Parkhaus befinden. In der Gesamtauswertung wird daraus der Mittelwert über die gesamte Simulationsdauer gebildet. Sie ermöglicht eine direkte Einschätzung der tatsächlichen Nutzung des Parkhauses und stellt eine absolute Betrachtung der Systemauslastung dar.
 
+Darüber hinaus dient diese Größe als Basis für weitere Kennzahlen wie die prozentuale Auslastung. Veränderungen im zeitlichen Verlauf geben Aufschluss über typische Nutzungsmuster und Belastungsphasen innerhalb der Simulation.
 
-
-### 2. Maximale Auslastung
-
-Gibt die höchste erreichte Auslastung während der gesamten Simulation an.  
-
-Im Gegensatz zum Durchschnittswert macht diese Kennzahl kurzfristige Spitzenbelastungen sichtbar. Selbst wenn die durchschnittliche Auslastung moderat erscheint, kann eine hohe maximale Auslastung auf temporäre Engpässe hinweisen. Diese Statistik ist daher entscheidend, um Belastungsspitzen und kritische Systemzustände zu identifizieren.
+Am Ende der Simulation wird der über den gesamten Zeitraum ermittelte Gesamtwert ausgegeben.
 
 
 
-### 3. Anteil der Zeit, in der das Parkhaus vollständig ausgelastet war
+### 2. Auslastung
 
-Misst den prozentualen Anteil der Simulationszeit, in der alle Stellplätze belegt waren.  
+Beschreibt die prozentuale Belegung des Parkhauses relativ zur Gesamtkapazität.
 
-Diese Kennzahl zeigt, wie häufig das System an seiner Kapazitätsgrenze operiert hat. Ein hoher Wert deutet auf eine strukturelle Überlastung hin, da in diesen Zeiträumen keine zusätzlichen Fahrzeuge aufgenommen werden konnten. Sie ist besonders aussagekräftig für die Beurteilung, ob eine Erweiterung der Kapazität sinnvoll oder notwendig wäre.
+Diese Kennzahl normiert die Anzahl parkender Fahrzeuge auf die vorhandene Stellplatzkapazität und erlaubt dadurch eine vergleichbare Bewertung der Systemauslastung. In der Gesamtauswertung zeigt sie, wie effizient die vorhandene Kapazität genutzt wurde.
 
+Da die Auslastung unabhängig von der absoluten Stellplatzanzahl ist, eignet sie sich besonders für Szenarienvergleiche mit unterschiedlichen Kapazitäten. Sie ermöglicht somit eine objektive Beurteilung der Dimensionierung des Parkhauses.
 
-
-### 4. Ablehnungsquote
-
-Beschreibt den prozentualen Anteil der ankommenden Fahrzeuge, die weder direkt einen Parkplatz noch einen Platz in der Warteschlange erhalten haben.  
-
-Diese Statistik misst den tatsächlichen Nachfrageüberhang und damit den wirtschaftlichen Verlust durch nicht bediente Fahrzeuge. Eine hohe Ablehnungsquote deutet auf eine unzureichende Gesamtkapazität (Parkplätze + Warteschlange) hin und ist ein zentraler Indikator für die Leistungsfähigkeit des Systems.
+Am Ende der Simulation wird die über die gesamte Laufzeit berechnete Gesamtauslastung ausgegeben.
 
 
 
-### 5. Durchschnittliche Wartedauer
+### 3. Wartende Fahrzeuge
 
-Gibt die mittlere Zeitspanne an, die Fahrzeuge in der Warteschlange verbringen, bevor sie einen Parkplatz erhalten.  
+Gibt die Anzahl der Fahrzeuge an, die sich in der Warteschlange befinden.
 
-Diese Kennzahl bewertet die Servicequalität des Systems aus Nutzersicht. Während die Ablehnungsquote angibt, wie viele Fahrzeuge nicht bedient werden konnten, beschreibt die durchschnittliche Wartedauer die Intensität des Engpasses für diejenigen Fahrzeuge, die warten mussten. Eine hohe Wartedauer weist auf signifikante Verzögerungen und damit auf eine starke Systembelastung hin.
+Diese Kennzahl macht sichtbar, wie stark die Nachfrage die unmittelbare Parkkapazität übersteigt. Eine dauerhaft hohe Anzahl wartender Fahrzeuge deutet auf eine strukturelle Überlastung hin und zeigt, dass das Parkhaus regelmäßig an seine Kapazitätsgrenze stößt.
+
+Da die Warteschlange unbegrenzt ist, spiegelt diese Größe direkt den Nachfrageüberhang wider. Ein kontinuierliches Anwachsen der Warteschlange weist darauf hin, dass das System langfristig nicht im Gleichgewicht arbeitet.
+
+Am Ende der Simulation wird der über den gesamten Zeitraum berechnete Gesamtwert ausgegeben.
+
+
+
+### 4. Parkdauer
+
+Beschreibt die Zeitspanne, die ein Fahrzeug vom Einparken bis zur Ausfahrt im Parkhaus verbringt.
+
+Diese Kennzahl analysiert das Nutzungsverhalten der Fahrzeuge. Eine lange Parkdauer reduziert die Umschlagshäufigkeit der Stellplätze, während eine kurze Parkdauer zu häufigeren Fahrzeugwechseln und höherer Dynamik im System führt. In der Gesamtauswertung wird der Mittelwert aller Parkzeiten betrachtet.
+
+Die Parkdauer beeinflusst maßgeblich die Systemdynamik, da sie bestimmt, wie schnell Stellplätze wieder verfügbar werden. Sie ist somit ein zentraler Faktor für die Kapazitätsauslastung und das Entstehen von Warteschlangen.
+
+Am Ende der Simulation wird die über alle Fahrzeuge berechnete Gesamtauswertung ausgegeben.
+
+
+
+### 5. Wartedauer
+
+Gibt die Zeitspanne an, die ein Fahrzeug in der Warteschlange verbringt, bevor es einen Parkplatz erhält.
+
+Diese Kennzahl bewertet die Servicequalität des Systems aus Nutzersicht. Während die Anzahl wartender Fahrzeuge die Systembelastung beschreibt, zeigt die Wartedauer die individuelle Verzögerung einzelner Fahrzeuge. Hohe Werte weisen auf deutliche Engpässe und eine starke Auslastung hin.
+
+Die Wartedauer ist besonders relevant für die Bewertung der Nutzerzufriedenheit, da lange Wartezeiten die Akzeptanz des Systems negativ beeinflussen können. Sie ergänzt somit die rein systemorientierten Kennzahlen um eine qualitative Betrachtung.
+
+Am Ende der Simulation wird die über alle wartenden Fahrzeuge berechnete Gesamtauswertung ausgegeben.
