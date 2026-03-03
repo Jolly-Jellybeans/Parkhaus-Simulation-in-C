@@ -12,36 +12,36 @@
 
 BEGIN Menu Logic
 
-    CREATE parking garage with fixed number of slots
-    INITIALIZE statistics structure
+    CREATE parking garage with fixed number of slots    // allocate parking garage
+    INITIALIZE statistics structure                     // prepare statistics tracking
 
-    SET running = true
+    SET running = true                                  // control variable for loop
 
     WHILE running DO
 
         DISPLAY main menu
-        PROMPT user for input
+        PROMPT user for input                           // ask user for choice
         READ user choice from input
         VALIDATE user input
 
-        IF choice == 1 THEN
-            READ vehicle data from user
+        IF choice == 1 THEN                            // park a new vehicle
+            READ vehicle data from user                
             VALIDATE vehicle data
             TRY to park vehicle in garage
             DISPLAY result message
             UPDATE statistics if necessary
 
-        ELSE IF choice == 2 THEN
+        ELSE IF choice == 2 THEN                       // process departures
             PROCESS departures based on current simulation time
             UPDATE statistics
 
-        ELSE IF choice == 3 THEN
+        ELSE IF choice == 3 THEN                       // show garage state
             DISPLAY current parking garage status
 
-        ELSE IF choice == 4 THEN
+        ELSE IF choice == 4 THEN                       // show statistics
             DISPLAY collected statistics
 
-        ELSE IF choice == 0 THEN
+        ELSE IF choice == 0 THEN                       // exit program
             SET running = false
 
         ELSE
