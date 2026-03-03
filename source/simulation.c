@@ -30,7 +30,7 @@ FUNCTION simulation(garage, stats, config_sim_duration, config_arrival_prob, con
         IF random_val < config_arrival_prob THEN
             
             // Neues Fahrzeug erstellen
-            new_vehicle ← Leeres Vehicle
+            new_vehicle ← Empty Vehicle
             new_vehicle.id ← generiere_neue_id()
             new_vehicle.entry_time ← current_time
             new_vehicle.remaining_duration ← (CALL rand() % config_max_duration) + 1 
