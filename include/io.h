@@ -2,6 +2,27 @@
 #define IO_H
 #include "parking_garage.h"
 #include "vehicle.h"
+
+/*
+typedef struct
+{
+    int slots;
+    int max_park_duration;
+    int sim_duration;
+    int arrival_prob;
+    int seed;
+} SimulationConfig;
+*/
+/*
+STRUCT SimulationConfig
+    Ganzzahl slots
+    Ganzzahl max_park_duration
+    Ganzzahl sim_duration
+    Ganzzahl arrival_prob
+    Ganzzahl seed
+END STRUCT
+*/
+
 //Hier Programm:
 /**
  * @brief Gibt das Hauptmenü der Parkhaus-Simulation in der Konsole aus.
