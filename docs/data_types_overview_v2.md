@@ -6,6 +6,16 @@ This document provides an overview of all custom data types used in the Parking 
 **Purpose**
 Represents a single vehicle in the parking simulation.
 
+**Type:** struct Vehicle
+
+**Structure:** 
+typedef struct
+{ 
+    int id;
+    int remaining_duration;
+    int entry_time;
+} Vehicle;
+
 **Attributes**
 - 'int id' -- Unique identifier of the vehicle
 - 'int remaining_duration' -- Remaining parking duration
@@ -42,6 +52,14 @@ Queue:
 
 **Purpose:**  
 Represents the complete parking garage including parking slots and waiting queue.
+
+**Type:** struct ParkingGarage
+
+**Structure:**
+- Total number of slots
+- Number of occupied slots
+- Array/list of parking slots (vehicles)
+- Waiting queue (Queue)
 
 **Attributes:**
 - int slot_count -- Total number of parking slots
