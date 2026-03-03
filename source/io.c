@@ -14,11 +14,8 @@
 --------------------------------------------------------------
 FUNCTION print_menu
 --------------------------------------------------------------
-    PRINT "==== Parking Garage Simulation ==="
-    PRINT "0 - Exit"
-    PRINT "1 - Start Simulation"
-    PRINT "2 - Show parking garage status"
-    PRINT "3 - Show statistics"
+    PRINT "Please choose an option:"
+    PRINT "Enter a number and press Enter"   // tells user how to input
 END FUNCTION
 
 --------------------------------------------------------------
