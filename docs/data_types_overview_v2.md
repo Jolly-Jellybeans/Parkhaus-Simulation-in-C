@@ -47,9 +47,6 @@ QueueNode:
 - Stores a Vehicle
 - Pointer to next node
 
-**Functions:**
--int queue_size(const Queue *p_queue)
-
 Queue:
 - Pointer to first element (head)
 - Pointer to last element (tail)
@@ -123,14 +120,6 @@ Stores statistical data about the parking simulation
 - departed_vehicle_count
 - total_wait_duration
 
-**Functions:**
-- statistics_init(Statistics *p_statistics)
-- statistics_on_queued(Statistics *p_statistics)
-- statistics_on_parked_from_queue(Statistics *p_statistics, int wait_duration)
-- statistics_on_departure(Statistics *p_statistics, int park_duration)
-- statistics_step_update(Statistics *p_statistics, int occupied_slots, int total_slots, int queued_vehicles)
-- statistics_print_step(const Statistics *p_statistics, int current_step, int total_steps, int total_slots)
-- statistics_print(const Statistics *p_statistics)
 
 **Uses by:**
 - Simulation
