@@ -120,6 +120,62 @@ FUNCTION statistics_step_update(p_statistics, occupied_slots, total_slots, queue
 
 END FUNCTION
 
+FUNCTION statistics_print_step(p_statistics, current_step, total_steps, total_slots)
+
+    IF p_statistics = NULL
+    THEN
+        RETURN
+    END IF
+
+    IF current_step < 0
+    THEN
+        current_step ← 0
+    END IF
+
+    IF total_steps < 0
+    THEN
+        total_steps ← 0
+    END IF
+
+    IF total_slots < 0
+    THEN
+        total_slots ← 0
+    END IF
+
+    current_occupancy_percent ← 0.0
+    IF total_slots > 0
+    THEN
+        current_occupancy_percent ←
+            (p_statistics.currently_parked / total_slots) * 100.0
+    END IF
+
+    current_avg_park_duration ← 0.0
+    IF p_statistics.departed_vehicle_count > 0
+    THEN
+        current_avg_park_duration ←
+            p_statistics.total_park_duration
+            / p_statistics.departed_vehicle_count
+    END IF
+
+    current_avg_wait_duration ← 0.0
+    IF p_statistics.queued_vehicle_count_served > 0
+    THEN
+        current_avg_wait_duration ←
+            p_statistics.total_wait_duration
+            / p_statistics.queued_vehicle_count_served
+    END IF
+
+    PRINT "------------------- Aktueller Status -------------------"
+    PRINT "AKTUELLER STATUS: Schritt ", current_step, " / ", total_steps
+    PRINT "1) Aktuell parkende Autos         : ", p_statistics.currently_parked, " Fahrzeuge"
+    PRINT "2) Aktuelle Auslastung            : ", current_occupancy_percent, " Prozent"
+    PRINT "3) Aktuell wartende Fahrzeuge     : ", p_statistics.currently_queued, " Fahrzeuge"
+    PRINT "4) Aktuelle durchschn. Parkdauer  : ", current_avg_park_duration, " Zeitschritte"
+    PRINT "5) Aktuelle durchschn. Wartedauer : ", current_avg_wait_duration, " Zeitschritte"
+    PRINT "--------------------------------------------------------"
+
+END FUNCTION
+
 FUNCTION statistics_print(p_statistics)
 
     IF p_statistics = NULL
@@ -166,17 +222,12 @@ FUNCTION statistics_print(p_statistics)
             / p_statistics.queued_vehicle_count_served
     END IF
 
-    PRINT "==================== Statistik ===================="
-        PRINT "1) Ø parkende Autos             : ",
-            avg_parked_vehicles
-    PRINT "2) Durchschnittliche Auslastung : ",
-          avg_occupancy_percent, "%"
-        PRINT "3) Ø wartende Fahrzeuge         : ",
-            avg_queued_vehicles
-    PRINT "4) Durchschnittliche Parkdauer  : ",
-          avg_park_duration
-    PRINT "5) Durchschnittliche Wartedauer : ",
-          avg_wait_duration
-    PRINT "==================================================="
+        PRINT "==================== Gesamt-Statistik ===================="
+        PRINT "1) Durchschnittl. parkende Autos     : ", avg_parked_vehicles, " Fahrzeuge"
+        PRINT "2) Durchschnittl. Auslastung         : ", avg_occupancy_percent, " Prozent"
+        PRINT "3) Durchschnittl. wartende Fahrzeuge : ", avg_queued_vehicles, " Fahrzeuge"
+        PRINT "4) Gesamte durchschn. Parkdauer      : ", avg_park_duration, " Zeitschritte"
+        PRINT "5) Gesamte durchschn. Wartedauer     : ", avg_wait_duration, " Zeitschritte"
+        PRINT "==========================================================="
 
 END FUNCTION
