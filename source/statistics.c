@@ -46,19 +46,24 @@ END FUNCTION
 
 FUNCTION statistics_on_parked_from_queue(p_statistics, wait_duration)
 
+    // Sicherheitsprüfung: Ohne gültige Statistikstruktur keine Verarbeitung.
     IF p_statistics = NULL
     THEN
         RETURN
     END IF
 
+    // Negative Wartezeiten sind fachlich ungültig und werden auf 0 begrenzt.
     IF wait_duration < 0
     THEN
         wait_duration ← 0
     END IF
 
+    // Wartezeit des aus der Queue bedienten Fahrzeugs aufsummieren.
     p_statistics.total_wait_duration ←
         p_statistics.total_wait_duration + wait_duration
 
+    // Anzahl der bedienten Queue-Fahrzeuge erhöhen
+    // (Basis für durchschnittliche Wartedauer).
     p_statistics.queued_vehicle_count_served ←
         p_statistics.queued_vehicle_count_served + 1
 
