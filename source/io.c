@@ -76,8 +76,24 @@ FUNCTION read_menu_choice                    // Function checks if menu input is
   END IF
 END FUNCTION
 */  
-
-
+/*
+-------------------------------------------------
+  FUNCTION print_result_message(result)
+-------------------------------------------------
+    SWITCH result
+          CASE PARKING_SUCCESS:
+              PRINT "Vehicle parked successfully."
+          CASE PARKING_QUEUED:
+              PRINT "Parking full. Vehicle added to waiting queue."
+          CASE PARKING_QUEUE_FULL:
+              PRINT "Queue is full. Vehicle rejected."
+          CASE PARKING_INVALID:
+              PRINT "Invalid vehicle data."
+          DEFAULT:
+              PRINT "Unknown parking result."
+    END SWITCH
+  END FUNCTION
+*/
 /*
 FUNCTION read_simulation_parameters
     // slot_count
