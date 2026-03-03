@@ -52,7 +52,7 @@ FUNCTION simulation(garage, stats, config_sim_duration, config_arrival_prob, con
         CALL statistics_step_update(ADRESSE VON stats, garage.occupied_count, garage.slot_count)
         
         PRINT "Zeit: ", current_time
-        CALL print_parking_garage_status(garage)
+        CALL statistics_print(ADRESSE VON stats)
         
     END FOR
 
