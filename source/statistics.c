@@ -96,11 +96,14 @@ END FUNCTION
 
 FUNCTION statistics_step_update(p_statistics, occupied_slots, total_slots, queued_vehicles)
 
+    // Sicherheitsprüfung: Ohne gültige Statistikstruktur keine Aktualisierung.
     IF p_statistics = NULL
     THEN
         RETURN
     END IF
 
+    // Eingaben normieren, damit keine negativen oder unplausiblen Werte
+    // in die Statistik eingehen.
     IF occupied_slots < 0
     THEN
         occupied_slots ← 0
@@ -116,9 +119,11 @@ FUNCTION statistics_step_update(p_statistics, occupied_slots, total_slots, queue
         queued_vehicles ← 0
     END IF
 
+    // Aktuelle Momentwerte für die Schrittausgabe speichern.
     p_statistics.currently_parked ← occupied_slots
     p_statistics.currently_queued ← queued_vehicles
 
+    // Zeitliche Summen für spätere Durchschnittswerte aufbauen.
     p_statistics.parked_vehicle_count_sum ←
         p_statistics.parked_vehicle_count_sum + occupied_slots
 
@@ -128,10 +133,12 @@ FUNCTION statistics_step_update(p_statistics, occupied_slots, total_slots, queue
     p_statistics.time_samples ←
         p_statistics.time_samples + 1
 
+    // Auslastung nur berechnen, wenn eine gültige Gesamtkapazität vorhanden ist.
     IF total_slots > 0
     THEN
         occupancy_ratio ← occupied_slots / total_slots
 
+        // Summen/Zähler für durchschnittliche prozentuale Auslastung führen.
         p_statistics.occupancy_ratio_sum ←
             p_statistics.occupancy_ratio_sum + occupancy_ratio
 
