@@ -20,3 +20,15 @@ FUNCTION statistics_init(p_statistics)
     p_statistics.total_wait_duration ← 0
 
 END FUNCTION
+
+FUNCTION statistics_on_queued(p_statistics)
+
+    IF p_statistics = NULL
+    THEN
+        RETURN
+    END IF
+
+    p_statistics.queued_vehicle_count_cumulative ←
+        p_statistics.queued_vehicle_count_cumulative + 1
+
+END FUNCTION
