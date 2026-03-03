@@ -41,4 +41,11 @@ bool queue_dequeue(Queue *p_queue,Vehicle *p_out_vehicle);
  * @return true, wenn keine Fahrzeuge warten, sonst false.
  */
 bool queue_is_empty(const Queue *p_queue);
+/**
+ * @brief Gibt die aktuelle Anzahl wartender Fahrzeuge in der Queue zurück.
+ *
+ * @param[in] p_queue Zu zählende Queue.
+ * @return Anzahl der Fahrzeuge in der Warteschlange (0 bei NULL oder leerer Queue).
+ */
+int queue_size(const Queue *p_queue);
 #endif /* QUEUE_H */
