@@ -72,3 +72,35 @@ FUNCTION statistics_on_departure(p_statistics, park_duration)
         p_statistics.departed_vehicle_count + 1
 
 END FUNCTION
+
+FUNCTION statistics_step_update(p_statistics, occupied_slots, total_slots)
+
+    IF p_statistics = NULL
+    THEN
+        RETURN
+    END IF
+
+    IF occupied_slots < 0
+    THEN
+        occupied_slots ← 0
+    END IF
+
+    IF total_slots > 0 AND occupied_slots > total_slots
+    THEN
+        occupied_slots ← total_slots
+    END IF
+
+    p_statistics.currently_parked ← occupied_slots
+
+    IF total_slots > 0
+    THEN
+        occupancy_ratio ← occupied_slots / total_slots
+
+        p_statistics.occupancy_ratio_sum ←
+            p_statistics.occupancy_ratio_sum + occupancy_ratio
+
+        p_statistics.occupancy_samples ←
+            p_statistics.occupancy_samples + 1
+    END IF
+
+END FUNCTION
