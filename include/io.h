@@ -17,13 +17,6 @@ void print_menu(void);
 int read_menu_choice(void);
 
 /**
- * @brief Gibt den aktuellen Zustand des Parkhauses in der Konsole aus.
- *
- * @param[in] p_garage Zeiger auf die Parkhausstruktur mit dem aktuellen Status.
- * @return Kein Rückgabewert.
- */
-void print_parking_garage_status(const ParkingGarage *p_garage);
-/**
  * @brief Gibt eine Meldung zum Ergebnis eines Parkvorgangs in der Konsole aus.
  *
  * @param[in] result Ergebnisstatus des Parkvorgangs.
