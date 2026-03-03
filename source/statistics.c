@@ -52,3 +52,23 @@ FUNCTION statistics_on_parked_from_queue(p_statistics, wait_duration)
         p_statistics.queued_vehicle_count_served + 1
 
 END FUNCTION
+
+FUNCTION statistics_on_departure(p_statistics, park_duration)
+
+    IF p_statistics = NULL
+    THEN
+        RETURN
+    END IF
+
+    IF park_duration < 0
+    THEN
+        park_duration ← 0
+    END IF
+
+    p_statistics.total_park_duration ←
+        p_statistics.total_park_duration + park_duration
+
+    p_statistics.departed_vehicle_count ←
+        p_statistics.departed_vehicle_count + 1
+
+END FUNCTION
