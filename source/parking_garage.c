@@ -33,10 +33,13 @@ END FUNCTION
 
 FUNCTION clear_slot(p_slot)
 
+    // Sicherheitsprüfung: Ein NULL-Zeiger darf nicht dereferenziert werden.
     IF p_slot = NULL
     THEN RETURN
     END IF
 
+    // Stellplatz vollständig auf den Ausgangszustand zurücksetzen,
+    // damit keine alten Fahrzeugdaten im Slot verbleiben.
     p_slot.vehicle.id ← 0
     p_slot.vehicle.remaining_duration ← 0
     p_slot.vehicle.entry_time ← 0
