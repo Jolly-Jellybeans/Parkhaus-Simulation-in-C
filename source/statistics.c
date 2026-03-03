@@ -32,3 +32,23 @@ FUNCTION statistics_on_queued(p_statistics)
         p_statistics.queued_vehicle_count_cumulative + 1
 
 END FUNCTION
+
+FUNCTION statistics_on_parked_from_queue(p_statistics, wait_duration)
+
+    IF p_statistics = NULL
+    THEN
+        RETURN
+    END IF
+
+    IF wait_duration < 0
+    THEN
+        wait_duration ← 0
+    END IF
+
+    p_statistics.total_wait_duration ←
+        p_statistics.total_wait_duration + wait_duration
+
+    p_statistics.queued_vehicle_count_served ←
+        p_statistics.queued_vehicle_count_served + 1
+
+END FUNCTION
