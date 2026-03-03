@@ -150,11 +150,13 @@ END FUNCTION
 
 FUNCTION statistics_print_step(p_statistics, current_step, total_steps, total_slots)
 
+    // Sicherheitsprüfung: Ohne gültige Statistikstruktur keine Ausgabe.
     IF p_statistics = NULL
     THEN
         RETURN
     END IF
 
+    // Schutz gegen ungültige negative Anzeigeparameter.
     IF current_step < 0
     THEN
         current_step ← 0
@@ -170,6 +172,7 @@ FUNCTION statistics_print_step(p_statistics, current_step, total_steps, total_sl
         total_slots ← 0
     END IF
 
+    // Aktuelle Auslastung für diesen Simulationsschritt berechnen.
     current_occupancy_percent ← 0.0
     IF total_slots > 0
     THEN
@@ -177,6 +180,7 @@ FUNCTION statistics_print_step(p_statistics, current_step, total_steps, total_sl
             (p_statistics.currently_parked / total_slots) * 100.0
     END IF
 
+    // Laufende Durchschnittswerte auf Basis bisher abgeschlossener Fahrzeuge.
     current_avg_park_duration ← 0.0
     IF p_statistics.departed_vehicle_count > 0
     THEN
@@ -193,6 +197,7 @@ FUNCTION statistics_print_step(p_statistics, current_step, total_steps, total_sl
             / p_statistics.queued_vehicle_count_served
     END IF
 
+    // Kompakte Live-Ausgabe für Monitoring pro Simulationsschritt.
     PRINT "------------------- Aktueller Status -------------------"
     PRINT "AKTUELLER STATUS: Schritt ", current_step, " / ", total_steps
     PRINT "1) Aktuell parkende Autos         : ", p_statistics.currently_parked, " Fahrzeuge"
