@@ -3,55 +3,44 @@
 #include "queue.h"
 #include "vehicle.h"
 #include "io.h"
+#include "simulation.h"
 
 
+/*
+------------------------------------------------------
+    PSEUDOCODE - Main program flow
+------------------------------------------------------
 
-// -----------------------------------------------
-// PSEUDOCODE
-//------------------------------------------------
+FUNCTION main
 
-BEGIN Menu Logic
+  // 1. CONFIGURATION
+  // Create config struct and fill it from user input
+  config <- CALL get_config_from_user()
 
-    CREATE parking garage with fixed number of slots
-    INITIALIZE statistics structure
+  // 2. INITIALIZATION
+  CALL srand(config.seed)
 
-    SET running = true
+  garage <- CALL parking_garage_create(config.slots)
+  IF garage is NULL THEN
+      RETURN -1
+  END IF
 
-    WHILE running DO
+  stats <- empty Statistics structure
+  CALL statistics_init(ADDRESS OF stats)
 
-        DISPLAY main menu
-        PROMPT user for input
-        READ user choice from input
-        VALIDATE user input
+  // 3. SIMULATION
+  // Pass values from config struct into simulation
+  CALL simulation(garage,
+                  ADDRESS OF stats,
+                  config.sim_duration,
+                  config.arrival_prob,
+                  config.max_park_duration)
 
-        IF choice == 1 THEN
-            READ vehicle data from user
-            VALIDATE vehicle data
-            TRY to park vehicle in garage
-            DISPLAY result message
-            UPDATE statistics if necessary
+  // 4. END
+  CALL print_result_message(ADDRESS OF stats)
+  CALL parking_garage_destroy(garage)
 
-        ELSE IF choice == 2 THEN
-            PROCESS departures based on current simulation time
-            UPDATE statistics
+  RETURN 0
 
-        ELSE IF choice == 3 THEN
-            DISPLAY current parking garage status
-
-        ELSE IF choice == 4 THEN
-            DISPLAY collected statistics
-
-        ELSE IF choice == 0 THEN
-            SET running = false
-
-        ELSE
-            DISPLAY "Invalid input"
-
-        END IF
-
-    END WHILE
-
-    DESTROY parking garage
-    TERMINATE program
-
-END PROGRAM
+END FUNCTION
+*/
