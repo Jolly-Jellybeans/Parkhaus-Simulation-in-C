@@ -21,24 +21,24 @@ FUNCTION main
   CALL srand(config.seed)
 
   p_garage ← CALL parking_garage_create(config.slots)
-  IF p_garage ist NULL THEN
+  IF p_garage is NULL THEN
       RETURN -1
   END IF
 
-  stats ← leere Statistics-Struktur
-  CALL statistics_init(ADRESSE VON stats)
+  stats ← empty Statistics structure
+  CALL statistics_init(ADDRESS OF stats)
 
   // 3. SIMULATION
   // Simulationsparameter aus config-Struktur übergeben.
   CALL simulation(p_garage,
-                  ADRESSE VON stats,
+                  ADDRESS OF stats,
                   config.sim_duration,
                   config.arrival_prob,
                   config.max_park_duration)
 
   // 4. ENDE
   // Gesamtstatistik ausgeben und Ressourcen freigeben.
-  CALL statistics_print(ADRESSE VON stats)
+  CALL statistics_print(ADDRESS OF stats)
   CALL parking_garage_destroy(p_garage)
 
   RETURN 0
