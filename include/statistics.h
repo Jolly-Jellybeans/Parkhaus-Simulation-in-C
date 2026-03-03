@@ -1,24 +1,26 @@
 #ifndef STATISTICS_H
 #define STATISTICS_H
 #include "parking_garage.h"
-
+/*
 STRUCTURE Statistics
 
-    currently_parked
+    currently_parked 
     currently_queued
 
-    parked_vehicle_count_sum
-    queued_vehicle_count_sum
+    parked_vehicle_count_sum 
+    queued_vehicle_count_sum 
     time_samples
 
     occupancy_ratio_sum
     occupancy_samples
     queued_vehicle_count_served
-    total_park_duration
-    departed_vehicle_count
+    total_park_duration            
+    departed_vehicle_count         
     total_wait_duration
 
 END STRUCTURE
+*/
+
 //Hier Programm:
 /**
  * @brief Initialisiert die Statistikdaten vor dem Start der Simulation.
