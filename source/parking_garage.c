@@ -11,10 +11,13 @@ static void clear_slot(ParkingSlot *p_slot);
 
 FUNCTION find_free_slot_index(p_garage)
 
+    // Sicherheitsprüfung: Ohne gültiges Parkhaus oder Slot-Array
+    // kann kein freier Stellplatz ermittelt werden.
     IF p_garage = NULL OR p_garage.p_slots = NULL
     THEN RETURN -1
     END IF
 
+    // Lineare Suche: Der erste nicht belegte Stellplatz wird sofort zurückgegeben.
     FOR i ← 0 TO p_garage.slot_count - 1
 
         IF p_garage.p_slots[i].is_occupied = false
@@ -23,6 +26,7 @@ FUNCTION find_free_slot_index(p_garage)
 
     END FOR
 
+    // Kein freier Platz gefunden.
     RETURN -1
 
 END FUNCTION
