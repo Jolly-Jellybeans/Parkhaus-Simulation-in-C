@@ -2,27 +2,50 @@
 #define IO_H
 #include "parking_garage.h"
 #include "vehicle.h"
+
+/*
+typedef struct
+{
+    int slots;
+    int max_park_duration;
+    int sim_duration;
+    int arrival_prob;
+    int seed;
+} SimulationConfig;
+*/
+/*
+STRUCT SimulationConfig
+    Ganzzahl slots
+    Ganzzahl max_park_duration
+    Ganzzahl sim_duration
+    Ganzzahl arrival_prob
+    Ganzzahl seed
+END STRUCT
+*/
+
 //Hier Programm:
 /**
- * @brief Gibt das Hauptmenü der Parkhaus-Simulation in der Konsole aus.
+ * @brief Prompts the user for a numeric input.
  *
- * @return Kein Rückgabewert.
- */
-void print_menu(void);
-/**
- * @brief Liest die Menüauswahl des Benutzers von der Konsole ein.
+ * Displays the given description text in the console,
+ * reads a value from the user and returns it.
  *
- * @return Eingegebene Menüoption als Ganzzahl.
+ * @param description Text shown to the user as input prompt.
+ * @return The numeric value entered by the user.
  */
-int read_menu_choice(void);
+int user_input(const char *description);
 
 /**
- * @brief Gibt den aktuellen Zustand des Parkhauses in der Konsole aus.
+ * @brief Reads all simulation parameters from the user.
  *
- * @param[in] p_garage Zeiger auf die Parkhausstruktur mit dem aktuellen Status.
- * @return Kein Rückgabewert.
+ * Requests the required simulation configuration values
+ * (number of slots, maximum parking duration, simulation duration,
+ * arrival probability and random seed) and returns them
+ * as a SimulationConfig structure.
+ *
+ * @return A SimulationConfig containing all user-defined parameters.
  */
-void print_parking_garage_status(const ParkingGarage *p_garage);
+SimulationConfig get_config_from_user(void);
 /**
  * @brief Gibt eine Meldung zum Ergebnis eines Parkvorgangs in der Konsole aus.
  *
