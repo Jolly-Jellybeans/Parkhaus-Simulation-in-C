@@ -9,7 +9,19 @@ FUNCTION simulation(garage, stats, config_sim_duration, config_arrival_prob, con
         departed_count ← CALL parking_garage_remove_departing(garage, current_time)
         
         IF departed_count > 0 THEN
+            
             CALL statistics_on_departure(ADRESSE VON stats, departed_count)
+            
+            // Nachrücken aus der Warteschlange
+            WHILE garage.occupied_count < garage.slot_count UND NICHT CALL queue_is_empty(garage.p_queue) DO
+                waiting_vehicle ← Empty Vehicle
+                CALL queue_dequeue(garage.p_queue, ADRESSE VON waiting_vehicle)
+                wait_duration ← current_time - waiting_vehicle.entry_time
+                CALL statistics_on_parked_from_queue(ADRESSE VON stats, wait_duration)
+                
+                waiting_vehicle.entry_time ← current_time
+                CALL parking_garage_park(garage, ADRESSE VON waiting_vehicle, current_time)
+            END WHILE
         END IF
 
         // 2. Ankunft neuer Fahrzeuge
