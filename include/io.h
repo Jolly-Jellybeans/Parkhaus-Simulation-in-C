@@ -24,18 +24,6 @@ END STRUCT
 */
 
 //Hier Programm:
-/**
- * @brief Gibt das Hauptmenü der Parkhaus-Simulation in der Konsole aus.
- *
- * @return Kein Rückgabewert.
- */
-void print_menu(void);
-/**
- * @brief Liest die Menüauswahl des Benutzers von der Konsole ein.
- *
- * @return Eingegebene Menüoption als Ganzzahl.
- */
-int read_menu_choice(void);
 
 /**
  * @brief Gibt eine Meldung zum Ergebnis eines Parkvorgangs in der Konsole aus.
