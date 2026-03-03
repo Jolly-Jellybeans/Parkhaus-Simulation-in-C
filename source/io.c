@@ -11,7 +11,9 @@
 ---------------------------------------------
 ---------------------------------------------
 
+-------------------------------------------------
 FUNCTION user_input(description) RETURNS integer
+-------------------------------------------------   
     PRINT description                   // show prompt text to the user
 
     LOOP forever                        // keep asking until input is valid
@@ -26,8 +28,9 @@ FUNCTION user_input(description) RETURNS integer
     END LOOP
 END FUNCTION
 
-
+---------------------------------------------------------------
 FUNCTION get_config_from_user() RETURNS SimulationConfig
+---------------------------------------------------------------  
     NEW config (Type SimulationConfig)  // create new config object
 
     config.slots            <- CALL user_input("Anzahl der Stellplätze: ")
