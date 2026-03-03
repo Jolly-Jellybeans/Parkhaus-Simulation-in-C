@@ -1,6 +1,24 @@
 #ifndef STATISTICS_H
 #define STATISTICS_H
 #include "parking_garage.h"
+
+STRUCTURE Statistics
+
+    currently_parked
+    currently_queued
+
+    parked_vehicle_count_sum
+    queued_vehicle_count_sum
+    time_samples
+
+    occupancy_ratio_sum
+    occupancy_samples
+    queued_vehicle_count_served
+    total_park_duration
+    departed_vehicle_count
+    total_wait_duration
+
+END STRUCTURE
 //Hier Programm:
 /**
  * @brief Initialisiert die Statistikdaten vor dem Start der Simulation.
@@ -29,15 +47,25 @@ void statistics_on_parked_from_queue(Statistics *p_statistics,int wait_duration)
  */
 void statistics_on_departure(Statistics *p_statistics,int park_duration);
 /**
- * @brief Aktualisiert zeitabhängige Werte wie Auslastung in jedem Simulationsschritt.
+ * @brief Aktualisiert zeitabhängige Werte (Parkende, Auslastung, Wartende) pro Simulationsschritt.
  *
  * @param[in,out] p_statistics Statistikstruktur, die aktualisiert wird.
  * @param[in] occupied_slots Aktuell belegte Stellplätze.
  * @param[in] total_slots Gesamtanzahl verfügbarer Stellplätze.
+ * @param[in] queued_vehicles Aktuell wartende Fahrzeuge in der Warteschlange.
  */
-void statistics_step_update(Statistics *p_statistics,int occupied_slots,int total_slots);
+void statistics_step_update(Statistics *p_statistics,int occupied_slots,int total_slots,int queued_vehicles);
 /**
- * @brief Gibt die gesammelten Statistikwerte auf der Konsole aus.
+ * @brief Gibt den aktuellen Statistikblock für einen Simulationsschritt aus.
+ *
+ * @param[in] p_statistics Statistikstruktur, die ausgegeben wird.
+ * @param[in] current_step Aktueller Simulationsschritt.
+ * @param[in] total_steps Gesamtanzahl geplanter Simulationsschritte.
+ * @param[in] total_slots Gesamtanzahl verfügbarer Stellplätze.
+ */
+void statistics_print_step(const Statistics *p_statistics,int current_step,int total_steps,int total_slots);
+/**
+ * @brief Gibt die finale Gesamtauswertung (Durchschnittswerte) am Simulationsende aus.
  *
  * @param[in] p_statistics Statistikstruktur, die ausgegeben wird.
  */
