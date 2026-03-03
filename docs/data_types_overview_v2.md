@@ -32,12 +32,14 @@ typedef struct
 ## 2. Queue (include/queue.h)
 
 **Purpose:**  
-Represents the waiting queue for vehicles when the parking garage is full.
+Represents the waiting queue for vehicles when the parking garage has no free slots.
 
-**Type:** struct Queue
+**Type:** 
+- Queue (opaque struct)
+- uses bool (stdbool.h)
 
 **Structure (short overview):**
-- QueueNode stores a Vehicle and a pointer to the next node
+- QueueNode stores a pointer to a Vehicle and a pointer to the next node
 - Queue stores pointers to the first and last node
 
 **Structure:**  
@@ -45,12 +47,16 @@ QueueNode:
 - Stores a Vehicle
 - Pointer to next node
 
+**Functions:**
+-int queue_size(const Queue *p_queue)
+
 Queue:
 - Pointer to first element (head)
-- Pointer to last element (head)
+- Pointer to last element (tail)
 
 **Used by:**
 - ParkingGarage
+- Simulation
 
 ---
 
