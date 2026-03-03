@@ -6,10 +6,24 @@
 
 /*
 ---------------------------------------------
+---------------------------------------------
   PSEUDOCODE - Input validation
 ---------------------------------------------
+---------------------------------------------
 
+---------------------------------------------
+FUNCTION print_menu
+---------------------------------------------
+    PRINT "==== Parking Garage Simulation ==="
+    PRINT "0 - Exit"
+    PRINT "1 - Start Simulation"
+    PRINT "2 - Show parking garage status"
+    PRINT "3 - Show statistics"
+END FUNCTION
+
+---------------------------------------------
 FUNCTION read_menu_choice                    // Function checks if menu input is valid
+---------------------------------------------
 
   LOOP forever                               // keep asking until valid input
   
