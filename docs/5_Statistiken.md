@@ -2,40 +2,40 @@
 
 
 
-### 1. Anzahl aktuell parkender Autos
-
-Erfasst die absolute Anzahl der im aktuellen Simulationsschritt belegten Stellplätze und bildet damit den unmittelbaren Systemzustand ab.  
-
-Diese Kennzahl stellt eine Momentaufnahme der Kapazitätsauslastung dar und ermöglicht es, kurzfristige Belastungsspitzen oder Phasen geringer Nutzung direkt zu erkennen. Sie ist außerdem Grundlage für die Berechnung weiterer Kennzahlen, insbesondere der prozentualen Auslastung. Durch die Betrachtung einzelner Zeitschritte können dynamische Veränderungen im Systemverhalten nachvollzogen werden.
-
-
-
-### 2. Durchschnittliche prozentuale Auslastung (gesamter Zeitraum)
+### 1. Durchschnittliche prozentuale Auslastung (gesamter Zeitraum)
 
 Beschreibt die mittlere Auslastung des Parkhauses über die gesamte Simulationsdauer in Prozent der Gesamtkapazität.  
 
-Im Gegensatz zur momentanen Belegung erlaubt diese Statistik eine langfristige Bewertung der Systemeffizienz. Sie zeigt, ob Engpässe nur punktuell auftreten oder ob eine strukturelle Überlastung vorliegt. Eine dauerhaft hohe durchschnittliche Auslastung deutet auf eine konstant hohe Nachfrage hin, während eine niedrige Auslastung auf Überkapazität schließen lässt. Diese Kennzahl ist daher besonders relevant für strategische Entscheidungen wie Kapazitätserweiterungen oder Optimierungen der Stellplatzanzahl.
+Diese Kennzahl dient der Bewertung der allgemeinen Systemeffizienz. Sie zeigt, ob das Parkhaus überwiegend unter-, optimal- oder überausgelastet war. Eine dauerhaft hohe durchschnittliche Auslastung deutet auf eine konstant hohe Nachfrage hin, während eine niedrige Auslastung auf Überkapazität schließen lässt. Sie bildet somit die Grundlage für eine langfristige Kapazitätsbewertung.
 
 
 
-### 3. Kumulierte Anzahl wartender Fahrzeuge
+### 2. Maximale Auslastung
 
-Zählt alle Fahrzeuge, die im Verlauf der Simulation mindestens einmal in die Warteschlange aufgenommen wurden.  
+Gibt die höchste erreichte Auslastung während der gesamten Simulation an.  
 
-Diese Statistik misst den gesamten Nachfrageüberhang, der nicht unmittelbar bedient werden konnte. Während eine momentane Warteschlangenlänge nur den aktuellen Zustand widerspiegelt, erfasst die kumulierte Anzahl die Häufigkeit von Engpasssituationen über den gesamten Zeitraum. Eine hohe kumulierte Warteschlangenanzahl weist darauf hin, dass die vorhandene Kapazität zeitweise nicht ausreichte, um alle ankommenden Fahrzeuge direkt aufzunehmen. Sie dient somit als Indikator für strukturelle Kapazitätsengpässe.
+Im Gegensatz zum Durchschnittswert macht diese Kennzahl kurzfristige Spitzenbelastungen sichtbar. Selbst wenn die durchschnittliche Auslastung moderat erscheint, kann eine hohe maximale Auslastung auf temporäre Engpässe hinweisen. Diese Statistik ist daher entscheidend, um Belastungsspitzen und kritische Systemzustände zu identifizieren.
 
 
 
-### 4. Durchschnittliche Parkdauer
+### 3. Anteil der Zeit, in der das Parkhaus vollständig ausgelastet war
 
-Gibt die mittlere Verweildauer der Fahrzeuge im Parkhaus an.  
+Misst den prozentualen Anteil der Simulationszeit, in der alle Stellplätze belegt waren.  
 
-Diese Kennzahl ermöglicht die Analyse des Nutzerverhaltens sowie der Umschlagdynamik des Systems. Eine hohe durchschnittliche Parkdauer führt zu einer geringeren Fluktuation der Stellplätze und kann die Auslastung zusätzlich verstärken. Eine geringe Parkdauer hingegen erhöht den Fahrzeugdurchsatz. Die Statistik hilft somit zu unterscheiden, ob eine hohe Auslastung durch eine hohe Ankunftsfrequenz oder durch lange Belegungszeiten verursacht wird.
+Diese Kennzahl zeigt, wie häufig das System an seiner Kapazitätsgrenze operiert hat. Ein hoher Wert deutet auf eine strukturelle Überlastung hin, da in diesen Zeiträumen keine zusätzlichen Fahrzeuge aufgenommen werden konnten. Sie ist besonders aussagekräftig für die Beurteilung, ob eine Erweiterung der Kapazität sinnvoll oder notwendig wäre.
+
+
+
+### 4. Ablehnungsquote
+
+Beschreibt den prozentualen Anteil der ankommenden Fahrzeuge, die weder direkt einen Parkplatz noch einen Platz in der Warteschlange erhalten haben.  
+
+Diese Statistik misst den tatsächlichen Nachfrageüberhang und damit den wirtschaftlichen Verlust durch nicht bediente Fahrzeuge. Eine hohe Ablehnungsquote deutet auf eine unzureichende Gesamtkapazität (Parkplätze + Warteschlange) hin und ist ein zentraler Indikator für die Leistungsfähigkeit des Systems.
 
 
 
 ### 5. Durchschnittliche Wartedauer
 
-Misst die durchschnittliche Zeitspanne, die Fahrzeuge in der Warteschlange verbringen, bevor sie einen Parkplatz erhalten.  
+Gibt die mittlere Zeitspanne an, die Fahrzeuge in der Warteschlange verbringen, bevor sie einen Parkplatz erhalten.  
 
-Diese Kennzahl ergänzt die Anzahl wartender Fahrzeuge um eine qualitative Bewertung der Engpassintensität. Während die kumulierte Warteschlangenanzahl angibt, wie häufig Wartezeiten auftraten, beschreibt die durchschnittliche Wartedauer, wie stark die betroffenen Nutzer beeinträchtigt wurden. Eine hohe Wartedauer deutet auf eine signifikante Überlastung des Systems hin und erlaubt Rückschlüsse auf die Servicequalität des Parkhauses.
+Diese Kennzahl bewertet die Servicequalität des Systems aus Nutzersicht. Während die Ablehnungsquote angibt, wie viele Fahrzeuge nicht bedient werden konnten, beschreibt die durchschnittliche Wartedauer die Intensität des Engpasses für diejenigen Fahrzeuge, die warten mussten. Eine hohe Wartedauer weist auf signifikante Verzögerungen und damit auf eine starke Systembelastung hin.
