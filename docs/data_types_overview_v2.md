@@ -34,6 +34,12 @@ typedef struct
 **Purpose:**  
 Represents the waiting queue for vehicles when the parking garage is full.
 
+**Type:** struct Queue
+
+**Structure (short overview):**
+- QueueNode stores a Vehicle and a pointer to the next node
+- Queue stores pointers to the first and last node
+
 **Structure:**  
 QueueNode:
 - Stores a Vehicle
