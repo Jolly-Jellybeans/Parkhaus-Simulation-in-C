@@ -115,3 +115,34 @@ FUNCTION parking_garage_remove_departing(p_garage, current_time)
 
 END FUNCTION
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int parking_garage_remove_departing(ParkingGarage *p_garage,int current_time){
+    if(p_garage == NULL){
+        return 0;
+    }
+
+    int removed_count = 0;
+
+    for(int i = 0; i < p_garage->slot_count; i++){
+        if(p_garage->p_slots[i].is_occupied && p_garage->p_slots[i].departure_time <= current_time){
+            clear_slot(&p_garage->p_slots[i]);
+            p_garage->occupied_count--;
+            removed_count++;
+        }
+    }
+
+    return removed_count;
+}
