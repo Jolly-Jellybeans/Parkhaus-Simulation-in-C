@@ -23,16 +23,16 @@ TYPE Parking Garage
 END TYPE
 */
 
-/**
+
  * @brief Ergebnis eines Parkversuchs.
- */
-// typedef enum
-// {
-//     PARKING_SUCCESS,
-//     PARKING_QUEUED,
-//     PARKING_QUEUE_FULL,
-//     PARKING_INVALID
-// } ParkingResult;
+
+typedef enum
+{
+    PARKING_SUCCESS,
+    PARKING_QUEUED,
+    PARKING_QUEUE_FULL,
+    PARKING_INVALID
+} ParkingResult;
 
 /*
 TYPE ParkingResult
