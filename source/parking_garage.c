@@ -145,4 +145,16 @@ int parking_garage_remove_departing(ParkingGarage *p_garage,int current_time){
     }
 
     return removed_count;
+static int find_free_slot_index(const ParkingGarage *p_garage){
+    if (p_garage == NULL || p_garage->p_slots == NULL) {
+        return -1;
+    }
+
+    for (int i = 0; i < p_garage->slot_count; i++) {
+        if (!p_garage->p_slots[i].is_occupied) {
+            return i;
+        }
+    }
+
+    return -1;
 }
