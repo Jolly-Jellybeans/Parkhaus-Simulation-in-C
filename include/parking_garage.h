@@ -24,7 +24,7 @@ END TYPE
 */
 
 
- * @brief Ergebnis eines Parkversuchs.
+// * @brief Ergebnis eines Parkversuchs.
 
 typedef enum
 {
