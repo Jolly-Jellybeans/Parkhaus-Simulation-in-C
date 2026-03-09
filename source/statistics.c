@@ -275,12 +275,38 @@ FUNCTION statistics_print(p_statistics)
 END FUNCTION
 */
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void statistics_on_queued(Statistics *p_statistics){
+
 void statistics_init(Statistics *p_statistics){
     if (p_statistics == NULL)
     {
         return;
     }
 
+    
     p_statistics->currently_parked = 0;
     p_statistics->currently_queued = 0;
 
