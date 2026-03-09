@@ -1,4 +1,5 @@
 #include "io.h"
+#include <stdio.h>
 
 /**
  * @brief Entfernt verbleibende Zeichen aus dem Eingabepuffer, um saubere Lesefolgen zu gewährleisten.
