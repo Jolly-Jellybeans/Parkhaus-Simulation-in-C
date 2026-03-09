@@ -115,19 +115,17 @@ FUNCTION parking_garage_remove_departing(p_garage, current_time)
 
 END FUNCTION
 */
+static void clear_slot(ParkingSlot *p_slot){
+    if (p_slot == NULL) {
+        return;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    p_slot->vehicle.id = 0;
+    p_slot->vehicle.remaining_duration = 0;
+    p_slot->vehicle.entry_time = 0;
+    p_slot->departure_time = 0;
+    p_slot->is_occupied = false;
+}
 
 int parking_garage_remove_departing(ParkingGarage *p_garage,int current_time){
     if(p_garage == NULL){
@@ -145,6 +143,7 @@ int parking_garage_remove_departing(ParkingGarage *p_garage,int current_time){
     }
 
     return removed_count;
+}
 static int find_free_slot_index(const ParkingGarage *p_garage){
     if (p_garage == NULL || p_garage->p_slots == NULL) {
         return -1;
