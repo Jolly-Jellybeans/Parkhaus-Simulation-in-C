@@ -3,7 +3,7 @@
 #include "parking_garage.h"
 #include "vehicle.h"
 
-/*
+
 typedef struct
 {
     int slots;
@@ -12,7 +12,7 @@ typedef struct
     int arrival_prob;
     int seed;
 } SimulationConfig;
-*/
+
 /*
 STRUCT SimulationConfig
     Ganzzahl slots
