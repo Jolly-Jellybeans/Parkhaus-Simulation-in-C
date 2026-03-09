@@ -274,3 +274,36 @@ FUNCTION statistics_print(p_statistics)
 
 END FUNCTION
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void statistics_on_queued(Statistics *p_statistics){
+
+    if (p_statistics == NULL)
+    {
+        return;
+    }
+
+    
+}
