@@ -164,3 +164,10 @@ FUNCTION queue_size(p_queue)
     RETURN count
 END FUNCTION
 */
+
+
+// Definition eines einzelnen Knotens
+typedef struct QueueNode {
+    Vehicle data;               
+    struct QueueNode *p_next;   
+} QueueNode;
