@@ -79,3 +79,22 @@ static void clear_input_buffer(void)
     }
 }
 
+
+int user_input(const char *description)
+{
+    int value;
+
+    while (1)
+    {
+        printf("%s", description);
+
+        if (scanf("%d", &value) == 1)
+        {
+            clear_input_buffer();
+            return value;
+        }
+
+        printf("Please enter a number.\n");
+        clear_input_buffer();
+    }
+}
