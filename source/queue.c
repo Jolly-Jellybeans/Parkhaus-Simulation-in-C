@@ -1,5 +1,5 @@
 #include "queue.h"
-
+#include <stdlib.h>
 /**
  * @brief Erzeugt einen neuen Listenknoten mit den Fahrzeugdaten.
  */
