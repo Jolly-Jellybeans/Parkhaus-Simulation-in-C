@@ -171,3 +171,12 @@ typedef struct QueueNode {
     Vehicle data;               
     struct QueueNode *p_next;   
 } QueueNode;
+
+static QueueNode *node_create(const Vehicle *p_vehicle) {
+    QueueNode *p_node = (QueueNode *)malloc(sizeof(QueueNode));
+    if (p_node != NULL) {
+        p_node->data = *p_vehicle; // Kopiere die Fahrzeugdaten
+        p_node->p_next = NULL;     // Nächster Knoten ist zunächst NULL
+    }
+    return p_node;
+}
