@@ -419,3 +419,46 @@ void statistics_print_step(const Statistics *p_statistics,int current_step,int t
     printf("| %-42s|%11.1f | Zeitschritte    |\n", "5. Aktuelle durchschn. Wartedauer", current_avg_wait_duration);
     printf("+--------------------------------------------+------------+-----------------+\n");
 }
+void statistics_print(const Statistics *p_statistics){
+    if (p_statistics == NULL)
+    {
+        return;
+    }
+
+    double avg_parked_vehicles = 0.0;
+    double avg_queued_vehicles = 0.0;
+    double avg_occupancy_percent = 0.0;
+
+    if (p_statistics->time_samples > 0)
+    {
+        avg_parked_vehicles = (double)p_statistics->parked_vehicle_count_sum / p_statistics->time_samples;
+        avg_queued_vehicles = (double)p_statistics->queued_vehicle_count_sum / p_statistics->time_samples;
+    }
+
+    if (p_statistics->occupancy_samples > 0)
+    {
+        avg_occupancy_percent = (p_statistics->occupancy_ratio_sum / p_statistics->occupancy_samples) * 100.0;
+    }
+
+    double avg_park_duration = 0.0;
+    if (p_statistics->departed_vehicle_count > 0)
+    {
+        avg_park_duration = (double)p_statistics->total_park_duration / p_statistics->departed_vehicle_count;
+    }
+
+    double avg_wait_duration = 0.0;
+    if (p_statistics->queued_vehicle_count_served > 0)
+    {
+        avg_wait_duration = (double)p_statistics->total_wait_duration / p_statistics->queued_vehicle_count_served;
+    }
+
+    printf("+--------------------------------------------+------------+-----------------+\n");
+    printf("| %-42s| Wert       | Einheit         |\n", "GESAMT-STATISTIK (Durchschnittswerte)");
+    printf("+--------------------------------------------+------------+-----------------+\n");
+    printf("| %-42s|%11.1f | Fahrzeuge       |\n", "1. Durchschnittl. parkende Autos", avg_parked_vehicles);
+    printf("| %-42s|%11.1f | Prozent         |\n", "2. Durchschnittl. Auslastung", avg_occupancy_percent);
+    printf("| %-42s|%11.1f | Fahrzeuge       |\n", "3. Durchschnittl. wartende Fahrzeuge", avg_queued_vehicles);
+    printf("| %-42s|%11.1f | Zeitschritte    |\n", "4. Gesamte durchschn. Parkdauer", avg_park_duration);
+    printf("| %-42s|%11.1f | Zeitschritte    |\n", "5. Gesamte durchschn. Wartedauer", avg_wait_duration);
+    printf("+--------------------------------------------+------------+-----------------+\n");
+}
