@@ -5,14 +5,14 @@
 
 // Hier Programm:
 
-/* typedef struct
+typedef struct
 {
     int slot_count;          // Gesamtanzahl der Stellplätze
     int occupied_count;      // Anzahl aktuell belegter Stellplätze
     Vehicle *p_slots;        // Dynamisches Array: Stellplätze
     Queue *p_queue;          // Warteschlange für Fahrzeuge
 } ParkingGarage;
-*/
+
 /*
 TYPE Parking Garage
     slot_count               // Gesamtanzahl der Stellplätze
@@ -23,16 +23,16 @@ TYPE Parking Garage
 END TYPE
 */
 
-/**
- * @brief Ergebnis eines Parkversuchs.
- */
-// typedef enum
-// {
-//     PARKING_SUCCESS,
-//     PARKING_QUEUED,
-//     PARKING_QUEUE_FULL,
-//     PARKING_INVALID
-// } ParkingResult;
+
+// * @brief Ergebnis eines Parkversuchs.
+
+typedef enum
+{
+    PARKING_SUCCESS,
+    PARKING_QUEUED,
+    PARKING_QUEUE_FULL,
+    PARKING_INVALID
+} ParkingResult;
 
 /*
 TYPE ParkingResult

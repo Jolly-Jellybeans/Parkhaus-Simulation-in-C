@@ -20,6 +20,21 @@ STRUCTURE Statistics
 
 END STRUCTURE
 */
+typedef struct {
+    int currently_parked;
+    int currently_queued;
+
+    int parked_vehicle_count_sum;
+    int queued_vehicle_count_sum;
+    int time_samples;
+
+    double occupancy_ratio_sum;
+    int occupancy_samples;
+    int queued_vehicle_count_served;
+    int total_park_duration;
+    int departed_vehicle_count;
+    int total_wait_duration;
+} Statistics;
 
 //Hier Programm:
 /**

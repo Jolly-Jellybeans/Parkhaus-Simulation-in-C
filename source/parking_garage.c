@@ -157,3 +157,35 @@ static int find_free_slot_index(const ParkingGarage *p_garage){
 
     return -1;
 }
+
+
+ParkingResult parking_garage_park(ParkingGarage *p_garage, const Vehicle *p_vehicle, int current_time)
+{
+    if (p_garage == NULL || p_vehicle == NULL || !vehicle_is_valid(p_vehicle))
+    {
+        return PARKING_INVALID;
+    }
+
+    int free_index = find_free_slot_index(p_garage);
+
+    if (free_index >= 0)
+    {
+        ParkingSlot *p_slot = &p_garage->p_slots[free_index];
+
+        p_slot->vehicle = *p_vehicle;
+        p_slot->vehicle.entry_time = current_time;
+        p_slot->departure_time = current_time + p_vehicle->remaining_duration;
+        p_slot->is_occupied = true;
+
+        p_garage->occupied_count++;
+
+        return PARKING_SUCCESS;
+    }
+
+    if (queue_enqueue(p_garage->p_queue, p_vehicle))
+    {
+        return PARKING_QUEUED;
+    }
+
+    return PARKING_QUEUE_FULL;
+}
