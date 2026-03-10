@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "statistics.h"
 /*
 FUNCTION statistics_init(p_statistics)
@@ -405,12 +406,16 @@ void statistics_print_step(const Statistics *p_statistics,int current_step,int t
         current_avg_wait_duration = (double)p_statistics->total_wait_duration / p_statistics->queued_vehicle_count_served;
     }
 
-    printf("------------------- Aktueller Status -------------------\n");
-    printf("AKTUELLER STATUS: Schritt %d / %d\n", current_step, total_steps);
-    printf("1) Aktuell parkende Autos         : %d Fahrzeuge\n", p_statistics->currently_parked);
-    printf("2) Aktuelle Auslastung            : %.2f Prozent\n", current_occupancy_percent);
-    printf("3) Aktuell wartende Fahrzeuge     : %d Fahrzeuge\n", p_statistics->currently_queued);
-    printf("4) Aktuelle durchschn. Parkdauer  : %.2f Zeitschritte\n", current_avg_park_duration);
-    printf("5) Aktuelle durchschn. Wartedauer : %.2f Zeitschritte\n", current_avg_wait_duration);
-    printf("--------------------------------------------------------\n");
+    char header[60];
+    snprintf(header, sizeof(header), "| AKTUELLER STATUS: Schritt %d / %d", current_step, total_steps);
+
+    printf("+--------------------------------------------+------------+-----------------+\n");
+    printf("%-45s| Wert       | Einheit         |\n", header);
+    printf("+--------------------------------------------+------------+-----------------+\n");
+    printf("| %-42s|%11d | Fahrzeuge       |\n", "1. Aktuell parkende Autos", p_statistics->currently_parked);
+    printf("| %-42s|%11.1f | Prozent         |\n", "2. Aktuelle Auslastung", current_occupancy_percent);
+    printf("| %-42s|%11d | Fahrzeuge       |\n", "3. Aktuell wartende Fahrzeuge", p_statistics->currently_queued);
+    printf("| %-42s|%11.1f | Zeitschritte    |\n", "4. Aktuelle durchschn. Parkdauer", current_avg_park_duration);
+    printf("| %-42s|%11.1f | Zeitschritte    |\n", "5. Aktuelle durchschn. Wartedauer", current_avg_wait_duration);
+    printf("+--------------------------------------------+------------+-----------------+\n");
 }
