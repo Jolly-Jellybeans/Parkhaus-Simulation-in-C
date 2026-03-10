@@ -180,3 +180,12 @@ static QueueNode *node_create(const Vehicle *p_vehicle) {
     }
     return p_node;
 }
+
+Queue *queue_create() {
+    Queue *p_queue = (Queue *)malloc(sizeof(Queue));
+    if (p_queue != NULL) {
+        p_queue->p_head = NULL; // Anfang der Schlange
+        p_queue->p_tail = NULL; // Ende der Schlange
+    }
+    return p_queue;
+}
