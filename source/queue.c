@@ -233,7 +233,8 @@ bool queue_enqueue(Queue *p_queue, const Vehicle *p_vehicle) {
         // Queue ist leer, neuer Knoten wird zum Head und Tail
         p_queue->p_head = p_new_node;
         p_queue->p_tail = p_new_node;
-    } else {
+    } 
+    else {
         // Anfügen am Ende der Queue
         p_queue->p_tail->p_next = p_new_node;
         p_queue->p_tail = p_new_node;
@@ -253,4 +254,29 @@ int queue_size(const Queue *p_queue) {
         p_current = p_current->p_next; // Zum nächsten Knoten wechseln
     }
     return count;
+bool queue_is_empty(const Queue *p_queue) {
+    if (p_queue == NULL || p_queue->p_head == NULL) {
+        return true; // Eine NULL-Queue gilt als leer
+    }
+    return false;
+}
+
+bool queue_dequeue(Queue *p_queue, Vehicle *p_out_vehicle) {
+    if (p_queue == NULL || p_out_vehicle == NULL || p_queue->p_head == NULL) {
+        return false; 
+    }
+
+    QueueNode *p_temp_node = p_queue->p_head; // Ersten Knoten merken
+    *p_out_vehicle = p_temp_node->data; // Fahrzeugdaten kopieren
+
+    // Head auf den nächsten Knoten setzen
+    p_queue->p_head = p_temp_node->p_next;
+
+    // Wenn die Queue jetzt leer ist, Tail auch auf NULL setzen
+    if (p_queue->p_head == NULL) {
+        p_queue->p_tail = NULL;
+    }
+
+    node_destroy(p_temp_node); // Alten Knoten freigeben
+    return true;
 }
