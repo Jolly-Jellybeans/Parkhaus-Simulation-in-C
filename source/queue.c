@@ -240,3 +240,10 @@ bool queue_enqueue(Queue *p_queue, const Vehicle *p_vehicle) {
     }
     return true;
 }
+
+bool queue_is_empty(const Queue *p_queue) {
+    if (p_queue == NULL || p_queue->p_head == NULL) {
+        return true; // Eine NULL-Queue gilt als leer
+    }
+    return false;
+}
