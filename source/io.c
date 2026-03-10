@@ -111,3 +111,29 @@ SimulationConfig get_config_from_user(void)
 
     return config;
 }
+
+void print_result_message(ParkingResult result)
+{
+    switch (result)
+    {
+        case PARKING_SUCCESS:
+            printf("Vehicle parked successfully.\n");
+            break;
+
+        case PARKING_QUEUED:
+            printf("Parking full. Vehicle added to waiting queue.\n");
+            break;
+
+        case PARKING_QUEUE_FULL:
+            printf("Queue is full. Vehicle rejected.\n");
+            break;
+
+        case PARKING_INVALID:
+            printf("Invalid vehicle data.\n");
+            break;
+
+        default:
+            printf("Unknown parking result.\n");
+            break;
+    }
+}
