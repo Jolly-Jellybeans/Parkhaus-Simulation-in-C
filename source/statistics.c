@@ -275,30 +275,8 @@ FUNCTION statistics_print(p_statistics)
 END FUNCTION
 */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void statistics_on_queued(Statistics *p_statistics){
+    
 
 void statistics_init(Statistics *p_statistics){
     if (p_statistics == NULL)
@@ -345,4 +323,40 @@ void statistics_on_departure(Statistics *p_statistics,int park_duration){
 
     p_statistics->total_park_duration += park_duration;
     p_statistics->departed_vehicle_count += 1;
+}
+
+void statistics_step_update(Statistics *p_statistics,int occupied_slots,int total_slots,int queued_vehicles){
+    if (p_statistics == NULL)
+    {
+        return;
+    }
+
+    if (occupied_slots < 0)
+    {
+        occupied_slots = 0;
+    }
+
+    if (total_slots > 0 && occupied_slots > total_slots)
+    {
+        occupied_slots = total_slots;
+    }
+
+    if (queued_vehicles < 0)
+    {
+        queued_vehicles = 0;
+    }
+
+    p_statistics->currently_parked = occupied_slots;
+    p_statistics->currently_queued = queued_vehicles;
+
+    p_statistics->parked_vehicle_count_sum += occupied_slots;
+    p_statistics->queued_vehicle_count_sum += queued_vehicles;
+    p_statistics->time_samples += 1;
+
+    if (total_slots > 0)
+    {
+        double occupancy_ratio = (double)occupied_slots / total_slots;
+        p_statistics->occupancy_ratio_sum += occupancy_ratio;
+        p_statistics->occupancy_samples += 1;
+    }
 }
