@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "statistics.h"
 /*
 FUNCTION statistics_init(p_statistics)
@@ -365,4 +366,56 @@ void statistics_step_update(Statistics *p_statistics,int occupied_slots,int tota
         p_statistics->occupancy_ratio_sum += occupancy_ratio;
         p_statistics->occupancy_samples += 1;
     }
+}
+void statistics_print_step(const Statistics *p_statistics,int current_step,int total_steps,int total_slots){
+    if (p_statistics == NULL)
+    {
+        return;
+    }
+
+    if (current_step < 0)
+    {
+        current_step = 0;
+    }
+
+    if (total_steps < 0)
+    {
+        total_steps = 0;
+    }
+
+    if (total_slots < 0)
+    {
+        total_slots = 0;
+    }
+
+    double current_occupancy_percent = 0.0;
+    if (total_slots > 0)
+    {
+        current_occupancy_percent = ((double)p_statistics->currently_parked / total_slots) * 100.0;
+    }
+
+    double current_avg_park_duration = 0.0;
+    if (p_statistics->departed_vehicle_count > 0)
+    {
+        current_avg_park_duration = (double)p_statistics->total_park_duration / p_statistics->departed_vehicle_count;
+    }
+
+    double current_avg_wait_duration = 0.0;
+    if (p_statistics->queued_vehicle_count_served > 0)
+    {
+        current_avg_wait_duration = (double)p_statistics->total_wait_duration / p_statistics->queued_vehicle_count_served;
+    }
+
+    char header[60];
+    snprintf(header, sizeof(header), "| AKTUELLER STATUS: Schritt %d / %d", current_step, total_steps);
+
+    printf("+--------------------------------------------+------------+-----------------+\n");
+    printf("%-45s| Wert       | Einheit         |\n", header);
+    printf("+--------------------------------------------+------------+-----------------+\n");
+    printf("| %-42s|%11d | Fahrzeuge       |\n", "1. Aktuell parkende Autos", p_statistics->currently_parked);
+    printf("| %-42s|%11.1f | Prozent         |\n", "2. Aktuelle Auslastung", current_occupancy_percent);
+    printf("| %-42s|%11d | Fahrzeuge       |\n", "3. Aktuell wartende Fahrzeuge", p_statistics->currently_queued);
+    printf("| %-42s|%11.1f | Zeitschritte    |\n", "4. Aktuelle durchschn. Parkdauer", current_avg_park_duration);
+    printf("| %-42s|%11.1f | Zeitschritte    |\n", "5. Aktuelle durchschn. Wartedauer", current_avg_wait_duration);
+    printf("+--------------------------------------------+------------+-----------------+\n");
 }
