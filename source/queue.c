@@ -233,7 +233,8 @@ bool queue_enqueue(Queue *p_queue, const Vehicle *p_vehicle) {
         // Queue ist leer, neuer Knoten wird zum Head und Tail
         p_queue->p_head = p_new_node;
         p_queue->p_tail = p_new_node;
-    } else {
+    } 
+    else {
         // Anfügen am Ende der Queue
         p_queue->p_tail->p_next = p_new_node;
         p_queue->p_tail = p_new_node;
@@ -241,6 +242,18 @@ bool queue_enqueue(Queue *p_queue, const Vehicle *p_vehicle) {
     return true;
 }
 
+int queue_size(const Queue *p_queue) {
+    if (p_queue == NULL || p_queue->p_head == NULL) {
+        return 0; // Keine Elemente in der Queue
+    }
+
+    int count = 0;
+    QueueNode *p_current = p_queue->p_head;
+    while (p_current != NULL) {
+        count++;
+        p_current = p_current->p_next; // Zum nächsten Knoten wechseln
+    }
+    return count;
 bool queue_is_empty(const Queue *p_queue) {
     if (p_queue == NULL || p_queue->p_head == NULL) {
         return true; // Eine NULL-Queue gilt als leer
