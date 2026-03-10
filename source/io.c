@@ -1,4 +1,5 @@
 #include "io.h"
+#include <stdio.h>
 
 /**
  * @brief Entfernt verbleibende Zeichen aus dem Eingabepuffer, um saubere Lesefolgen zu gewährleisten.
@@ -62,9 +63,38 @@ END FUNCTION
 */
 /*
 -----------------------------------------------------------
-  END OF PSEUDOCODE
+  END OF PSEUDOCODE    
 -----------------------------------------------------------
 */
 
 static void clear_input_buffer(void);
 
+static void clear_input_buffer(void)
+{
+    int ch;          // variable to store each character
+
+    while ((ch = getchar()) != '\n' && ch != EOF)      // read until end of line
+    {
+        ;
+    }
+}
+
+
+int user_input(const char *description)
+{
+    int value;             // variable for the user input
+
+    while (1)              // repeat until valid number is entered
+    {
+        printf("%s", description);         // print input description
+
+        if (scanf("%d", &value) == 1)      // try to read integer
+        {
+            clear_input_buffer();          // clear remaining input
+            return value;
+        }
+
+        printf("Please enter a number.\n");    // error message
+        clear_input_buffer();                  // remove invalid input
+    }
+}
