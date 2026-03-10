@@ -180,3 +180,9 @@ static QueueNode *node_create(const Vehicle *p_vehicle) {
     }
     return p_node;
 }
+
+static void node_destroy(QueueNode *p_node) {
+    if (p_node != NULL) {
+        free(p_node); // Speicher für den Knoten freigeben
+    }
+}
