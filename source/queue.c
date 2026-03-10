@@ -241,6 +241,13 @@ bool queue_enqueue(Queue *p_queue, const Vehicle *p_vehicle) {
     return true;
 }
 
+bool queue_is_empty(const Queue *p_queue) {
+    if (p_queue == NULL || p_queue->p_head == NULL) {
+        return true; // Eine NULL-Queue gilt als leer
+    }
+    return false;
+}
+
 bool queue_dequeue(Queue *p_queue, Vehicle *p_out_vehicle) {
     if (p_queue == NULL || p_out_vehicle == NULL || p_queue->p_head == NULL) {
         return false; 
