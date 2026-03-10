@@ -98,3 +98,16 @@ int user_input(const char *description)
         clear_input_buffer();                  // remove invalid input
     }
 }
+
+SimulationConfig get_config_from_user(void)
+{
+    SimulationConfig config;        // config object for all inputs
+
+    config.slots = user_input("Anzahl der Stellplaetze: ");      // number of parking slots
+    config.max_park_duration = user_input("Maximale Parkdauer (pro Auto): ");    // max parking duration
+    config.sim_duration = user_input("Gesamte Simulationsdauer: ");        // total simulation time
+    config.arrival_prob = user_input("Ankunftswahrscheinlichkeit (0-100): ");    // arrival probability
+    config.seed = user_input("Zufalls-Seed (z.B. 42): ");      // random seed
+
+    return config;
+}
