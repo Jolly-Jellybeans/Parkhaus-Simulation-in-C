@@ -276,6 +276,12 @@ END FUNCTION
 */
 
 void statistics_on_queued(Statistics *p_statistics){
+    if (p_statistics == NULL)
+    {
+        return;
+    }
+
+}
     
 
 void statistics_init(Statistics *p_statistics){
