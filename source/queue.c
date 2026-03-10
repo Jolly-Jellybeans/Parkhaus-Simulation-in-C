@@ -240,3 +240,17 @@ bool queue_enqueue(Queue *p_queue, const Vehicle *p_vehicle) {
     }
     return true;
 }
+
+int queue_size(const Queue *p_queue) {
+    if (p_queue == NULL || p_queue->p_head == NULL) {
+        return 0; // Keine Elemente in der Queue
+    }
+
+    int count = 0;
+    QueueNode *p_current = p_queue->p_head;
+    while (p_current != NULL) {
+        count++;
+        p_current = p_current->p_next; // Zum nächsten Knoten wechseln
+    }
+    return count;
+}
