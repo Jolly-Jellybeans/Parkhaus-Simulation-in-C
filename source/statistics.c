@@ -323,6 +323,7 @@ void statistics_init(Statistics *p_statistics){
 
     p_statistics->total_wait_duration = 0;
 }
+void statistics_on_parked_from_queue(Statistics *p_statistics,int wait_duration){
 
 void statistics_on_departure(Statistics *p_statistics,int park_duration){
     if (p_statistics == NULL)
@@ -330,6 +331,13 @@ void statistics_on_departure(Statistics *p_statistics,int park_duration){
         return;
     }
 
+    if (wait_duration < 0)
+    {
+        wait_duration = 0;
+    }
+
+    p_statistics->total_wait_duration += wait_duration;
+    p_statistics->queued_vehicle_count_served += 1;
     if (park_duration < 0)
     {
         park_duration = 0;
