@@ -366,3 +366,51 @@ void statistics_step_update(Statistics *p_statistics,int occupied_slots,int tota
         p_statistics->occupancy_samples += 1;
     }
 }
+void statistics_print_step(const Statistics *p_statistics,int current_step,int total_steps,int total_slots){
+    if (p_statistics == NULL)
+    {
+        return;
+    }
+
+    if (current_step < 0)
+    {
+        current_step = 0;
+    }
+
+    if (total_steps < 0)
+    {
+        total_steps = 0;
+    }
+
+    if (total_slots < 0)
+    {
+        total_slots = 0;
+    }
+
+    double current_occupancy_percent = 0.0;
+    if (total_slots > 0)
+    {
+        current_occupancy_percent = ((double)p_statistics->currently_parked / total_slots) * 100.0;
+    }
+
+    double current_avg_park_duration = 0.0;
+    if (p_statistics->departed_vehicle_count > 0)
+    {
+        current_avg_park_duration = (double)p_statistics->total_park_duration / p_statistics->departed_vehicle_count;
+    }
+
+    double current_avg_wait_duration = 0.0;
+    if (p_statistics->queued_vehicle_count_served > 0)
+    {
+        current_avg_wait_duration = (double)p_statistics->total_wait_duration / p_statistics->queued_vehicle_count_served;
+    }
+
+    printf("------------------- Aktueller Status -------------------\n");
+    printf("AKTUELLER STATUS: Schritt %d / %d\n", current_step, total_steps);
+    printf("1) Aktuell parkende Autos         : %d Fahrzeuge\n", p_statistics->currently_parked);
+    printf("2) Aktuelle Auslastung            : %.2f Prozent\n", current_occupancy_percent);
+    printf("3) Aktuell wartende Fahrzeuge     : %d Fahrzeuge\n", p_statistics->currently_queued);
+    printf("4) Aktuelle durchschn. Parkdauer  : %.2f Zeitschritte\n", current_avg_park_duration);
+    printf("5) Aktuelle durchschn. Wartedauer : %.2f Zeitschritte\n", current_avg_wait_duration);
+    printf("--------------------------------------------------------\n");
+}
