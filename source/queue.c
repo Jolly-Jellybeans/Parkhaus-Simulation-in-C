@@ -186,6 +186,24 @@ static QueueNode *node_create(const Vehicle *p_vehicle) {
     return p_node;
 }
 
+void queue_destroy(Queue *p_queue) {
+    if (p_queue == NULL) {
+        return;
+    }
+
+    QueueNode *p_current = p_queue->p_head;
+    while (p_current != NULL) {
+        QueueNode *p_next_node = p_current->p_next; // Nächsten Knoten merken
+        node_destroy(p_current); // Aktuellen Knoten freigeben
+        p_current = p_next_node; // Zum nächsten Knoten wechseln
+    }
+
+    // Verhindern von Dangling Pointern
+    p_queue->p_head = NULL;
+    p_queue->p_tail = NULL;
+    free(p_queue);
+}
+
 Queue *queue_create() {
     Queue *p_queue = (Queue *)malloc(sizeof(Queue));
     if (p_queue != NULL) {
