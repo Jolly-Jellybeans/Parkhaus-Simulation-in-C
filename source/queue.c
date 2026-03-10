@@ -254,6 +254,8 @@ int queue_size(const Queue *p_queue) {
         p_current = p_current->p_next; // Zum nächsten Knoten wechseln
     }
     return count;
+}
+
 bool queue_is_empty(const Queue *p_queue) {
     if (p_queue == NULL || p_queue->p_head == NULL) {
         return true; // Eine NULL-Queue gilt als leer
