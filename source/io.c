@@ -114,26 +114,26 @@ SimulationConfig get_config_from_user(void)
 
 void print_result_message(ParkingResult result)
 {
-    switch (result)
+    switch (result)      // check parking result
     {
         case PARKING_SUCCESS:
-            printf("Vehicle parked successfully.\n");
+            printf("Vehicle parked successfully.\n");        // parked directly
             break;
 
         case PARKING_QUEUED:
-            printf("Parking full. Vehicle added to waiting queue.\n");
+            printf("Parking full. Vehicle added to waiting queue.\n");      // added to queue
             break;
 
         case PARKING_QUEUE_FULL:
-            printf("Queue is full. Vehicle rejected.\n");
+            printf("Queue is full. Vehicle rejected.\n");      // queue full
             break;
 
         case PARKING_INVALID:
-            printf("Invalid vehicle data.\n");
+            printf("Invalid vehicle data.\n");      // invalid input
             break;
 
         default:
-            printf("Unknown parking result.\n");
+            printf("Unknown parking result.\n");      // fallback case
             break;
     }
 }
