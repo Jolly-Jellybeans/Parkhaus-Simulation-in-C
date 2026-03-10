@@ -200,3 +200,25 @@ static void node_destroy(QueueNode *p_node) {
         free(p_node); // Speicher für den Knoten freigeben
     }
 }
+
+bool queue_enqueue(Queue *p_queue, const Vehicle *p_vehicle) {
+    if (p_queue == NULL || p_vehicle == NULL) {
+        return false; // Ungültige Eingabe
+    }
+
+    QueueNode *p_new_node = node_create(p_vehicle);
+    if (p_new_node == NULL) {
+        return false; 
+    }
+
+    if (p_queue->p_tail == NULL) {
+        // Queue ist leer, neuer Knoten wird zum Head und Tail
+        p_queue->p_head = p_new_node;
+        p_queue->p_tail = p_new_node;
+    } else {
+        // Anfügen am Ende der Queue
+        p_queue->p_tail->p_next = p_new_node;
+        p_queue->p_tail = p_new_node;
+    }
+    return true;
+}
