@@ -323,3 +323,18 @@ void statistics_init(Statistics *p_statistics){
 
     p_statistics->total_wait_duration = 0;
 }
+
+void statistics_on_departure(Statistics *p_statistics,int park_duration){
+    if (p_statistics == NULL)
+    {
+        return;
+    }
+
+    if (park_duration < 0)
+    {
+        park_duration = 0;
+    }
+
+    p_statistics->total_park_duration += park_duration;
+    p_statistics->departed_vehicle_count += 1;
+}
