@@ -172,6 +172,11 @@ typedef struct QueueNode {
     struct QueueNode *p_next;   
 } QueueNode;
 
+typedef struct Queue {
+    QueueNode *p_head; // Anfang der Schlange
+    QueueNode *p_tail; // Ende der Schlange
+} Queue;
+
 static QueueNode *node_create(const Vehicle *p_vehicle) {
     QueueNode *p_node = (QueueNode *)malloc(sizeof(QueueNode));
     if (p_node != NULL) {
@@ -184,8 +189,8 @@ static QueueNode *node_create(const Vehicle *p_vehicle) {
 Queue *queue_create() {
     Queue *p_queue = (Queue *)malloc(sizeof(Queue));
     if (p_queue != NULL) {
-        p_queue->p_head = NULL; // Anfang der Schlange
-        p_queue->p_tail = NULL; // Ende der Schlange
+        p_queue->p_head = NULL; 
+        p_queue->p_tail = NULL; 
     }
     return p_queue;
 }
