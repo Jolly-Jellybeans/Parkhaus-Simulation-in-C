@@ -172,7 +172,10 @@ typedef struct QueueNode {
     struct QueueNode *p_next;   
 } QueueNode;
 
-
+typedef struct Queue {
+    QueueNode *p_head; // Anfang der Schlange
+    QueueNode *p_tail; // Ende der Schlange
+} Queue;
 
 static QueueNode *node_create(const Vehicle *p_vehicle) {
     QueueNode *p_node = (QueueNode *)malloc(sizeof(QueueNode));
@@ -199,4 +202,19 @@ void queue_destroy(Queue *p_queue) {
     p_queue->p_head = NULL;
     p_queue->p_tail = NULL;
     free(p_queue);
+}
+
+Queue *queue_create() {
+    Queue *p_queue = (Queue *)malloc(sizeof(Queue));
+    if (p_queue != NULL) {
+        p_queue->p_head = NULL; 
+        p_queue->p_tail = NULL; 
+    }
+    return p_queue;
+}
+
+static void node_destroy(QueueNode *p_node) {
+    if (p_node != NULL) {
+        free(p_node); // Speicher für den Knoten freigeben
+    }
 }
