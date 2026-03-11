@@ -4,6 +4,7 @@
 #include "vehicle.h"
 #include "io.h"
 #include "simulation.h"
+#include <stdlib.h>
 
 
 /*
@@ -45,3 +46,36 @@ FUNCTION main
 
 END FUNCTION
 */
+
+
+int main(void)
+{
+    SimulationConfig config;
+    ParkingGarage *p_garage;
+    Statistics stats;
+
+    config = get_config_from_user();            // read user settings
+
+    srand(config.seed);            // initialize random generator
+
+    p_garage = parking_garage_create(config.slots);            // create garage
+    if (p_garage == NULL)
+    {
+        return -1;
+    }
+
+    statistics_init(&stats);            // initialize statistics
+
+    simulation(
+        p_garage,
+        &stats,
+        config.sim_duration,
+        config.arrival_prob,
+        config.max_park_duration
+    );
+
+    statistics_print(&stats);            // print final statistics
+    parking_garage_destroy(p_garage);            // free memory
+
+    return 0;
+}
