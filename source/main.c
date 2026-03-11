@@ -46,3 +46,36 @@ FUNCTION main
 
 END FUNCTION
 */
+
+
+int main(void)
+{
+    SimulationConfig config;
+    ParkingGarage *p_garage;
+    Statistics stats;
+
+    config = get_config_from_user();
+
+    srand(config.seed);
+
+    p_garage = parking_garage_create(config.slots);
+    if (p_garage == NULL)
+    {
+        return -1;
+    }
+
+    statistics_init(&stats);
+
+    simulation(
+        p_garage,
+        &stats,
+        config.sim_duration,
+        config.arrival_prob,
+        config.max_park_duration
+    );
+
+    statistics_print(&stats);
+    parking_garage_destroy(p_garage);
+
+    return 0;
+}
