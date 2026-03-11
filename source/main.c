@@ -54,17 +54,17 @@ int main(void)
     ParkingGarage *p_garage;
     Statistics stats;
 
-    config = get_config_from_user();
+    config = get_config_from_user();            // read user settings
 
-    srand(config.seed);
+    srand(config.seed);            // initialize random generator
 
-    p_garage = parking_garage_create(config.slots);
+    p_garage = parking_garage_create(config.slots);            // create garage
     if (p_garage == NULL)
     {
         return -1;
     }
 
-    statistics_init(&stats);
+    statistics_init(&stats);            // initialize statistics
 
     simulation(
         p_garage,
@@ -74,8 +74,8 @@ int main(void)
         config.max_park_duration
     );
 
-    statistics_print(&stats);
-    parking_garage_destroy(p_garage);
+    statistics_print(&stats);            // print final statistics
+    parking_garage_destroy(p_garage);            // free memory
 
     return 0;
 }
