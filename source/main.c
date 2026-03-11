@@ -4,6 +4,7 @@
 #include "vehicle.h"
 #include "io.h"
 #include "simulation.h"
+#include <stdlib.h>
 
 
 /*
