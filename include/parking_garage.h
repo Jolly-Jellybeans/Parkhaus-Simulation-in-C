@@ -68,6 +68,16 @@ void parking_garage_destroy(ParkingGarage *p_garage);
  * @return Ergebnisstatus des Parkversuchs.
  */
 ParkingResult parking_garage_park(ParkingGarage *p_garage,const Vehicle *p_vehicle,int current_time);
+/**
+ * @brief Sucht den ersten freien Stellplatz und gibt dessen Index zurueck.
+ *
+ * Die Suche laeuft linear von Index 0 bis slot_count - 1.
+ *
+ * @param[in] p_garage Parkhausstruktur mit Slot-Array.
+ * @return Index des ersten freien Slots, oder -1 falls keiner frei ist
+ *         bzw. die Eingabe ungueltig ist.
+ */
+int find_free_slot_index(const ParkingGarage *p_garage);
 
 /**
  * @brief Entfernt alle Fahrzeuge mit geplanter Abfahrtszeit (<= current_time).

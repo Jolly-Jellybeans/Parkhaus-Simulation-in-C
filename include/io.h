@@ -25,6 +25,13 @@ END STRUCT
 
 //Hier Programm:
 /**
+ * @brief Leert verbleibende Zeichen im Eingabepuffer bis Zeilenende/EOF.
+ *
+ * Wird genutzt, um nach scanf() den Puffer zu bereinigen,
+ * damit Folgeeingaben nicht durch Restzeichen gestoert werden.
+ */
+void clear_input_buffer(void);
+/**
  * @brief Prompts the user for a numeric input.
  *
  * Displays the given description text in the console,

@@ -6,6 +6,20 @@
 typedef struct QueueNode QueueNode;
 typedef struct Queue Queue;
 /**
+ * @brief Erzeugt einen neuen Queue-Knoten mit kopierten Fahrzeugdaten.
+ *
+ * @param[in] p_vehicle Fahrzeugdaten, die im Knoten gespeichert werden.
+ * @return Zeiger auf den neuen Knoten oder NULL bei Fehler.
+ */
+QueueNode *node_create(const Vehicle *p_vehicle);
+/**
+ * @brief Gibt einen zuvor erzeugten Queue-Knoten frei.
+ *
+ * @param[in,out] p_node Zu loeschender Knoten.
+ * @return Kein Rueckgabewert.
+ */
+void node_destroy(QueueNode *p_node);
+/**
  * @brief Erstellt eine neue Fahrzeugwarteschlange.
  *
  * @return Zeiger auf die erzeugte Queue oder NULL bei Misserfolg.

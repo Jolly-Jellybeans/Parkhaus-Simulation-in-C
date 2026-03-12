@@ -67,9 +67,9 @@ END FUNCTION
 -----------------------------------------------------------
 */
 
-static void clear_input_buffer(void);
 
-static void clear_input_buffer(void)
+
+void clear_input_buffer(void)
 {
     int ch;          // variable to store each character
 
