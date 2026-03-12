@@ -3,11 +3,11 @@
 /**
  * @brief Erzeugt einen neuen Listenknoten mit den Fahrzeugdaten.
  */
-static QueueNode *node_create(const Vehicle *p_vehicle);
+QueueNode *node_create(const Vehicle *p_vehicle);
 /**
  * @brief Gibt einen Listenknoten inkl. Fahrzeugdaten frei.
  */
-static void node_destroy(QueueNode *p_node);
+void node_destroy(QueueNode *p_node);
 
 /*
 // Definition eines einzelnen Knotens (QueueNode)
@@ -177,7 +177,7 @@ typedef struct Queue {
     QueueNode *p_tail; // Ende der Schlange
 } Queue;
 
-static QueueNode *node_create(const Vehicle *p_vehicle) {
+QueueNode *node_create(const Vehicle *p_vehicle) {
     QueueNode *p_node = (QueueNode *)malloc(sizeof(QueueNode));
     if (p_node != NULL) {
         p_node->data = *p_vehicle; // Kopiere die Fahrzeugdaten
@@ -213,7 +213,7 @@ Queue *queue_create() {
     return p_queue;
 }
 
-static void node_destroy(QueueNode *p_node) {
+void node_destroy(QueueNode *p_node) {
     if (p_node != NULL) {
         free(p_node); // Speicher für den Knoten freigeben
     }

@@ -5,6 +5,8 @@
 //Hier Programm:
 typedef struct QueueNode QueueNode;
 typedef struct Queue Queue;
+QueueNode *node_create(const Vehicle *p_vehicle);
+void node_destroy(QueueNode *p_node);
 /**
  * @brief Erstellt eine neue Fahrzeugwarteschlange.
  *

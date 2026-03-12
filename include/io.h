@@ -24,6 +24,7 @@ END STRUCT
 */
 
 //Hier Programm:
+void clear_input_buffer(void);
 /**
  * @brief Prompts the user for a numeric input.
  *

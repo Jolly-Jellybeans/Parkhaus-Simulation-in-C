@@ -68,6 +68,7 @@ void parking_garage_destroy(ParkingGarage *p_garage);
  * @return Ergebnisstatus des Parkversuchs.
  */
 ParkingResult parking_garage_park(ParkingGarage *p_garage,const Vehicle *p_vehicle,int current_time);
+int find_free_slot_index(const ParkingGarage *p_garage);
 
 /**
  * @brief Entfernt alle Fahrzeuge mit geplanter Abfahrtszeit (<= current_time).

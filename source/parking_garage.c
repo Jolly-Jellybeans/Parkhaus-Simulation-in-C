@@ -3,11 +3,11 @@
 /**
  * @brief Sucht einen freien Stellplatz und liefert dessen Index zurück.
  */
-static int find_free_slot_index(const ParkingGarage *p_garage);
+int find_free_slot_index(const ParkingGarage *p_garage);
 /**
  * @brief Leert einen Stellplatz und setzt ihn auf den Ausgangszustand zurück.
  */
-static void clear_slot(ParkingSlot *p_slot);
+void clear_slot(ParkingSlot *p_slot);
 
 /*
 FUNCTION find_free_slot_index(p_garage)
@@ -115,7 +115,7 @@ FUNCTION parking_garage_remove_departing(p_garage, current_time)
 
 END FUNCTION
 */
-static void clear_slot(ParkingSlot *p_slot){
+void clear_slot(ParkingSlot *p_slot){
     if (p_slot == NULL) {
         return;
     }
@@ -144,7 +144,7 @@ int parking_garage_remove_departing(ParkingGarage *p_garage,int current_time){
 
     return removed_count;
 }
-static int find_free_slot_index(const ParkingGarage *p_garage){
+int find_free_slot_index(const ParkingGarage *p_garage){
     if (p_garage == NULL || p_garage->p_slots == NULL) {
         return -1;
     }
