@@ -38,7 +38,7 @@ FUNCTION get_config_from_user() RETURNS SimulationConfig
     config.max_park_duration<- CALL user_input("Maximale Parkdauer (pro Auto): ")
     config.sim_duration     <- CALL user_input("Gesamte Simulationsdauer: ")
     config.arrival_prob     <- CALL user_input("Ankunftswahrscheinlichkeit (0-100): ")
-    config.seed             <- CALL user_input("Zufalls-Seed (z.B. 42): ")
+    config.seed             <- CALL user_input("Zufalls-Seed: ")
 
     RETURN config                      // return all user values
 END FUNCTION
@@ -107,7 +107,7 @@ SimulationConfig get_config_from_user(void)
     config.max_park_duration = user_input("Maximale Parkdauer (pro Auto): ");    // max parking duration
     config.sim_duration = user_input("Gesamte Simulationsdauer: ");        // total simulation time
     config.arrival_prob = user_input("Ankunftswahrscheinlichkeit (0-100): ");    // arrival probability
-    config.seed = user_input("Zufalls-Seed (z.B. 42): ");      // random seed
+    config.seed = user_input("Zufalls-Seed: ");      // random seed
 
     return config;
 }
