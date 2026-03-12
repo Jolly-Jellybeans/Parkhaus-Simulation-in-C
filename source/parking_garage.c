@@ -1,5 +1,5 @@
 #include "parking_garage.h"
-
+#include <stdlib.h>
 /**
  * @brief Sucht einen freien Stellplatz und liefert dessen Index zurück.
  */
