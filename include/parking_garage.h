@@ -28,7 +28,7 @@ typedef struct
 {
     int slot_count;          // Gesamtanzahl der Stellplätze
     int occupied_count;      // Anzahl aktuell belegter Stellplätze
-    Vehicle *p_slots;        // Dynamisches Array: Stellplätze
+    ParkingSlot *p_slots;        // Dynamisches Array: Stellplätze
     Queue *p_queue;          // Warteschlange für Fahrzeuge
 } ParkingGarage;
 
