@@ -14,14 +14,22 @@ Auch die unterschiedliche Anzahl an Commits erklärt sich daraus: Der Arbeitsumf
 
 ## Warum nutzten wir `static`-Funktionen?
 
-In unserem Projekt wurden `static`-Funktionen bewusst eingesetzt, um interne Hilfsfunktionen klar von der öffentlichen Schnittstelle eines Moduls zu trennen. 
+<!--
+Urspruengliche Entscheidung (Teil 1):
+In unserem Projekt wurden static-Funktionen bewusst eingesetzt, um interne Hilfsfunktionen
+klar von der oeffentlichen Schnittstelle eines Moduls zu trennen.
+Dadurch waere die Sichtbarkeit auf die jeweilige .c-Datei beschraenkt gewesen
+(bessere Kapselung, weniger Namenskonflikte, keine externen Zugriffe).
+-->
 
-Viele Funktionen – beispielsweise zur Slot-Suche, internen Validierung oder Verarbeitung der Warteschlange – werden ausschließlich innerhalb einer einzelnen `.c`-Datei benötigt und sollen nicht von außen aufrufbar sein. 
+Im zweiten Teil des Projekts haben wir diese Entscheidung bewusst angepasst und die `static`-Deklarationen entfernt.
 
-Durch die Deklaration als `static` wird ihre Sichtbarkeit auf diese Datei beschränkt. Dies verbessert die Kapselung, verhindert unbeabsichtigte externe Zugriffe und reduziert potenzielle Namenskonflikte beim Linken.
+Grund dafuer war die Testanforderung, fuer die relevanten Funktionen gezielte Assert-Tests zu schreiben.  
+Durch `static` waeren diese Funktionen nur innerhalb derselben `.c`-Datei sichtbar gewesen und nicht sauber von den Testdateien aus pruefbar.
 
-Zusätzlich unterstützt diese Vorgehensweise eine klare Modulstruktur:  
-Nur die wirklich notwendigen Funktionen werden über Header-Dateien nach außen bereitgestellt, während Implementierungsdetails verborgen bleiben. Dadurch bleibt das System übersichtlich, robust und wartbar.
+Deshalb wurden die betroffenen Funktionen als normale (nicht-`static`) Funktionen gefuehrt, damit sie direkt getestet und im Testkontext eindeutig aufgerufen werden koennen.
+
+Damit priorisieren wir in diesem Projektabschnitt bewusst die Testbarkeit und Nachweisbarkeit der geforderten Funktionen.
 
 ---
 
