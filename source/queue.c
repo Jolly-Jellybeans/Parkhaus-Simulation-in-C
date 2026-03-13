@@ -208,6 +208,7 @@ Queue *queue_create() {
 void node_destroy(QueueNode *p_node) {
     if (p_node != NULL) {
         free(p_node); // Speicher für den Knoten freigeben
+        p_node = NULL; // Dangling Pointer vermeiden
     }
 }
 
