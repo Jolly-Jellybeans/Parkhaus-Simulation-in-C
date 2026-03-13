@@ -1,5 +1,11 @@
 #include <stdio.h>
 
+/*
+Kompilieren und Ausführen aller Unit-Tests:
+cc -g -I./include ./tests/*.c ./source/parking_garage.c ./source/queue.c 
+./source/vehicle.c ./source/statistics.c -o ./tests/unit_tests && ./tests/unit_tests
+*/
+
 // test_parking_garage.c
 void test_find_free_slot_index_free_slot_exists(void);
 void test_find_free_slot_index_no_free_slot(void);
