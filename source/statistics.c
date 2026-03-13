@@ -282,6 +282,12 @@ void statistics_on_queued(Statistics *p_statistics){
         return;
     }
 
+    if (p_statistics->currently_queued < 0)
+    {
+        p_statistics->currently_queued = 0;
+    }
+
+    p_statistics->currently_queued += 1;
 }
     
 
