@@ -273,3 +273,18 @@ void test_parking_garage_create_valid_slot_count(void) {
     // free allocated memory after test
     parking_garage_destroy(garage);
 }
+
+/*
+Test 2:
+Ungültige Anzahl an Stellplätzen wird übergeben.
+Die Funktion soll NULL zurückgeben.
+*/
+void test_parking_garage_create_invalid_slot_count(void) {
+    // try to create garage with invalid slot counts
+    ParkingGarage *garage_zero = parking_garage_create(0);
+    ParkingGarage *garage_negative = parking_garage_create(-1);
+
+    // invalid input should return NULL
+    assert(garage_zero == NULL);
+    assert(garage_negative == NULL);
+}
