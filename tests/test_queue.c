@@ -75,9 +75,9 @@ void test_queue_destroy() {
     Vehicle v2 = {.id = 102, .entry_time = 6};
     Vehicle v3 = {.id = 103, .entry_time = 7};
 
-    enqueue(q_filled, &v1);
-    enqueue(q_filled, &v2);
-    enqueue(q_filled, &v3);
+    queue_enqueue(q_filled, &v1);
+    queue_enqueue(q_filled, &v2);
+    queue_enqueue(q_filled, &v3);
 
     queue_destroy(q_filled);
 }
