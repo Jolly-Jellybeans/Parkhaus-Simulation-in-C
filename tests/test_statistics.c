@@ -77,4 +77,24 @@ void test_statistics_on_queued_increments_currently_queued() {
 	assert(stats.total_wait_duration == 9);
 }
 
+/*
+Test 2:
+Bei mehreren Aufrufen soll der Warteschlangenstand
+bei jedem Queue-Ereignis weiter hochgezaehlt werden.
+*/
+void test_statistics_on_queued_counts_multiple_queue_events() {
+	Statistics stats = {0};
+
+	stats.currently_queued = 0;
+	stats.currently_parked = 2;
+	stats.queued_vehicle_count_sum = 6;
+
+	statistics_on_queued(&stats);
+	statistics_on_queued(&stats);
+
+	assert(stats.currently_queued == 2);
+	assert(stats.currently_parked == 2);
+	assert(stats.queued_vehicle_count_sum == 6);
+}
+
 
