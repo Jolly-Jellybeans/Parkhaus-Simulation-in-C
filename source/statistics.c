@@ -385,6 +385,60 @@ void statistics_step_update(Statistics *p_statistics,int occupied_slots,int tota
         p_statistics->occupancy_samples += 1;
     }
 }
+
+// Keep bar length inside a valid range
+static int clamp_bar_value(int value, int min, int max)
+{
+    if (value < min)
+    {
+        return min;
+    }
+
+    if (value > max)
+    {
+        return max;
+    }
+
+    return value;
+}
+
+// Print one formatted ASCII bar line
+static void print_ascii_bar_line(const char *label, double value, double max_value, int width)
+{
+    int filled = 0;
+
+    // Ignore invalid input
+    if (label == NULL || width <= 0)
+    {
+        return;
+    }
+
+    // Calculate how many characters should be filled
+    if (max_value > 0.0 && value > 0.0)
+    {
+        filled = (int)((value / max_value) * width + 0.5);
+    }
+
+    // Prevent the bar from becoming too short or too long
+    filled = clamp_bar_value(filled, 0, width);
+
+    printf("| %-22s | ", label);
+
+    // Print filled part
+    for (int i = 0; i < filled; i++)
+    {
+        printf("#");
+    }
+
+    // Print remaining empty part
+    for (int i = filled; i < width; i++)
+    {
+        printf("-");
+    }
+
+    printf(" |\n");
+}
+
 void statistics_print_step(const Statistics *p_statistics, int current_step, int total_steps, int total_slots, const char *p_filename)
 {
     if (p_statistics == NULL)
