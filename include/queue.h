@@ -3,8 +3,16 @@
 #include "vehicle.h"
 #include <stdbool.h>
 //Hier Programm:
-typedef struct QueueNode QueueNode;
-typedef struct Queue Queue;
+// Definition eines einzelnen Knotens
+typedef struct QueueNode {
+    Vehicle data;               
+    struct QueueNode *p_next;   
+} QueueNode;
+
+typedef struct Queue {
+    QueueNode *p_head; // Anfang der Schlange
+    QueueNode *p_tail; // Ende der Schlange
+} Queue;
 /**
  * @brief Erzeugt einen neuen Queue-Knoten mit kopierten Fahrzeugdaten.
  *
