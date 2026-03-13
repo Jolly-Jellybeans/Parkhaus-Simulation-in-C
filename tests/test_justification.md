@@ -39,3 +39,8 @@ Eine solche Ausgabeprüfung wäre hier zudem fehleranfällig (Formatierung, Rund
 
 Die für die Endausgabe verwendeten Statistikwerte werden bereits über die Tests der Berechnungsfunktionen (z. B. "statistics_step_update", "statistics_on_departure", "statistics_on_parked_from_queue") abgesichert.
 Daher wird "statistics_print" aktuell über manuelle Sichtprüfung der Terminalausgabe validiert.
+
+## Ticket 81 – Review test requirement for "simulation"
+
+Die Funktion "simulation" fungiert als reine Steuerfunktion. Sie besitzt keine eigene Logik, sondern ruft lediglich andere Unterfunktionen auf und verknüpft diese.
+Da alle Unterfunktionen bereits isoliert getestet wurden, ist ein zusätzlicher Unit-Test für die aufrufende Funktion nicht sinnvoll und  umsetzbar.
