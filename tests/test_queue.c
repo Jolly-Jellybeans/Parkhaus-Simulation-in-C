@@ -1,6 +1,7 @@
 #include <assert.h>
 #include "queue.h"
-
+#include <stdlib.h>
+#include "vehicle.h"
 /*
 Test node_create:
 Ein Knoten wird mit einmal mit normalen und leerem Fahrzeug erstellt.
