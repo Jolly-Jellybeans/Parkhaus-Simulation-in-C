@@ -158,17 +158,6 @@ END FUNCTION
 */
 
 
-// Definition eines einzelnen Knotens
-typedef struct QueueNode {
-    Vehicle data;               
-    struct QueueNode *p_next;   
-} QueueNode;
-
-typedef struct Queue {
-    QueueNode *p_head; // Anfang der Schlange
-    QueueNode *p_tail; // Ende der Schlange
-} Queue;
-
 QueueNode *node_create(const Vehicle *p_vehicle) {
     QueueNode *p_node = (QueueNode *)malloc(sizeof(QueueNode));
     if (p_node != NULL) {
