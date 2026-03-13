@@ -1,6 +1,6 @@
 # Parkhaus-Simulation-in-C
 
-Programmentwurf für eine Parkhaus-Simulation in C.
+Programmentwurf für eine Parkhaus-Simulation in C für den Kurs Programmieren 1.
 Die Anwendung simuliert über diskrete Zeitschritte:
 
 - ankommende Fahrzeuge,
@@ -104,4 +104,4 @@ Parkhaus-Simulation-in-C/
 
 ## Entwickler
 
-Programmentwurf von Bennet Weith, Niklas Reutter und Arne Stützle.
+Programmentwurf von Bennet Weith, Niklas Reutter und Arne Stützle aus TSA/TSL 25
