@@ -73,18 +73,20 @@ void statistics_on_departure(Statistics *p_statistics,int park_duration);
  */
 void statistics_step_update(Statistics *p_statistics,int occupied_slots,int total_slots,int queued_vehicles);
 /**
- * @brief Gibt den aktuellen Statistikblock für einen Simulationsschritt aus.
+ * @brief Gibt den aktuellen Statistikblock fuer einen Simulationsschritt aus und schreibt ihn optional in eine Datei.
  *
  * @param[in] p_statistics Statistikstruktur, die ausgegeben wird.
  * @param[in] current_step Aktueller Simulationsschritt.
  * @param[in] total_steps Gesamtanzahl geplanter Simulationsschritte.
- * @param[in] total_slots Gesamtanzahl verfügbarer Stellplätze.
+ * @param[in] total_slots Gesamtanzahl verfuegbarer Stellplaetze.
+ * @param[in] p_filename Dateiname fuer die Ausgabedatei, oder NULL fuer nur Konsolenausgabe.
  */
-void statistics_print_step(const Statistics *p_statistics,int current_step,int total_steps,int total_slots);
+void statistics_print_step(const Statistics *p_statistics,int current_step,int total_steps,int total_slots,const char *p_filename);
 /**
- * @brief Gibt die finale Gesamtauswertung (Durchschnittswerte) am Simulationsende aus.
+ * @brief Gibt die finale Gesamtauswertung (Durchschnittswerte) aus und schreibt sie optional in eine Datei.
  *
  * @param[in] p_statistics Statistikstruktur, die ausgegeben wird.
+ * @param[in] p_filename Dateiname fuer die Ausgabedatei, oder NULL fuer nur Konsolenausgabe.
  */
-void statistics_print(const Statistics *p_statistics);
+void statistics_print(const Statistics *p_statistics, const char *p_filename);
 #endif /* STATISTICS_H */

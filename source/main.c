@@ -74,7 +74,7 @@ int main(void)
         config.max_park_duration
     );
 
-    statistics_print(&stats);            // print final statistics
+    statistics_print(&stats, "statistics_output.txt");            // print final statistics and export to text file
     parking_garage_destroy(p_garage);            // free memory
 
     return 0;
