@@ -21,3 +21,13 @@ Die Funktion wird stattdessen über manuelle Eingaben im laufenden Programm gepr
 
 Die Funktion "node_destroy" gibt den reservierten Speicherplatz eines einzelnen Warteschlangenknotens über die C-Standardfunktion "free" an das Betriebssystem zurück.
 Automatisierte Assert-Tests sind für diese Funktion im aktuellen Projektaufbau nicht sinnvoll, da ein anschließender Lesezugriff zur Überprüfung des gelöschten Speichers nach C-Standard zu undefiniertem Verhalten bzw. einem Programmabsturz führen würde.
+
+
+## Ticket 63 – Review test requirement for "statistics_print"
+
+Die Funktion "statistics_print" erzeugt ausschließlich formatierte Konsolenausgaben über mehrere "printf"-Aufrufe.
+Direkte Assert-Tests sind im aktuellen Projektaufbau dafür nicht sinnvoll, da ohne zusätzliche Testinfrastruktur keine stabile Umleitung und Auswertung von "stdout" möglich ist.
+Eine solche Ausgabeprüfung wäre hier zudem fehleranfällig (Formatierung, Rundung, Zeilenumbrüche) und hätte nur begrenzten Mehrwert gegenüber den bereits vorhandenen Logiktests.
+
+Die für die Endausgabe verwendeten Statistikwerte werden bereits über die Tests der Berechnungsfunktionen (z. B. "statistics_step_update", "statistics_on_departure", "statistics_on_parked_from_queue") abgesichert.
+Daher wird "statistics_print" aktuell über manuelle Sichtprüfung der Terminalausgabe validiert.
