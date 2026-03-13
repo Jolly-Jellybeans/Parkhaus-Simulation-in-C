@@ -80,3 +80,26 @@ void test_queue_destroy() {
     queue_destroy(q_filled);
 
 }
+
+/* Test queue_enqueue:
+Überprüft das korrekte Einfügen von Elementen und die Zeiger-Verkettung.
+*/
+void test_queue_enqueue() {
+    Queue *q = queue_create();
+    Vehicle v1 = {.id = 101, .entry_time = 5};
+    Vehicle v2 = {.id = 102, .entry_time = 6};
+
+    // Test 1: Ungültige Eingaben
+    // Überprüfung, ob NULL-Pointer sicher abgefangen werden und false zurückgeben
+    assert(queue_enqueue(NULL, &v1) == false);
+    assert(queue_enqueue(q, NULL) == false);
+
+    // Test 2: Zustandswechsel
+    // Prüft das Setzen von Head/Tail beim ersten Element und das Weiterrücken beim Zweiten
+    queue_enqueue(q, &v1);
+    assert(q->p_head == q->p_tail);
+    queue_enqueue(q, &v2);
+    assert(q->p_tail->data.id == 102);
+
+    queue_destroy(q);
+}
