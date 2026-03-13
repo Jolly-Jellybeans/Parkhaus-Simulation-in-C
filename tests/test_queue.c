@@ -57,6 +57,7 @@ void test_queue_create() {
 Bei fehlerhaften Funktionen stürzt das Programm ab, 
 eine Überprüfung ob Speicher freigegeben wurde, ist mit assert nicht möglich
 */
+
 void test_queue_destroy() {
 
     // Test 1: NULL-Pointer 
@@ -78,12 +79,36 @@ void test_queue_destroy() {
     enqueue(q_filled, &v3);
 
     queue_destroy(q_filled);
+}
 
+/* Test queue_dequeue:
+Überprüft das sichere Entnehmen von Elementen und das Nachrücken der Zeiger.
+*/
+
+void test_queue_dequeue() {
+    Queue *q = queue_create();
+    Vehicle out_v = {0};
+    Vehicle v1 = {.id = 101, .entry_time = 5};
+
+    // Test 1: Ungültige Eingaben & Leere Queue
+    // Überprüfung, ob Entnahmeversuche ohne Daten sicher abgefangen werden
+    assert(queue_dequeue(NULL, &out_v) == false);
+    assert(queue_dequeue(q, &out_v) == false);
+
+    // Test 2: Entnahme und kritischer Pfad
+    // Prüft die korrekte Datenübergabe und den Reset beim Entnehmen des letzten Elements
+    queue_enqueue(q, &v1);
+    assert(queue_dequeue(q, &out_v) == true);
+    assert(out_v.id == 101);
+    assert(q->p_head == NULL && q->p_tail == NULL);
+
+    queue_destroy(q);
 }
 
 /* Test queue_enqueue:
 Überprüft das korrekte Einfügen von Elementen und die Zeiger-Verkettung.
 */
+
 void test_queue_enqueue() {
     Queue *q = queue_create();
     Vehicle v1 = {.id = 101, .entry_time = 5};
