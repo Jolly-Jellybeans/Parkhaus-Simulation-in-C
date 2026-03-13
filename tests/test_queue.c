@@ -22,7 +22,7 @@ void test_node_create() {
     // Nachfolger auf NULL gesetzt
     assert(node1->p_next == NULL);
 
-    free(node1);
+    node_destroy(node1);
 
  // Test mit leerem Auto 
     Vehicle v_empty = {0}; 
@@ -35,3 +35,4 @@ void test_node_create() {
 
     node_destroy(node2);
 }
+
