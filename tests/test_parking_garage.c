@@ -212,3 +212,38 @@ void test_parking_garage_park_direct_success(void) {
     assert(slots[0].departure_time == 15);
 
     queue_destroy(queue);
+}
+
+/*
+Test 2:
+Alle Stellplaetze sind bereits belegt.
+Das Fahrzeug soll in die Queue aufgenommen werden.
+Rueckgabewert muss PARKING_QUEUED sein.
+Belegung im Parkhaus darf sich nicht aendern.
+Queue-Groesse muss danach 1 sein.
+*/
+void test_parking_garage_park_queued_when_no_slot_free(void) {
+    ParkingGarage garage;
+    ParkingSlot slots[2];
+    Queue *queue = queue_create();
+
+    assert(queue != NULL);
+
+    slots[0].is_occupied = true;
+    slots[1].is_occupied = true;
+
+    garage.slot_count = 2;
+    garage.occupied_count = 2;
+    garage.p_slots = slots;
+    garage.p_queue = queue;
+
+    Vehicle vehicle = {2, 3, 0};
+
+    ParkingResult result = parking_garage_park(&garage, &vehicle, 7);
+
+    assert(result == PARKING_QUEUED);
+    assert(garage.occupied_count == 2);
+    assert(queue_size(queue) == 1);
+
+    queue_destroy(queue);
+}
