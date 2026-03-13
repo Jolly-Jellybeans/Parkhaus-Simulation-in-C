@@ -175,3 +175,40 @@ void test_parking_garage_remove_departing_keeps_future_vehicles() {
     assert(slots[1].vehicle.id == 12);
     assert(slots[1].departure_time == 9);
 }
+
+
+/*
+Test 1:
+Es gibt mindestens einen freien Stellplatz.
+Das Fahrzeug soll direkt eingeparkt werden.
+Rueckgabewert muss PARKING_SUCCESS sein.
+Belegung und Slot-Daten muessen korrekt gesetzt werden.
+*/
+void test_parking_garage_park_direct_success(void) {
+    ParkingGarage garage;
+    ParkingSlot slots[2];
+    Queue *queue = queue_create();
+
+    assert(queue != NULL);
+
+    slots[0].is_occupied = false;
+    slots[1].is_occupied = false;
+
+    garage.slot_count = 2;
+    garage.occupied_count = 0;
+    garage.p_slots = slots;
+    garage.p_queue = queue;
+
+    Vehicle vehicle = {1, 5, 0};
+
+    ParkingResult result = parking_garage_park(&garage, &vehicle, 10);
+
+    assert(result == PARKING_SUCCESS);
+    assert(garage.occupied_count == 1);
+    assert(slots[0].is_occupied == true);
+    assert(slots[0].vehicle.id == 1);
+    assert(slots[0].vehicle.remaining_duration == 5);
+    assert(slots[0].vehicle.entry_time == 10);
+    assert(slots[0].departure_time == 15);
+
+    queue_destroy(queue);
