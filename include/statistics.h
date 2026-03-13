@@ -82,9 +82,26 @@ void statistics_step_update(Statistics *p_statistics,int occupied_slots,int tota
  */
 void statistics_print_step(const Statistics *p_statistics,int current_step,int total_steps,int total_slots);
 /**
+ * @brief Schreibt den aktuellen Statistikblock eines Simulationsschritts in eine Textdatei.
+ *
+ * @param[in] p_statistics Statistikstruktur mit den aktuellen Werten.
+ * @param[in] current_step Aktueller Simulationsschritt.
+ * @param[in] total_steps Gesamtanzahl geplanter Simulationsschritte.
+ * @param[in] total_slots Gesamtanzahl verfügbarer Stellplätze.
+ * @param[in] p_filename Dateiname/Zielpfad fuer die Ausgabedatei.
+ */
+void statistics_write_step_to_file(const Statistics *p_statistics,int current_step,int total_steps,int total_slots,const char *p_filename);
+/**
  * @brief Gibt die finale Gesamtauswertung (Durchschnittswerte) am Simulationsende aus.
  *
  * @param[in] p_statistics Statistikstruktur, die ausgegeben wird.
  */
 void statistics_print(const Statistics *p_statistics);
+/**
+ * @brief Schreibt die finale Gesamtauswertung (Durchschnittswerte) in eine Textdatei.
+ *
+ * @param[in] p_statistics Statistikstruktur, deren Werte geschrieben werden.
+ * @param[in] p_filename Dateiname/Zielpfad fuer die Ausgabedatei.
+ */
+void statistics_write_to_file(const Statistics *p_statistics, const char *p_filename);
 #endif /* STATISTICS_H */
