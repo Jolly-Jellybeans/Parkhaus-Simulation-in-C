@@ -75,6 +75,7 @@ int main(void)
     );
 
     statistics_print(&stats);            // print final statistics
+    statistics_write_to_file(&stats, "statistics_output.txt");            // export final statistics to text file
     parking_garage_destroy(p_garage);            // free memory
 
     return 0;
