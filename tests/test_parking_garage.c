@@ -189,7 +189,7 @@ void test_parking_garage_park_direct_success(void) {
     ParkingSlot slots[2];
     Queue *queue = queue_create();
 
-    assert(queue != NULL);
+    assert(queue != NULL);            // queue must be created successfully
 
     slots[0].is_occupied = false;
     slots[1].is_occupied = false;
@@ -203,13 +203,13 @@ void test_parking_garage_park_direct_success(void) {
 
     ParkingResult result = parking_garage_park(&garage, &vehicle, 10);
 
-    assert(result == PARKING_SUCCESS);
-    assert(garage.occupied_count == 1);
+    assert(result == PARKING_SUCCESS);            // vehicle should park directly
+    assert(garage.occupied_count == 1);            // one slot should now be occupied
     assert(slots[0].is_occupied == true);
-    assert(slots[0].vehicle.id == 1);
+    assert(slots[0].vehicle.id == 1);            // vehicle id should be copied into slot
     assert(slots[0].vehicle.remaining_duration == 5);
-    assert(slots[0].vehicle.entry_time == 10);
-    assert(slots[0].departure_time == 15);
+    assert(slots[0].vehicle.entry_time == 10);            // entry time should be set
+    assert(slots[0].departure_time == 15);            // departure time = current_time + duration
 
     queue_destroy(queue);
 }
@@ -241,9 +241,9 @@ void test_parking_garage_park_queued_when_no_slot_free(void) {
 
     ParkingResult result = parking_garage_park(&garage, &vehicle, 7);
 
-    assert(result == PARKING_QUEUED);
-    assert(garage.occupied_count == 2);
-    assert(queue_size(queue) == 1);
+    assert(result == PARKING_QUEUED);            // vehicle should be added to queue
+    assert(garage.occupied_count == 2);            // occupied slots should stay unchanged
+    assert(queue_size(queue) == 1);            // queue should now contain one vehicle
 
     queue_destroy(queue);
 }
@@ -268,13 +268,13 @@ void test_parking_garage_park_invalid_vehicle(void) {
     garage.p_slots = slots;
     garage.p_queue = queue;
 
-    Vehicle invalid_vehicle = {0, 5, 0};   // id ungueltig
+    Vehicle invalid_vehicle = {0, 5, 0};            // invalid because id must be > 0
 
     ParkingResult result = parking_garage_park(&garage, &invalid_vehicle, 4);
 
-    assert(result == PARKING_INVALID);
-    assert(garage.occupied_count == 0);
-    assert(slots[0].is_occupied == false);
+    assert(result == PARKING_INVALID);            // invalid vehicle should be rejected
+    assert(garage.occupied_count == 0);            // garage state must stay unchanged
+    assert(slots[0].is_occupied == false);            // slot must still be free
     assert(queue_size(queue) == 0);
 
     queue_destroy(queue);
