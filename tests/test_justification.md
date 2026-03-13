@@ -17,3 +17,7 @@ Deshalb wird für "get_config_from_user" aktuell keine direkte Assert-Testdatei 
 Die Funktion wird stattdessen über manuelle Eingaben im laufenden Programm geprüft.
 
 
+## Ticket 61 – Review test requirement for "node_destroy"
+
+Die Funktion "node_destroy" gibt den reservierten Speicherplatz eines einzelnen Warteschlangenknotens über die C-Standardfunktion "free" an das Betriebssystem zurück.
+Automatisierte Assert-Tests sind für diese Funktion im aktuellen Projektaufbau nicht sinnvoll, da ein anschließender Lesezugriff zur Überprüfung des gelöschten Speichers nach C-Standard zu undefiniertem Verhalten bzw. einem Programmabsturz führen würde.

@@ -1,13 +1,5 @@
 #include "queue.h"
 #include <stdlib.h>
-/**
- * @brief Erzeugt einen neuen Listenknoten mit den Fahrzeugdaten.
- */
-QueueNode *node_create(const Vehicle *p_vehicle);
-/**
- * @brief Gibt einen Listenknoten inkl. Fahrzeugdaten frei.
- */
-void node_destroy(QueueNode *p_node);
 
 /*
 // Definition eines einzelnen Knotens (QueueNode)
@@ -216,6 +208,7 @@ Queue *queue_create() {
 void node_destroy(QueueNode *p_node) {
     if (p_node != NULL) {
         free(p_node); // Speicher für den Knoten freigeben
+        p_node = NULL; // Dangling Pointer vermeiden
     }
 }
 

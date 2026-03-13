@@ -57,3 +57,182 @@ void test_statistics_init_fresh_struct_start_state() {
 	assert(stats.time_samples == 0);
 	assert(stats.departed_vehicle_count == 0);
 }
+
+/*
+Test 1:
+Bei gueltigem aktuellen Warteschlangenstand
+soll statistics_on_queued den Wert um 1 erhoehen.
+*/
+void test_statistics_on_queued_increments_currently_queued() {
+	Statistics stats = {0};
+
+	stats.currently_queued = 3;
+	stats.time_samples = 5;
+	stats.total_wait_duration = 9;
+
+	statistics_on_queued(&stats);
+
+	assert(stats.currently_queued == 4);
+	assert(stats.time_samples == 5);
+	assert(stats.total_wait_duration == 9);
+}
+
+/*
+Test 2:
+Bei mehreren Aufrufen soll der Warteschlangenstand
+bei jedem Queue-Ereignis weiter hochgezaehlt werden.
+*/
+void test_statistics_on_queued_counts_multiple_queue_events() {
+	Statistics stats = {0};
+
+	stats.currently_queued = 0;
+	stats.currently_parked = 2;
+	stats.queued_vehicle_count_sum = 6;
+
+	statistics_on_queued(&stats);
+	statistics_on_queued(&stats);
+
+	assert(stats.currently_queued == 2);
+	assert(stats.currently_parked == 2);
+	assert(stats.queued_vehicle_count_sum == 6);
+}
+
+/*
+Test 1:
+Bei positiver Wartezeit soll die Wartezeit aufsummiert
+und der Zaehler bedienter Queue-Fahrzeuge um 1 erhoeht werden.
+*/
+void test_statistics_on_parked_from_queue_adds_wait_time() {
+	Statistics stats = {0};
+
+	stats.total_wait_duration = 4;
+	stats.queued_vehicle_count_served = 2;
+	stats.currently_queued = 3;
+
+	statistics_on_parked_from_queue(&stats, 6);
+
+	assert(stats.total_wait_duration == 10);
+	assert(stats.queued_vehicle_count_served == 3);
+	assert(stats.currently_queued == 3);
+}
+
+/*
+Test 2:
+Negative und null Wartezeit duerfen die Wartesumme nicht erhoehen.
+Der Zaehler bedienter Queue-Fahrzeuge soll pro Aufruf steigen.
+*/
+void test_statistics_on_parked_from_queue_handles_non_positive_wait() {
+	Statistics stats = {0};
+
+	stats.total_wait_duration = 8;
+	stats.queued_vehicle_count_served = 1;
+	stats.time_samples = 5;
+	stats.currently_parked = 4;
+
+	statistics_on_parked_from_queue(&stats, -3);
+	statistics_on_parked_from_queue(&stats, 0);
+
+	assert(stats.total_wait_duration == 8);
+	assert(stats.queued_vehicle_count_served == 3);
+	assert(stats.time_samples == 5);
+	assert(stats.currently_parked == 4);
+}
+
+/*
+Test 1:
+Normalfall mit gueltigen Eingaben.
+Momentwerte, Summen und Auslastungswerte sollen korrekt fortgeschrieben werden.
+*/
+void test_statistics_step_update_updates_state_and_sums() {
+    Statistics stats = {0};
+
+    stats.parked_vehicle_count_sum = 4;
+    stats.queued_vehicle_count_sum = 1;
+    stats.time_samples = 2;
+    stats.occupancy_ratio_sum = 0.5;
+    stats.occupancy_samples = 1;
+
+    statistics_step_update(&stats, 5, 10, 2);
+
+    assert(stats.currently_parked == 5);
+    assert(stats.currently_queued == 2);
+    assert(stats.parked_vehicle_count_sum == 9);
+    assert(stats.queued_vehicle_count_sum == 3);
+    assert(stats.time_samples == 3);
+    assert(stats.occupancy_ratio_sum == 1.0);
+    assert(stats.occupancy_samples == 2);
+}
+
+/*
+Test 2:
+Grenzfall mit ungueltigen Eingaben.
+Belegung ueber Kapazitaet wird auf die Kapazitaet begrenzt,
+negative Queue wird auf 0 gesetzt.
+Die normalisierten Werte muessen anschliessend korrekt in die
+Summen und Auslastungswerte uebernommen werden.
+*/
+void test_statistics_step_update_normalizes_invalid_inputs() {
+    Statistics stats = {0};
+
+    stats.parked_vehicle_count_sum = 10;
+    stats.queued_vehicle_count_sum = 6;
+    stats.time_samples = 2;
+    stats.occupancy_ratio_sum = 0.75;
+    stats.occupancy_samples = 2;
+
+    statistics_step_update(&stats, 12, 8, -4);
+
+    assert(stats.currently_parked == 8);
+    assert(stats.currently_queued == 0);
+    assert(stats.parked_vehicle_count_sum == 18);
+    assert(stats.queued_vehicle_count_sum == 6);
+    assert(stats.time_samples == 3);
+    assert(stats.occupancy_ratio_sum == 1.75);
+    assert(stats.occupancy_samples == 3);
+}
+
+
+/*
+Test 1:
+Bei positiver Parkdauer soll die Parkdauer aufsummiert
+und der Zaehler ausgefahrener Fahrzeuge um 1 erhoeht werden.
+Andere Werte, die nicht zur Ausfahrt gehoeren, sollen unveraendert bleiben.
+*/
+void test_statistics_on_departure_adds_park_duration() {
+    Statistics stats = {0};
+
+    stats.total_park_duration = 12;
+    stats.departed_vehicle_count = 2;
+    stats.currently_parked = 3;
+
+    statistics_on_departure(&stats, 5);
+
+    assert(stats.total_park_duration == 17);
+    assert(stats.departed_vehicle_count == 3);
+    assert(stats.currently_parked == 3);
+}
+
+/*
+Test 2:
+Negative Parkdauer wird als 0 behandelt.
+Die Parkdauer-Summe bleibt daher unveraendert,
+der Abfahrtszaehler steigt trotzdem um 1.
+Nicht betroffene Werte sollen unveraendert bleiben.
+*/
+void test_statistics_on_departure_normalizes_negative_duration() {
+    Statistics stats = {0};
+
+    stats.total_park_duration = 20;
+    stats.departed_vehicle_count = 4;
+    stats.currently_queued = 2;
+
+    statistics_on_departure(&stats, -7);
+
+    assert(stats.total_park_duration == 20);
+    assert(stats.departed_vehicle_count == 5);
+    assert(stats.currently_queued == 2);
+}
+
+
+
+
