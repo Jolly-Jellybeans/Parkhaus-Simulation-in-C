@@ -597,5 +597,43 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename){
             fprintf(p_file, "+--------------------------------------------+------------+-----------------+\n");
             fclose(p_file);
         }
+        {
+            // Additional ASCII chart section for final statistics
+    printf("|-------------------------------------------------------------|\n");
+    printf("| ASCII-DIAGRAMME GESAMT                                      |\n");
+    printf("|-------------------------------------------------------------|\n");
+
+    // Average parked vehicles relative to number of time samples
+    print_ascii_bar_line("Mittelwert-Balken",
+                         avg_parked_vehicles,
+                         (double)p_statistics->time_samples,
+                         20);
+
+    // Average occupancy percentage relative to 100
+    print_ascii_bar_line("Prozentbalken",
+                         avg_occupancy_percent,
+                         100.0,
+                         20);
+
+    // Average queued vehicles relative to number of time samples
+    print_ascii_bar_line("Warteschlange",
+                         avg_queued_vehicles,
+                         (double)p_statistics->time_samples,
+                         20);
+
+    // Average parking duration relative to number of time samples
+    print_ascii_bar_line("Dauerbalken",
+                         avg_park_duration,
+                         (double)p_statistics->time_samples,
+                         20);
+
+    // Average waiting duration relative to number of time samples
+    print_ascii_bar_line("Wartezeitbalken",
+                         avg_wait_duration,
+                         (double)p_statistics->time_samples,
+                         20);
+
+    printf("|-------------------------------------------------------------|\n");
+        }
     }
 }
