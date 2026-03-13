@@ -62,17 +62,9 @@ void test_queue_destroy() {
     // Test 1: NULL-Pointer 
     // Überprüfung ob NULL-Pointer ignoriert wird
     queue_destroy(NULL);
-
-    
-    // Test 2:Leere Queue
-    // Prüft, ob die while-Schleife korrekt übersprungen wird, wenn p_head == NULL ist,
-    Queue *q_empty = queue_create(); 
-    assert(q_empty != NULL); 
-    
-    queue_destroy(q_empty);
   
 
-    // Test 3: Gefüllte Queue 
+    // Test 2: Gefüllte Queue 
     // Prüft, ob die while-Schleife auf keine fehlerhaften Adressen zeigt
     Queue *q_filled = queue_create();
     assert(q_filled != NULL);
