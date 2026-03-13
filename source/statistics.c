@@ -41,9 +41,14 @@ FUNCTION statistics_on_queued(p_statistics)
         RETURN
     END IF
 
-    // Aktuell kein direkter Zähler-Update nötig:
-    // Die Kennzahl "wartende Fahrzeuge" wird pro Zeitschritt in
-    // statistics_step_update(...) über die aktuelle Queue-Länge erfasst.
+    // Negative Werte absichern und den aktuellen Queue-Zähler erhöhen.
+    IF p_statistics.currently_queued < 0
+    THEN
+        p_statistics.currently_queued ← 0
+    END IF
+
+    p_statistics.currently_queued ←
+        p_statistics.currently_queued + 1
 
 END FUNCTION
 
@@ -151,7 +156,7 @@ FUNCTION statistics_step_update(p_statistics, occupied_slots, total_slots, queue
 
 END FUNCTION
 
-FUNCTION statistics_print_step(p_statistics, current_step, total_steps, total_slots)
+FUNCTION statistics_print_step(p_statistics, current_step, total_steps, total_slots, p_filename)
 
     // Sicherheitsprüfung: Ohne gültige Statistikstruktur keine Ausgabe.
     IF p_statistics = NULL
@@ -200,19 +205,37 @@ FUNCTION statistics_print_step(p_statistics, current_step, total_steps, total_sl
             / p_statistics.queued_vehicle_count_served
     END IF
 
-    // Kompakte Live-Ausgabe für Monitoring pro Simulationsschritt.
-    PRINT "------------------- Aktueller Status -------------------"
-    PRINT "AKTUELLER STATUS: Schritt ", current_step, " / ", total_steps
-    PRINT "1) Aktuell parkende Autos         : ", p_statistics.currently_parked, " Fahrzeuge"
-    PRINT "2) Aktuelle Auslastung            : ", current_occupancy_percent, " Prozent"
-    PRINT "3) Aktuell wartende Fahrzeuge     : ", p_statistics.currently_queued, " Fahrzeuge"
-    PRINT "4) Aktuelle durchschn. Parkdauer  : ", current_avg_park_duration, " Zeitschritte"
-    PRINT "5) Aktuelle durchschn. Wartedauer : ", current_avg_wait_duration, " Zeitschritte"
-    PRINT "--------------------------------------------------------"
+    // Ausgabeziel: immer Terminal; optional zusätzlich Datei.
+    IF p_filename != NULL
+    THEN
+        outputs ← [stdout, Datei(p_filename, append_or_write)]
+    ELSE
+        outputs ← [stdout]
+    END IF
+
+    FOR JEDES output IN outputs
+        PRINT Headerblock "AKTUELLER STATUS: Schritt x / y"
+        PRINT Tabelle mit Kennzahl/Wert/Einheit
+
+        PRINT Zeile 1 (aktuell parkende Autos)
+        PRINT ASCII-Balkenzeile "Belegungsbalken" (relativ zu total_slots)
+
+        PRINT Zeile 2 (aktuelle Auslastung)
+        PRINT ASCII-Balkenzeile "Prozentbalken" (relativ zu 100)
+
+        PRINT Zeile 3 (aktuell wartende Fahrzeuge)
+        PRINT ASCII-Balkenzeile "Warteschlangenbalken" (relativ zu total_slots)
+
+        PRINT Zeile 4 (aktuelle durchschn. Parkdauer)
+        PRINT ASCII-Balkenzeile "Dauerbalken" (relativ zu total_steps)
+
+        PRINT Zeile 5 (aktuelle durchschn. Wartedauer)
+        PRINT ASCII-Balkenzeile "Wartezeitbalken" (relativ zu total_steps)
+    END FOR
 
 END FUNCTION
 
-FUNCTION statistics_print(p_statistics)
+FUNCTION statistics_print(p_statistics, p_filename)
 
     // Sicherheitsprüfung: Ohne gültige Statistikstruktur keine Ausgabe.
     IF p_statistics = NULL
@@ -265,14 +288,33 @@ FUNCTION statistics_print(p_statistics)
             / p_statistics.queued_vehicle_count_served
     END IF
 
-    // Finale Gesamtauswertung am Ende der Simulation ausgeben.
-        PRINT "==================== Gesamt-Statistik ===================="
-        PRINT "1) Durchschnittl. parkende Autos     : ", avg_parked_vehicles, " Fahrzeuge"
-        PRINT "2) Durchschnittl. Auslastung         : ", avg_occupancy_percent, " Prozent"
-        PRINT "3) Durchschnittl. wartende Fahrzeuge : ", avg_queued_vehicles, " Fahrzeuge"
-        PRINT "4) Gesamte durchschn. Parkdauer      : ", avg_park_duration, " Zeitschritte"
-        PRINT "5) Gesamte durchschn. Wartedauer     : ", avg_wait_duration, " Zeitschritte"
-        PRINT "==========================================================="
+    // Ausgabeziel: immer Terminal; optional zusätzlich Datei.
+    IF p_filename != NULL
+    THEN
+        outputs ← [stdout, Datei(p_filename, write)]
+    ELSE
+        outputs ← [stdout]
+    END IF
+
+    FOR JEDES output IN outputs
+        PRINT Headerblock "GESAMT-STATISTIK (Durchschnittswerte)"
+        PRINT Tabelle mit Kennzahl/Wert/Einheit
+
+        PRINT Zeile 1 (Durchschnittl. parkende Autos)
+        PRINT ASCII-Balkenzeile "Mittelwert-Balken" (relativ zu time_samples)
+
+        PRINT Zeile 2 (Durchschnittl. Auslastung)
+        PRINT ASCII-Balkenzeile "Prozentbalken" (relativ zu 100)
+
+        PRINT Zeile 3 (Durchschnittl. wartende Fahrzeuge)
+        PRINT ASCII-Balkenzeile "Warteschlangenbalken" (relativ zu time_samples)
+
+        PRINT Zeile 4 (Gesamte durchschn. Parkdauer)
+        PRINT ASCII-Balkenzeile "Dauerbalken" (relativ zu time_samples)
+
+        PRINT Zeile 5 (Gesamte durchschn. Wartedauer)
+        PRINT ASCII-Balkenzeile "Wartezeitbalken" (relativ zu time_samples)
+    END FOR
 
 END FUNCTION
 */
