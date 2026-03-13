@@ -57,3 +57,24 @@ void test_statistics_init_fresh_struct_start_state() {
 	assert(stats.time_samples == 0);
 	assert(stats.departed_vehicle_count == 0);
 }
+
+/*
+Test 1:
+Bei gueltigem aktuellen Warteschlangenstand
+soll statistics_on_queued den Wert um 1 erhoehen.
+*/
+void test_statistics_on_queued_increments_currently_queued() {
+	Statistics stats = {0};
+
+	stats.currently_queued = 3;
+	stats.time_samples = 5;
+	stats.total_wait_duration = 9;
+
+	statistics_on_queued(&stats);
+
+	assert(stats.currently_queued == 4);
+	assert(stats.time_samples == 5);
+	assert(stats.total_wait_duration == 9);
+}
+
+
