@@ -138,4 +138,44 @@ void test_statistics_on_parked_from_queue_handles_non_positive_wait() {
 	assert(stats.currently_parked == 4);
 }
 
+/*
+Test 1:
+Bei positiver Parkdauer soll die Parkdauer aufsummiert
+und der Zaehler ausgefahrener Fahrzeuge um 1 erhoeht werden.
+*/
+void test_statistics_on_departure_adds_park_duration() {
+	Statistics stats = {0};
+
+	stats.total_park_duration = 12;
+	stats.departed_vehicle_count = 2;
+	stats.currently_parked = 3;
+
+	statistics_on_departure(&stats, 5);
+
+	assert(stats.total_park_duration == 17);
+	assert(stats.departed_vehicle_count == 3);
+	assert(stats.currently_parked == 3);
+}
+
+/*
+Test 2:
+Negative Parkdauer wird als 0 behandelt.
+Die Parkdauer-Summe bleibt gleich, der Abfahrtszaehler steigt trotzdem um 1.
+*/
+void test_statistics_on_departure_normalizes_negative_duration() {
+	Statistics stats = {0};
+
+	stats.total_park_duration = 20;
+	stats.departed_vehicle_count = 4;
+	stats.currently_queued = 2;
+
+	statistics_on_departure(&stats, -7);
+
+	assert(stats.total_park_duration == 20);
+	assert(stats.departed_vehicle_count == 5);
+	assert(stats.currently_queued == 2);
+}
+
+
+
 
