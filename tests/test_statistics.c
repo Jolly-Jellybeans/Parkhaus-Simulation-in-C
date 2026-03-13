@@ -116,5 +116,26 @@ void test_statistics_on_parked_from_queue_adds_wait_time() {
 	assert(stats.currently_queued == 3);
 }
 
+/*
+Test 2:
+Negative und null Wartezeit duerfen die Wartesumme nicht erhoehen.
+Der Zaehler bedienter Queue-Fahrzeuge soll pro Aufruf steigen.
+*/
+void test_statistics_on_parked_from_queue_handles_non_positive_wait() {
+	Statistics stats = {0};
+
+	stats.total_wait_duration = 8;
+	stats.queued_vehicle_count_served = 1;
+	stats.time_samples = 5;
+	stats.currently_parked = 4;
+
+	statistics_on_parked_from_queue(&stats, -3);
+	statistics_on_parked_from_queue(&stats, 0);
+
+	assert(stats.total_wait_duration == 8);
+	assert(stats.queued_vehicle_count_served == 3);
+	assert(stats.time_samples == 5);
+	assert(stats.currently_parked == 4);
+}
 
 
