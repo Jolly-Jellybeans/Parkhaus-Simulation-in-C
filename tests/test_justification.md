@@ -23,7 +23,7 @@ Die Funktion "node_destroy" gibt den reservierten Speicherplatz eines einzelnen 
 Automatisierte Assert-Tests sind für diese Funktion im aktuellen Projektaufbau nicht sinnvoll, da ein anschließender Lesezugriff zur Überprüfung des gelöschten Speichers nach C-Standard zu undefiniertem Verhalten bzw. einem Programmabsturz führen würde.
 
 
-## Ticket 63 – Review test requirement for "statistics_print"
+## Ticket 78 – Review test requirement for "statistics_print"
 
 Die Funktion "statistics_print" erzeugt ausschließlich formatierte Konsolenausgaben über mehrere "printf"-Aufrufe.
 Direkte Assert-Tests sind im aktuellen Projektaufbau dafür nicht sinnvoll, da ohne zusätzliche Testinfrastruktur keine stabile Umleitung und Auswertung von "stdout" möglich ist.
