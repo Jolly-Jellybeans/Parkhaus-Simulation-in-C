@@ -119,5 +119,6 @@ void simulation(ParkingGarage* p_garage, Statistics* p_stats, int config_sim_dur
         int queued_count = queue_size(p_garage->p_queue);
         statistics_step_update(p_stats, p_garage->occupied_count, p_garage->slot_count, queued_count);
         statistics_print_step(p_stats, current_time + 1, config_sim_duration, p_garage->slot_count);
+        statistics_write_step_to_file(p_stats, current_time + 1, config_sim_duration, p_garage->slot_count, "statistics_steps.txt");
     }
 }
