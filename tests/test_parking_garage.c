@@ -248,3 +248,28 @@ void test_parking_garage_park_queued_when_no_slot_free(void) {
     queue_destroy(queue);
 }
 
+/*
+Test 1:
+Gültige Anzahl an Stellplätzen wird übergeben.
+Die Funktion soll ein Parkhaus korrekt initialisieren.
+*/
+void test_parking_garage_create_valid_slot_count(void) {
+    int slot_count = 3;
+
+    // create garage with a valid number of slots
+    ParkingGarage *garage = parking_garage_create(slot_count);
+
+    // garage should be created successfully
+    assert(garage != NULL);
+
+    // basic fields must be initialized correctly
+    assert(garage->slot_count == 3);
+    assert(garage->occupied_count == 0);
+
+    // internal resources must be allocated
+    assert(garage->p_slots != NULL);
+    assert(garage->p_queue != NULL);
+
+    // free allocated memory after test
+    parking_garage_destroy(garage);
+}
