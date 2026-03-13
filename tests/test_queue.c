@@ -36,3 +36,20 @@ void test_node_create() {
     node_destroy(node2);
 }
 
+/* Test queue_create:
+Überprüft on eine leere Schlange richtig erstellt wurde
+*/
+
+void test_queue_create() {
+    Queue *q = queue_create();
+
+    // Speicherebene prüfen
+    assert(q != NULL);
+
+    // Initialisierung prüfen 
+    assert(q->p_head == NULL);
+    assert(q->p_tail == NULL);
+
+    queue_destroy(q);
+}
+
