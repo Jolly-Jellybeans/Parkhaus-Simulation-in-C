@@ -71,3 +71,14 @@ void test_clear_slot_resets_all_fields() {
     assert(slot.is_occupied == false);
 }
 
+/*
+Test 2:
+Ein NULL-Zeiger wird uebergeben.
+Die Funktion darf nicht abstuerzen und muss direkt zurueckkehren.
+*/
+void test_clear_slot_with_null_pointer() {
+
+    clear_slot(NULL);
+
+    assert(1);
+}
