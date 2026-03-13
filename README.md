@@ -1,67 +1,16 @@
 # Parkhaus-Simulation-in-C
+von Niklas Reutter, Bennet Weith, Arne Stützle
 
-Programmentwurf für eine Parkhaus-Simulation in C für den Kurs Programmieren 1.
-Die Anwendung simuliert über diskrete Zeitschritte:
-
-- ankommende Fahrzeuge,
-- Einparken auf freien Stellplätzen,
-- Warteschlange bei vollem Parkhaus,
-- Abfahrten und statistische Auswertung.
-
-## Build und Start
+| | |
+| :--- | :--- |
+| Kurs | TSA/TSL 25 |
+| Studiengang | Embedded Systems |
+| Fach | Programmieren 1 |
+| Sprache | C |
 
 
-### Kompilieren
-
-Im Projektordner ausführen:
-
-```bash
-cc -g -I./include ./source/*.c -o ./parkhaus_sim
-```
-
-Alternative mit `gcc`:
-
-```bash
-gcc -g -I./include ./source/*.c -o ./parkhaus_sim
-```
-
-### Starten
-
-```bash
-./parkhaus_sim
-```
-
-Die Konfigurationswerte (z. B. Anzahl Stellplätze, Simulationsdauer, Ankunftswahrscheinlichkeit) werden beim Start abgefragt.
-
-## Unit-Tests ausführen
-
-Die Unit-Tests sind assert-basiert und werden über einen Test-Runner gestartet.
-
-### Test-Binary bauen
-
-```bash
-cc -g -I./include \
-	./tests/*.c \
-	./source/io.c \
-	./source/parking_garage.c \
-	./source/queue.c \
-	./source/simulation.c \
-	./source/statistics.c \
-	./source/vehicle.c \
-	-o ./tests/unit_tests
-```
-
-### Tests starten
-
-```bash
-./tests/unit_tests
-```
-
-Wenn kein `assert` fehlschlägt, endet das Programm erfolgreich und gibt eine Bestätigung aus.
 
 ## Projektstruktur
-
-### Projektbaum
 
 ```bash
 Parkhaus-Simulation-in-C/
@@ -103,6 +52,4 @@ Parkhaus-Simulation-in-C/
 ├── README.md
 └── parkhaus_sim                   erzeugtes Programm (nach Build)
 ```
-## Entwickler
 
-Programmentwurf von Bennet Weith, Niklas Reutter und Arne Stützle aus TSA/TSL 25
