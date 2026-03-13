@@ -51,3 +51,10 @@ Deshalb wird für "print_result_message" aktuell keine direkte Assert-Testdatei 
 
 Die Funktion "simulation" fungiert als reine Steuerfunktion. Sie besitzt keine eigene Logik, sondern ruft lediglich andere Unterfunktionen auf und verknüpft diese.
 Da alle Unterfunktionen bereits isoliert getestet wurden, ist ein zusätzlicher Unit-Test für die aufrufende Funktion nicht sinnvoll und  umsetzbar.
+
+## Ticket 92 – Review test requirement for "parking_garage_destroy"
+
+Für "parking_garage_destroy" werden aktuell keine direkten Assert-Tests ergänzt.
+
+Die Funktion dient ausschließlich dazu, bereits reservierten Speicher wieder freizugeben und interne Ressourcen zu zerstören. Nach dem Freigeben von Speicher ist eine direkte Prüfung nicht sinnvoll, da auf freigegebenen Speicher nicht mehr sicher zugegriffen werden darf.
+Eine zuverlässige Prüfung von "parking_garage_destroy" ist deshalb eher über Laufzeitanalyse-Tools wie Speicherprüfungen möglich und nicht über klassische Unit-Tests.
