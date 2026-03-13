@@ -1,5 +1,5 @@
 #include "parking_garage.h"
-
+#include <stdlib.h>
 /**
  * @brief Sucht einen freien Stellplatz und liefert dessen Index zurück.
  */
@@ -115,6 +115,52 @@ FUNCTION parking_garage_remove_departing(p_garage, current_time)
 
 END FUNCTION
 */
+ParkingGarage *parking_garage_create(int slot_count)
+{
+    if (slot_count <= 0)
+    {
+        return NULL;
+    }
+
+    ParkingGarage *p_garage = malloc(sizeof(ParkingGarage));
+    if (p_garage == NULL)
+    {
+        return NULL;
+    }
+
+    p_garage->p_slots = calloc(slot_count, sizeof(ParkingSlot));
+    if (p_garage->p_slots == NULL)
+    {
+        free(p_garage);
+        return NULL;
+    }
+
+    p_garage->p_queue = queue_create();
+    if (p_garage->p_queue == NULL)
+    {
+        free(p_garage->p_slots);
+        free(p_garage);
+        return NULL;
+    }
+
+    p_garage->slot_count = slot_count;
+    p_garage->occupied_count = 0;
+
+    return p_garage;
+}
+
+void parking_garage_destroy(ParkingGarage *p_garage)
+{
+    if (p_garage == NULL)
+    {
+        return;
+    }
+
+    queue_destroy(p_garage->p_queue);
+    free(p_garage->p_slots);
+    free(p_garage);
+}
+
 void clear_slot(ParkingSlot *p_slot){
     if (p_slot == NULL) {
         return;

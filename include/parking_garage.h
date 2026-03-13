@@ -2,14 +2,33 @@
 #define PARKING_GARAGE_H
 #include "vehicle.h"
 #include "queue.h"
+#include <stdbool.h>
 
 // Hier Programm:
+
+/**
+ * @brief Repräsentiert einen einzelnen Stellplatz im Parkhaus.
+ */
+typedef struct
+{
+    Vehicle vehicle;         // Fahrzeugdaten des parkenden Fahrzeugs
+    int departure_time;      // Geplanter Abfahrtszeitpunkt
+    bool is_occupied;        // true, wenn der Stellplatz belegt ist
+} ParkingSlot;
+
+/*
+TYPE ParkingSlot
+    vehicle              // Fahrzeugdaten des parkenden Fahrzeugs
+    departure_time       // Geplanter Abfahrtszeitpunkt
+    is_occupied          // true, wenn der Stellplatz belegt ist
+END TYPE
+*/
 
 typedef struct
 {
     int slot_count;          // Gesamtanzahl der Stellplätze
     int occupied_count;      // Anzahl aktuell belegter Stellplätze
-    Vehicle *p_slots;        // Dynamisches Array: Stellplätze
+    ParkingSlot *p_slots;        // Dynamisches Array: Stellplätze
     Queue *p_queue;          // Warteschlange für Fahrzeuge
 } ParkingGarage;
 

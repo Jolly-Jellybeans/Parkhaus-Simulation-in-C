@@ -1,5 +1,5 @@
 #include "simulation.h"
-
+#include <stdlib.h>
 /*
 FUNCTION simulation(p_garage, p_stats, config_sim_duration, config_arrival_prob, config_max_duration)
 
