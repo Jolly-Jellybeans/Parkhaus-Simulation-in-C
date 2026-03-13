@@ -1,6 +1,8 @@
 #include <assert.h>
 #include "parking_garage.h"
 
+void clear_slot(ParkingSlot *p_slot);
+
 /*
 Test 1:
 Ein freier Slot existiert.
@@ -43,4 +45,40 @@ void test_find_free_slot_index_no_free_slot() {
     int result = find_free_slot_index(&garage);
 
     assert(result == -1);
+}
+
+/*
+Test 1:
+Ein belegter Slot mit gesetzten Werten wird geleert.
+Alle Slot- und Fahrzeugwerte muessen auf den Ausgangszustand zurueckgesetzt werden.
+*/
+void test_clear_slot_resets_all_fields() {
+
+    ParkingSlot slot;
+
+    slot.vehicle.id = 42;
+    slot.vehicle.remaining_duration = 7;
+    slot.vehicle.entry_time = 12;
+    slot.departure_time = 19;
+    slot.is_occupied = true;
+
+    clear_slot(&slot);
+
+    assert(slot.vehicle.id == 0);
+    assert(slot.vehicle.remaining_duration == 0);
+    assert(slot.vehicle.entry_time == 0);
+    assert(slot.departure_time == 0);
+    assert(slot.is_occupied == false);
+}
+
+/*
+Test 2:
+Ein NULL-Zeiger wird uebergeben.
+Die Funktion darf nicht abstuerzen und muss direkt zurueckkehren.
+*/
+void test_clear_slot_with_null_pointer() {
+
+    clear_slot(NULL);
+
+    assert(1);
 }
