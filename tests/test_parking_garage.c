@@ -134,3 +134,42 @@ void test_parking_garage_remove_departing_removes_due_vehicles() {
     assert(slots[2].departure_time == 10);
 }
 
+/*
+Test 2:
+Kein Fahrzeug hat den Abfahrtszeitpunkt erreicht.
+Die Funktion darf nichts entfernen und keine Werte veraendern.
+*/
+void test_parking_garage_remove_departing_keeps_future_vehicles() {
+
+    ParkingSlot slots[2] = {0};
+    ParkingGarage garage = {0};
+
+    slots[0].vehicle.id = 11;
+    slots[0].vehicle.remaining_duration = 2;
+    slots[0].vehicle.entry_time = 1;
+    slots[0].departure_time = 7;
+    slots[0].is_occupied = true;
+
+    slots[1].vehicle.id = 12;
+    slots[1].vehicle.remaining_duration = 5;
+    slots[1].vehicle.entry_time = 2;
+    slots[1].departure_time = 9;
+    slots[1].is_occupied = true;
+
+    garage.p_slots = slots;
+    garage.slot_count = 2;
+    garage.occupied_count = 2;
+
+    int removed_count = parking_garage_remove_departing(&garage, 6);
+
+    assert(removed_count == 0);
+    assert(garage.occupied_count == 2);
+
+    assert(slots[0].is_occupied == true);
+    assert(slots[0].vehicle.id == 11);
+    assert(slots[0].departure_time == 7);
+
+    assert(slots[1].is_occupied == true);
+    assert(slots[1].vehicle.id == 12);
+    assert(slots[1].departure_time == 9);
+}
