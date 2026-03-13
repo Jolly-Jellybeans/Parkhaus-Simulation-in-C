@@ -163,6 +163,29 @@ void test_statistics_step_update_updates_state_and_sums() {
 	assert(stats.occupancy_samples == 2);
 }
 
+/*
+Test 2:
+Grenzfall mit ungueltigen Eingaben.
+Belegung ueber Kapazitaet wird gekappt, negative Queue auf 0 gesetzt.
+*/
+void test_statistics_step_update_normalizes_invalid_inputs() {
+	Statistics stats = {0};
 
+	stats.parked_vehicle_count_sum = 10;
+	stats.queued_vehicle_count_sum = 6;
+	stats.time_samples = 2;
+	stats.occupancy_ratio_sum = 0.75;
+	stats.occupancy_samples = 2;
+
+	statistics_step_update(&stats, 12, 8, -4);
+
+	assert(stats.currently_parked == 8);
+	assert(stats.currently_queued == 0);
+	assert(stats.parked_vehicle_count_sum == 18);
+	assert(stats.queued_vehicle_count_sum == 6);
+	assert(stats.time_samples == 3);
+	assert(stats.occupancy_ratio_sum == 1.75);
+	assert(stats.occupancy_samples == 3);
+}
 
 
