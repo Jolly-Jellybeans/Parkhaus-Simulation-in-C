@@ -138,4 +138,31 @@ void test_statistics_on_parked_from_queue_handles_non_positive_wait() {
 	assert(stats.currently_parked == 4);
 }
 
+/*
+Test 1:
+Normalfall mit gueltigen Eingaben.
+Momentwerte, Summen und Auslastungswerte sollen korrekt fortgeschrieben werden.
+*/
+void test_statistics_step_update_updates_state_and_sums() {
+	Statistics stats = {0};
+
+	stats.parked_vehicle_count_sum = 4;
+	stats.queued_vehicle_count_sum = 1;
+	stats.time_samples = 2;
+	stats.occupancy_ratio_sum = 0.5;
+	stats.occupancy_samples = 1;
+
+	statistics_step_update(&stats, 5, 10, 2);
+
+	assert(stats.currently_parked == 5);
+	assert(stats.currently_queued == 2);
+	assert(stats.parked_vehicle_count_sum == 9);
+	assert(stats.queued_vehicle_count_sum == 3);
+	assert(stats.time_samples == 3);
+	assert(stats.occupancy_ratio_sum == 1.0);
+	assert(stats.occupancy_samples == 2);
+}
+
+
+
 
