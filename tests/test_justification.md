@@ -1,3 +1,5 @@
+# Erklärungen für fehlende Notwendigkeit von Unit-Tests
+
 ## Ticket 61 – Review test requirement for "node_destroy"
 
 Die Funktion "node_destroy" gibt den reservierten Speicherplatz eines einzelnen Warteschlangenknotens über die C-Standardfunktion "free" an das Betriebssystem zurück.
