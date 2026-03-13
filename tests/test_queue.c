@@ -149,3 +149,27 @@ void test_queue_enqueue() {
 
     queue_destroy(q);
 }
+
+/* Test queue_size:
+Überprüft die exakte Zähllogik der Warteschlangen-Elemente.
+*/
+
+void test_queue_size() {
+    Queue *q = queue_create();
+    Vehicle v1 = {.id = 101, .entry_time = 5};
+
+    // Test 1: NULL-Pointer und leere Queue
+    // Prüft, ob leere und ungültige Queues sicher die Größe 0 zurückgeben
+    assert(queue_size(NULL) == 0);
+    assert(queue_size(q) == 0);
+
+    // Test 2: Gefüllte Queue
+    // Prüft die dynamische Größenanpassung beim Hinzufügen und Entfernen
+    queue_enqueue(q, &v1);
+    assert(queue_size(q) == 1);
+    Vehicle out_v;
+    queue_dequeue(q, &out_v);
+    assert(queue_size(q) == 0);
+
+    queue_destroy(q);
+}
