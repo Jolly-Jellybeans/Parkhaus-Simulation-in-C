@@ -53,7 +53,8 @@ FUNCTION simulation(p_garage, p_stats, config_sim_duration, config_arrival_prob,
 
         END IF
 
-        // 4. Zeitabhängige Statistiken aktualisieren und Live-Status ausgeben.
+        // 4. Zeitabhängige Statistiken aktualisieren,
+        //    Live-Status ausgeben und in Schritt-Datei schreiben.
         queued_count ← CALL queue_size(p_garage.p_queue)
 
         CALL statistics_step_update(ADRESSE VON p_stats,
@@ -64,7 +65,8 @@ FUNCTION simulation(p_garage, p_stats, config_sim_duration, config_arrival_prob,
         CALL statistics_print_step(ADRESSE VON p_stats,
                                    current_time + 1,
                                    config_sim_duration,
-                                   p_garage.slot_count)
+                                   p_garage.slot_count,
+                                   "statistics_steps.txt")
 
     END FOR
 

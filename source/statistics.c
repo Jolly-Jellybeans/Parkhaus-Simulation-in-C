@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "statistics.h"
+
 /*
 FUNCTION statistics_init(p_statistics)
 
@@ -40,9 +41,14 @@ FUNCTION statistics_on_queued(p_statistics)
         RETURN
     END IF
 
-    // Aktuell kein direkter Zähler-Update nötig:
-    // Die Kennzahl "wartende Fahrzeuge" wird pro Zeitschritt in
-    // statistics_step_update(...) über die aktuelle Queue-Länge erfasst.
+    // Negative Werte absichern und den aktuellen Queue-Zähler erhöhen.
+    IF p_statistics.currently_queued < 0
+    THEN
+        p_statistics.currently_queued ← 0
+    END IF
+
+    p_statistics.currently_queued ←
+        p_statistics.currently_queued + 1
 
 END FUNCTION
 
@@ -150,7 +156,7 @@ FUNCTION statistics_step_update(p_statistics, occupied_slots, total_slots, queue
 
 END FUNCTION
 
-FUNCTION statistics_print_step(p_statistics, current_step, total_steps, total_slots)
+FUNCTION statistics_print_step(p_statistics, current_step, total_steps, total_slots, p_filename)
 
     // Sicherheitsprüfung: Ohne gültige Statistikstruktur keine Ausgabe.
     IF p_statistics = NULL
@@ -199,19 +205,37 @@ FUNCTION statistics_print_step(p_statistics, current_step, total_steps, total_sl
             / p_statistics.queued_vehicle_count_served
     END IF
 
-    // Kompakte Live-Ausgabe für Monitoring pro Simulationsschritt.
-    PRINT "------------------- Aktueller Status -------------------"
-    PRINT "AKTUELLER STATUS: Schritt ", current_step, " / ", total_steps
-    PRINT "1) Aktuell parkende Autos         : ", p_statistics.currently_parked, " Fahrzeuge"
-    PRINT "2) Aktuelle Auslastung            : ", current_occupancy_percent, " Prozent"
-    PRINT "3) Aktuell wartende Fahrzeuge     : ", p_statistics.currently_queued, " Fahrzeuge"
-    PRINT "4) Aktuelle durchschn. Parkdauer  : ", current_avg_park_duration, " Zeitschritte"
-    PRINT "5) Aktuelle durchschn. Wartedauer : ", current_avg_wait_duration, " Zeitschritte"
-    PRINT "--------------------------------------------------------"
+    // Ausgabeziel: immer Terminal; optional zusätzlich Datei.
+    IF p_filename != NULL
+    THEN
+        outputs ← [stdout, Datei(p_filename, append_or_write)]
+    ELSE
+        outputs ← [stdout]
+    END IF
+
+    FOR JEDES output IN outputs
+        PRINT Headerblock "AKTUELLER STATUS: Schritt x / y"
+        PRINT Tabelle mit Kennzahl/Wert/Einheit
+
+        PRINT Zeile 1 (aktuell parkende Autos)
+        PRINT ASCII-Balkenzeile "Belegungsbalken" (relativ zu total_slots)
+
+        PRINT Zeile 2 (aktuelle Auslastung)
+        PRINT ASCII-Balkenzeile "Prozentbalken" (relativ zu 100)
+
+        PRINT Zeile 3 (aktuell wartende Fahrzeuge)
+        PRINT ASCII-Balkenzeile "Warteschlangenbalken" (relativ zu total_slots)
+
+        PRINT Zeile 4 (aktuelle durchschn. Parkdauer)
+        PRINT ASCII-Balkenzeile "Dauerbalken" (relativ zu total_steps)
+
+        PRINT Zeile 5 (aktuelle durchschn. Wartedauer)
+        PRINT ASCII-Balkenzeile "Wartezeitbalken" (relativ zu total_steps)
+    END FOR
 
 END FUNCTION
 
-FUNCTION statistics_print(p_statistics)
+FUNCTION statistics_print(p_statistics, p_filename)
 
     // Sicherheitsprüfung: Ohne gültige Statistikstruktur keine Ausgabe.
     IF p_statistics = NULL
@@ -264,14 +288,33 @@ FUNCTION statistics_print(p_statistics)
             / p_statistics.queued_vehicle_count_served
     END IF
 
-    // Finale Gesamtauswertung am Ende der Simulation ausgeben.
-        PRINT "==================== Gesamt-Statistik ===================="
-        PRINT "1) Durchschnittl. parkende Autos     : ", avg_parked_vehicles, " Fahrzeuge"
-        PRINT "2) Durchschnittl. Auslastung         : ", avg_occupancy_percent, " Prozent"
-        PRINT "3) Durchschnittl. wartende Fahrzeuge : ", avg_queued_vehicles, " Fahrzeuge"
-        PRINT "4) Gesamte durchschn. Parkdauer      : ", avg_park_duration, " Zeitschritte"
-        PRINT "5) Gesamte durchschn. Wartedauer     : ", avg_wait_duration, " Zeitschritte"
-        PRINT "==========================================================="
+    // Ausgabeziel: immer Terminal; optional zusätzlich Datei.
+    IF p_filename != NULL
+    THEN
+        outputs ← [stdout, Datei(p_filename, write)]
+    ELSE
+        outputs ← [stdout]
+    END IF
+
+    FOR JEDES output IN outputs
+        PRINT Headerblock "GESAMT-STATISTIK (Durchschnittswerte)"
+        PRINT Tabelle mit Kennzahl/Wert/Einheit
+
+        PRINT Zeile 1 (Durchschnittl. parkende Autos)
+        PRINT ASCII-Balkenzeile "Mittelwert-Balken" (relativ zu time_samples)
+
+        PRINT Zeile 2 (Durchschnittl. Auslastung)
+        PRINT ASCII-Balkenzeile "Prozentbalken" (relativ zu 100)
+
+        PRINT Zeile 3 (Durchschnittl. wartende Fahrzeuge)
+        PRINT ASCII-Balkenzeile "Warteschlangenbalken" (relativ zu time_samples)
+
+        PRINT Zeile 4 (Gesamte durchschn. Parkdauer)
+        PRINT ASCII-Balkenzeile "Dauerbalken" (relativ zu time_samples)
+
+        PRINT Zeile 5 (Gesamte durchschn. Wartedauer)
+        PRINT ASCII-Balkenzeile "Wartezeitbalken" (relativ zu time_samples)
+    END FOR
 
 END FUNCTION
 */
@@ -381,6 +424,7 @@ void statistics_step_update(Statistics *p_statistics,int occupied_slots,int tota
         p_statistics->occupancy_samples += 1;
     }
 }
+
 void statistics_print_step(const Statistics *p_statistics, int current_step, int total_steps, int total_slots, const char *p_filename)
 {
     if (p_statistics == NULL)
@@ -410,39 +454,108 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
         current_avg_wait_duration = (double)p_statistics->total_wait_duration / p_statistics->queued_vehicle_count_served;
     }
 
-    char header[60];
-    snprintf(header, sizeof(header), "| AKTUELLER STATUS: Schritt %d / %d", current_step, total_steps);
-
-    printf("+--------------------------------------------+------------+-----------------+\n");
-    printf("%-45s| Wert       | Einheit         |\n", header);
-    printf("+--------------------------------------------+------------+-----------------+\n");
-    printf("| %-42s|%11d | Fahrzeuge       |\n", "1. Aktuell parkende Autos", p_statistics->currently_parked);
-    printf("| %-42s|%11.1f | Prozent         |\n", "2. Aktuelle Auslastung", current_occupancy_percent);
-    printf("| %-42s|%11d | Fahrzeuge       |\n", "3. Aktuell wartende Fahrzeuge", p_statistics->currently_queued);
-    printf("| %-42s|%11.1f | Zeitschritte    |\n", "4. Aktuelle durchschn. Parkdauer", current_avg_park_duration);
-    printf("| %-42s|%11.1f | Zeitschritte    |\n", "5. Aktuelle durchschn. Wartedauer", current_avg_wait_duration);
-    printf("+--------------------------------------------+------------+-----------------+\n");
-
-    if (p_filename != NULL)
+    int target_count = (p_filename != NULL) ? 2 : 1;
+    for (int t = 0; t < target_count; t++)
     {
-        FILE *p_file = fopen(p_filename, current_step <= 1 ? "w" : "a");
-        if (p_file != NULL)
+        FILE *p_out;
+        if (t == 0)
         {
-            fprintf(p_file, "+--------------------------------------------+------------+-----------------+\n");
-            fprintf(p_file, "%-45s| Wert       | Einheit         |\n", header);
-            fprintf(p_file, "+--------------------------------------------+------------+-----------------+\n");
-            fprintf(p_file, "| %-42s|%11d | Fahrzeuge       |\n", "1. Aktuell parkende Autos", p_statistics->currently_parked);
-            fprintf(p_file, "| %-42s|%11.1f | Prozent         |\n", "2. Aktuelle Auslastung", current_occupancy_percent);
-            fprintf(p_file, "| %-42s|%11d | Fahrzeuge       |\n", "3. Aktuell wartende Fahrzeuge", p_statistics->currently_queued);
-            fprintf(p_file, "| %-42s|%11.1f | Zeitschritte    |\n", "4. Aktuelle durchschn. Parkdauer", current_avg_park_duration);
-            fprintf(p_file, "| %-42s|%11.1f | Zeitschritte    |\n", "5. Aktuelle durchschn. Wartedauer", current_avg_wait_duration);
-            fprintf(p_file, "+--------------------------------------------+------------+-----------------+\n");
-            fclose(p_file);
+            p_out = stdout;
         }
+        else
+        {
+            p_out = fopen(p_filename, current_step <= 1 ? "w" : "a");
+            if (p_out == NULL) { continue; }
+        }
+
+        char header[64];
+        snprintf(header, sizeof(header), "| AKTUELLER STATUS: Schritt %d / %d", current_step, total_steps);
+
+        fprintf(p_out, "+---------------------------------------------------------------+\n");
+        fprintf(p_out, "%-64s|\n", header);
+        fprintf(p_out, "+---------------------------------------------------------------+\n");
+        fprintf(p_out, "\n");
+        fprintf(p_out, "+--------------------------------------------+------------+-----------------+\n");
+        fprintf(p_out, "| %-42s| Wert       | Einheit         |\n", "Kennzahl");
+        fprintf(p_out, "+--------------------------------------------+------------+-----------------+\n");
+
+        // 1. Aktuell parkende Autos
+        fprintf(p_out, "| %-42s|%11d | Fahrzeuge       |\n", "1. Aktuell parkende Autos", p_statistics->currently_parked);
+        {
+            int bar_filled = 0;
+            if (total_slots > 0)
+                bar_filled = (int)((double)p_statistics->currently_parked / total_slots * 20.0 + 0.5);
+            if (bar_filled > 20) bar_filled = 20;
+            fprintf(p_out, "|    %-38s | ", "Belegungsbalken");
+            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
+            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            fprintf(p_out, " |\n");
+        }
+        fprintf(p_out, "|\n");
+
+        // 2. Aktuelle Auslastung
+        fprintf(p_out, "| %-42s|%11.1f | Prozent         |\n", "2. Aktuelle Auslastung", current_occupancy_percent);
+        {
+            int bar_filled = (int)(current_occupancy_percent / 100.0 * 20.0 + 0.5);
+            if (bar_filled > 20) bar_filled = 20;
+            fprintf(p_out, "|    %-38s | ", "Prozentbalken");
+            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
+            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            fprintf(p_out, " |\n");
+        }
+        fprintf(p_out, "|\n");
+
+        // 3. Aktuell wartende Fahrzeuge
+        fprintf(p_out, "| %-42s|%11d | Fahrzeuge       |\n", "3. Aktuell wartende Fahrzeuge", p_statistics->currently_queued);
+        {
+            int bar_filled = 0;
+            if (total_slots > 0)
+                bar_filled = (int)((double)p_statistics->currently_queued / total_slots * 20.0 + 0.5);
+            if (bar_filled > 20) bar_filled = 20;
+            fprintf(p_out, "|    %-38s | ", "Warteschlangenbalken");
+            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
+            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            fprintf(p_out, " |\n");
+        }
+        fprintf(p_out, "|\n");
+
+        // 4. Aktuelle durchschn. Parkdauer
+        fprintf(p_out, "| %-42s|%11.1f | Zeitschritte    |\n", "4. Aktuelle durchschn. Parkdauer", current_avg_park_duration);
+        {
+            int bar_filled = 0;
+            if (total_steps > 0)
+                bar_filled = (int)(current_avg_park_duration / total_steps * 20.0 + 0.5);
+            if (bar_filled > 20) bar_filled = 20;
+            fprintf(p_out, "|    %-38s | ", "Dauerbalken");
+            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
+            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            fprintf(p_out, " |\n");
+        }
+        fprintf(p_out, "|\n");
+
+        // 5. Aktuelle durchschn. Wartedauer
+        fprintf(p_out, "| %-42s|%11.1f | Zeitschritte    |\n", "5. Aktuelle durchschn. Wartedauer", current_avg_wait_duration);
+        {
+            int bar_filled = 0;
+            if (total_steps > 0)
+                bar_filled = (int)(current_avg_wait_duration / total_steps * 20.0 + 0.5);
+            if (bar_filled > 20) bar_filled = 20;
+            fprintf(p_out, "|    %-38s | ", "Wartezeitbalken");
+            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
+            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            fprintf(p_out, " |\n");
+        }
+
+        fprintf(p_out, "+--------------------------------------------+------------+-----------------+\n");
+
+        if (t != 0) { fclose(p_out); }
     }
 }
 
-void statistics_print(const Statistics *p_statistics, const char *p_filename){
+
+
+void statistics_print(const Statistics *p_statistics, const char *p_filename)
+{
     if (p_statistics == NULL)
     {
         return;
@@ -475,31 +588,97 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename){
         avg_wait_duration = (double)p_statistics->total_wait_duration / p_statistics->queued_vehicle_count_served;
     }
 
-    printf("+--------------------------------------------+------------+-----------------+\n");
-    printf("| %-42s| Wert       | Einheit         |\n", "GESAMT-STATISTIK (Durchschnittswerte)");
-    printf("+--------------------------------------------+------------+-----------------+\n");
-    printf("| %-42s|%11.1f | Fahrzeuge       |\n", "1. Durchschnittl. parkende Autos", avg_parked_vehicles);
-    printf("| %-42s|%11.1f | Prozent         |\n", "2. Durchschnittl. Auslastung", avg_occupancy_percent);
-    printf("| %-42s|%11.1f | Fahrzeuge       |\n", "3. Durchschnittl. wartende Fahrzeuge", avg_queued_vehicles);
-    printf("| %-42s|%11.1f | Zeitschritte    |\n", "4. Gesamte durchschn. Parkdauer", avg_park_duration);
-    printf("| %-42s|%11.1f | Zeitschritte    |\n", "5. Gesamte durchschn. Wartedauer", avg_wait_duration);
-    printf("+--------------------------------------------+------------+-----------------+\n");
-
-    if (p_filename != NULL)
+    int target_count = (p_filename != NULL) ? 2 : 1;
+    for (int t = 0; t < target_count; t++)
     {
-        FILE *p_file = fopen(p_filename, "w");
-        if (p_file != NULL)
+        FILE *p_out;
+        if (t == 0)
         {
-            fprintf(p_file, "+--------------------------------------------+------------+-----------------+\n");
-            fprintf(p_file, "| %-42s| Wert       | Einheit         |\n", "GESAMT-STATISTIK (Durchschnittswerte)");
-            fprintf(p_file, "+--------------------------------------------+------------+-----------------+\n");
-            fprintf(p_file, "| %-42s|%11.1f | Fahrzeuge       |\n", "1. Durchschnittl. parkende Autos", avg_parked_vehicles);
-            fprintf(p_file, "| %-42s|%11.1f | Prozent         |\n", "2. Durchschnittl. Auslastung", avg_occupancy_percent);
-            fprintf(p_file, "| %-42s|%11.1f | Fahrzeuge       |\n", "3. Durchschnittl. wartende Fahrzeuge", avg_queued_vehicles);
-            fprintf(p_file, "| %-42s|%11.1f | Zeitschritte    |\n", "4. Gesamte durchschn. Parkdauer", avg_park_duration);
-            fprintf(p_file, "| %-42s|%11.1f | Zeitschritte    |\n", "5. Gesamte durchschn. Wartedauer", avg_wait_duration);
-            fprintf(p_file, "+--------------------------------------------+------------+-----------------+\n");
-            fclose(p_file);
+            p_out = stdout;
         }
+        else
+        {
+            p_out = fopen(p_filename, "w");
+            if (p_out == NULL) { continue; }
+        }
+
+        fprintf(p_out, "+---------------------------------------------------------------+\n");
+        fprintf(p_out, "| %-61s |\n", "GESAMT-STATISTIK (Durchschnittswerte)");
+        fprintf(p_out, "+---------------------------------------------------------------+\n");
+        fprintf(p_out, "\n");
+        fprintf(p_out, "+--------------------------------------------+------------+-----------------+\n");
+        fprintf(p_out, "| %-42s| Wert       | Einheit         |\n", "Kennzahl");
+        fprintf(p_out, "+--------------------------------------------+------------+-----------------+\n");
+
+        // 1. Durchschnittl. parkende Autos
+        fprintf(p_out, "| %-42s|%11.1f | Fahrzeuge       |\n", "1. Durchschnittl. parkende Autos", avg_parked_vehicles);
+        {
+            int bar_filled = 0;
+            if (p_statistics->time_samples > 0)
+                bar_filled = (int)(avg_parked_vehicles / p_statistics->time_samples * 20.0 + 0.5);
+            if (bar_filled > 20) bar_filled = 20;
+            fprintf(p_out, "|    %-38s | ", "Mittelwert-Balken");
+            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
+            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            fprintf(p_out, " |\n");
+        }
+        fprintf(p_out, "|\n");
+
+        // 2. Durchschnittl. Auslastung
+        fprintf(p_out, "| %-42s|%11.1f | Prozent         |\n", "2. Durchschnittl. Auslastung", avg_occupancy_percent);
+        {
+            int bar_filled = (int)(avg_occupancy_percent / 100.0 * 20.0 + 0.5);
+            if (bar_filled > 20) bar_filled = 20;
+            fprintf(p_out, "|    %-38s | ", "Prozentbalken");
+            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
+            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            fprintf(p_out, " |\n");
+        }
+        fprintf(p_out, "|\n");
+
+        // 3. Durchschnittl. wartende Fahrzeuge
+        fprintf(p_out, "| %-42s|%11.1f | Fahrzeuge       |\n", "3. Durchschnittl. wartende Fahrzeuge", avg_queued_vehicles);
+        {
+            int bar_filled = 0;
+            if (p_statistics->time_samples > 0)
+                bar_filled = (int)(avg_queued_vehicles / p_statistics->time_samples * 20.0 + 0.5);
+            if (bar_filled > 20) bar_filled = 20;
+            fprintf(p_out, "|    %-38s | ", "Warteschlangenbalken");
+            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
+            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            fprintf(p_out, " |\n");
+        }
+        fprintf(p_out, "|\n");
+
+        // 4. Gesamte durchschn. Parkdauer
+        fprintf(p_out, "| %-42s|%11.1f | Zeitschritte    |\n", "4. Gesamte durchschn. Parkdauer", avg_park_duration);
+        {
+            int bar_filled = 0;
+            if (p_statistics->time_samples > 0)
+                bar_filled = (int)(avg_park_duration / p_statistics->time_samples * 20.0 + 0.5);
+            if (bar_filled > 20) bar_filled = 20;
+            fprintf(p_out, "|    %-38s | ", "Dauerbalken");
+            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
+            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            fprintf(p_out, " |\n");
+        }
+        fprintf(p_out, "|\n");
+
+        // 5. Gesamte durchschn. Wartedauer
+        fprintf(p_out, "| %-42s|%11.1f | Zeitschritte    |\n", "5. Gesamte durchschn. Wartedauer", avg_wait_duration);
+        {
+            int bar_filled = 0;
+            if (p_statistics->time_samples > 0)
+                bar_filled = (int)(avg_wait_duration / p_statistics->time_samples * 20.0 + 0.5);
+            if (bar_filled > 20) bar_filled = 20;
+            fprintf(p_out, "|    %-38s | ", "Wartezeitbalken");
+            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
+            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            fprintf(p_out, " |\n");
+        }
+
+        fprintf(p_out, "+--------------------------------------------+------------+-----------------+\n");
+
+        if (t != 0) { fclose(p_out); }
     }
 }

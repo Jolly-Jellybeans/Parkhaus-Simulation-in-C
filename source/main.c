@@ -38,8 +38,8 @@ FUNCTION main
                   config.max_park_duration)
 
   // 4. ENDE
-  // Gesamtstatistik ausgeben und Ressourcen freigeben.
-  CALL statistics_print(ADRESSE VON stats)
+    // Gesamtstatistik ausgeben und gleichzeitig in Datei schreiben.
+    CALL statistics_print(ADRESSE VON stats, "statistics_output.txt")
   CALL parking_garage_destroy(p_garage)
 
   RETURN 0
