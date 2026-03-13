@@ -97,4 +97,24 @@ void test_statistics_on_queued_counts_multiple_queue_events() {
 	assert(stats.queued_vehicle_count_sum == 6);
 }
 
+/*
+Test 1:
+Bei positiver Wartezeit soll die Wartezeit aufsummiert
+und der Zaehler bedienter Queue-Fahrzeuge um 1 erhoeht werden.
+*/
+void test_statistics_on_parked_from_queue_adds_wait_time() {
+	Statistics stats = {0};
+
+	stats.total_wait_duration = 4;
+	stats.queued_vehicle_count_served = 2;
+	stats.currently_queued = 3;
+
+	statistics_on_parked_from_queue(&stats, 6);
+
+	assert(stats.total_wait_duration == 10);
+	assert(stats.queued_vehicle_count_served == 3);
+	assert(stats.currently_queued == 3);
+}
+
+
 
