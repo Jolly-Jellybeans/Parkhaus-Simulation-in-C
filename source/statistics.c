@@ -1,5 +1,9 @@
 #include <stdio.h>
 #include "statistics.h"
+
+static int clamp_bar_value(int value, int min, int max);
+static void print_ascii_bar_line(const char *label, double value, double max_value, int width);
+
 /*
 FUNCTION statistics_init(p_statistics)
 
