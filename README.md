@@ -63,6 +63,7 @@ Wenn kein `assert` fehlschlägt, endet das Programm erfolgreich und gibt eine Be
 
 ### Projektbaum
 
+```bash
 Parkhaus-Simulation-in-C/
 ├── .vscode/
 │   ├── c_cpp_properties.json     
@@ -101,7 +102,7 @@ Parkhaus-Simulation-in-C/
 │   └── test_simulation.c          Tests Simulation
 ├── README.md
 └── parkhaus_sim                   erzeugtes Programm (nach Build)
-
+```
 ## Entwickler
 
 Programmentwurf von Bennet Weith, Niklas Reutter und Arne Stützle aus TSA/TSL 25
