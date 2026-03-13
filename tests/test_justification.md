@@ -8,17 +8,17 @@ Automatisierte Assert-Tests sind für diese Funktion im aktuellen Projektaufbau 
 
 ## Ticket 77 - Review test requirement for "statistics_print_step"
 
-Die Funktion "statistics_print_step" erzeugt formatierten Konsolen-Output über mehrere "printf"-Aufrufe.
+Die Funktion "statistics_print_step" erzeugt formatierten Konsolen- und Dateiausgabe-Output über mehrere "fprintf"-Aufrufe.
 Automatisierte Assert-Tests sind im aktuellen Projektaufbau dafür nicht sinnvoll, da ohne zusätzliche Testinfrastruktur keine robuste Umleitung und Auswertung von "stdout" erfolgt.
-Die Prüfung einzelner Zeichenketten wäre dadurch fehleranfällig (z. B. wegen Formatierung, Rundung und Zeilenumbrüchen) und hätte im Vergleich zur Kernlogik nur begrenzten Mehrwert.
+Zusätzlich müsste für Dateiausgaben ein stabiler Vergleich mit Golden-Files aufgebaut werden. Die Prüfung einzelner Zeichenketten wäre dadurch fehleranfällig (z. B. wegen Formatierung, Rundung und Zeilenumbrüchen) und hätte im Vergleich zur Kernlogik nur begrenzten Mehrwert.
 
 Die zugrunde liegende Rechenlogik wird bereits indirekt über die Tests von "statistics_step_update", "statistics_on_departure" und "statistics_on_parked_from_queue" abgedeckt.
 Daher wird "statistics_print_step" im aktuellen Stand über manuelle Sichtprüfung der Terminalausgabe validiert.
 
 ## Ticket 78 – Review test requirement for "statistics_print"
 
-Die Funktion "statistics_print" erzeugt ausschließlich formatierte Konsolenausgaben über mehrere "printf"-Aufrufe.
-Direkte Assert-Tests sind im aktuellen Projektaufbau dafür nicht sinnvoll, da ohne zusätzliche Testinfrastruktur keine stabile Umleitung und Auswertung von "stdout" möglich ist.
+Die Funktion "statistics_print" erzeugt formatierte Konsolen- und Dateiausgaben über mehrere "fprintf"-Aufrufe.
+Direkte Assert-Tests sind im aktuellen Projektaufbau dafür nicht sinnvoll, da ohne zusätzliche Testinfrastruktur keine stabile Umleitung und Auswertung von "stdout" sowie der erzeugten Datei möglich ist.
 Eine solche Ausgabeprüfung wäre hier zudem fehleranfällig (Formatierung, Rundung, Zeilenumbrüche) und hätte nur begrenzten Mehrwert gegenüber den bereits vorhandenen Logiktests.
 
 Die für die Endausgabe verwendeten Statistikwerte werden bereits über die Tests der Berechnungsfunktionen (z. B. "statistics_step_update", "statistics_on_departure", "statistics_on_parked_from_queue") abgesichert.
@@ -32,7 +32,7 @@ Ohne zusätzliche Testinfrastruktur für Input-/Output-Umleitung würde ein solc
 Daher werden aktuell keine direkten Assert-Tests erstellt. 
 Die Funktion wird stattdessen manuell über Konsoleneingaben geprüft.
 
-## Ticket 80 – Review test requirement for "get_config_from-user"
+## Ticket 80 – Review test requirement for "get_config_from_user"
 
 Für die Funktion "get_config_from_user" werden aktuell keine direkten Assert-Tests ergänzt.
 Grund dafür ist, dass die Funktion selbst keine eigenständige Fachlogik enthält, sondern mehrere Benutzereingaben über "user_input" abfragt und in einer "SimulationConfig"-Struktur speichert.
@@ -40,6 +40,13 @@ Da "user_input" direkt mit interaktiver Konsoleneingabe arbeitet ("scanf", "prin
 Ein automatisierter Assert-Test wäre in diesem Fall nur mit zusätzlichem Testaufbau sinnvoll, zum Beispiel durch Umleitung oder Mocking der Eingabe. Solche Tests wären im aktuellen Projektaufbau unnötig aufwendig und würden nicht die eigentliche Programmlogik isoliert prüfen.
 Deshalb wird für "get_config_from_user" aktuell keine direkte Assert-Testdatei ergänzt. 
 Die Funktion wird stattdessen über manuelle Eingaben im laufenden Programm geprüft.
+
+## Ticket 83 – Review test requirement for "clear_input_buffer"
+
+Die Funktion "clear_input_buffer" liest Zeichen direkt aus "stdin", bis ein Zeilenende oder EOF erreicht wird.
+Automatisierte Assert-Tests sind im aktuellen Projektaufbau ohne kontrollierte Umleitung von "stdin" nicht stabil umsetzbar.
+Da die Funktion keine fachliche Berechnungslogik enthält, sondern lediglich den Eingabepuffer bereinigt, ist der Nutzen eines aufwendigen I/O-Mocking-Setups hier gering.
+Deshalb wird "clear_input_buffer" aktuell über manuelle Eingabeszenarien validiert.
 
 ## Ticket 81 – Review test requirement for "print_result_message"
 
