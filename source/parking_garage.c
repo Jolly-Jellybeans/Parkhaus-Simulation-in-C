@@ -117,17 +117,20 @@ END FUNCTION
 */
 ParkingGarage *parking_garage_create(int slot_count)
 {
+    // Ohne Stellplätze kann kein sinnvolles Parkhaus erzeugt werden.
     if (slot_count <= 0)
     {
         return NULL;
     }
 
+    // Zuerst die Hauptstruktur allokieren.
     ParkingGarage *p_garage = malloc(sizeof(ParkingGarage));
     if (p_garage == NULL)
     {
         return NULL;
     }
 
+    // Stellplätze anlegen und mit 0 initialisieren (definierter Startzustand).
     p_garage->p_slots = calloc(slot_count, sizeof(ParkingSlot));
     if (p_garage->p_slots == NULL)
     {
@@ -135,9 +138,11 @@ ParkingGarage *parking_garage_create(int slot_count)
         return NULL;
     }
 
+    // Die Queue wird benötigt, falls bei voller Belegung neue Fahrzeuge ankommen.
     p_garage->p_queue = queue_create();
     if (p_garage->p_queue == NULL)
     {
+        // Bei Teilerfolg sauber aufräumen, damit kein Speicher verloren geht.
         free(p_garage->p_slots);
         free(p_garage);
         return NULL;
@@ -156,6 +161,7 @@ void parking_garage_destroy(ParkingGarage *p_garage)
         return;
     }
 
+    // In Besitz-Reihenfolge freigeben: Queue, Slots, danach Garagenstruktur.
     queue_destroy(p_garage->p_queue);
     free(p_garage->p_slots);
     free(p_garage);
@@ -166,6 +172,7 @@ void clear_slot(ParkingSlot *p_slot){
         return;
     }
 
+    // Stellplatz vollständig leeren, damit keine alten Fahrzeugdaten bestehen bleiben.
     p_slot->vehicle.id = 0;
     p_slot->vehicle.remaining_duration = 0;
     p_slot->vehicle.entry_time = 0;
@@ -180,9 +187,11 @@ int parking_garage_remove_departing(ParkingGarage *p_garage,int current_time){
 
     int removed_count = 0;
 
+    // Alle belegten Plätze prüfen und Fahrzeuge entfernen, deren Abfahrtszeit erreicht ist.
     for(int i = 0; i < p_garage->slot_count; i++){
         if(p_garage->p_slots[i].is_occupied && p_garage->p_slots[i].departure_time <= current_time){
             clear_slot(&p_garage->p_slots[i]);
+            // Belegungszähler synchron zum tatsächlichen Slot-Zustand halten.
             p_garage->occupied_count--;
             removed_count++;
         }
@@ -195,6 +204,7 @@ int find_free_slot_index(const ParkingGarage *p_garage){
         return -1;
     }
 
+    // First-Fit-Strategie: Der erste freie Slot wird sofort zurückgegeben.
     for (int i = 0; i < p_garage->slot_count; i++) {
         if (!p_garage->p_slots[i].is_occupied) {
             return i;
@@ -207,6 +217,7 @@ int find_free_slot_index(const ParkingGarage *p_garage){
 
 ParkingResult parking_garage_park(ParkingGarage *p_garage, const Vehicle *p_vehicle, int current_time)
 {
+    // Ungültige Zeiger oder fachlich ungültige Fahrzeugdaten sofort ablehnen.
     if (p_garage == NULL || p_vehicle == NULL || !vehicle_is_valid(p_vehicle))
     {
         return PARKING_INVALID;
@@ -216,9 +227,12 @@ ParkingResult parking_garage_park(ParkingGarage *p_garage, const Vehicle *p_vehi
 
     if (free_index >= 0)
     {
+        // Fahrzeug direkt in den freien Slot eintragen.
         ParkingSlot *p_slot = &p_garage->p_slots[free_index];
 
         p_slot->vehicle = *p_vehicle;
+        // entry_time und departure_time werden beim Parken gesetzt,
+        // damit spätere Abfahrtsprüfungen korrekt funktionieren.
         p_slot->vehicle.entry_time = current_time;
         p_slot->departure_time = current_time + p_vehicle->remaining_duration;
         p_slot->is_occupied = true;
@@ -228,10 +242,12 @@ ParkingResult parking_garage_park(ParkingGarage *p_garage, const Vehicle *p_vehi
         return PARKING_SUCCESS;
     }
 
+    // Wenn kein Platz frei ist: Fahrzeug als Fallback in die Queue einreihen.
     if (queue_enqueue(p_garage->p_queue, p_vehicle))
     {
         return PARKING_QUEUED;
     }
 
+    // Auch die Queue ist voll: Fahrzeug kann aktuell nicht aufgenommen werden.
     return PARKING_QUEUE_FULL;
 }
