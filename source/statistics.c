@@ -497,6 +497,44 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
             fprintf(p_file, "+--------------------------------------------+------------+-----------------+\n");
             fclose(p_file);
         }
+        { 
+            // Additional ASCII chart section for the current simulation step
+    printf("|-------------------------------------------------------------|\n");
+    printf("| ASCII-DIAGRAMME PRO ZEITSCHRITT                             |\n");
+    printf("|-------------------------------------------------------------|\n");
+
+    // Occupied slots relative to total slots
+    print_ascii_bar_line("Belegungsbalken",
+                         (double)p_statistics->currently_parked,
+                         (double)total_slots,
+                         20);
+
+    // Occupancy percentage relative to 100
+    print_ascii_bar_line("Prozentbalken",
+                         current_occupancy_percent,
+                         100.0,
+                         20);
+
+    // Queued vehicles relative to total slots
+    print_ascii_bar_line("Warteschlange",
+                         (double)p_statistics->currently_queued,
+                         (double)total_slots,
+                         20);
+
+    // Average parking duration relative to total steps
+    print_ascii_bar_line("Dauerbalken",
+                         current_avg_park_duration,
+                         (double)total_steps,
+                         20);
+
+    // Average waiting duration relative to total steps
+    print_ascii_bar_line("Wartezeitbalken",
+                         current_avg_wait_duration,
+                         (double)total_steps,
+                         20);
+
+    printf("|-------------------------------------------------------------|\n");
+        }
     }
 }
 
