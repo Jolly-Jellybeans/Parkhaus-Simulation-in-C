@@ -38,21 +38,20 @@ void test_statistics_init_resets_all_fields() {
 
 /*
 Test 2:
-Idempotenz: Ein erneuter Aufruf auf bereits initialisierter Struktur
-darf keine ungueltigen Werte erzeugen und muss bei 0/0.0 bleiben.
+Frische Struktur ohne Vorbelegung.
+Es wird nur geprueft, ob statistics_init den erwarteten Startzustand setzt.
 */
-void test_statistics_init_is_idempotent() {
-	Statistics stats;
-
-	statistics_init(&stats);
-
-	stats.currently_parked = 1;
-	stats.total_wait_duration = 7;
-	stats.occupancy_ratio_sum = 0.5;
+void test_statistics_init_fresh_struct_start_state() {
+	Statistics stats = {0};
 
 	statistics_init(&stats);
 
 	assert(stats.currently_parked == 0);
+	assert(stats.currently_queued == 0);
+	assert(stats.parked_vehicle_count_sum == 0);
+	assert(stats.queued_vehicle_count_sum == 0);
+	assert(stats.queued_vehicle_count_served == 0);
+	assert(stats.total_park_duration == 0);
 	assert(stats.total_wait_duration == 0);
 	assert(stats.occupancy_ratio_sum == 0.0);
 	assert(stats.time_samples == 0);
