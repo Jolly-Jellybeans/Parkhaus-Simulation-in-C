@@ -1,6 +1,8 @@
 #include <assert.h>
 #include <stddef.h>
 #include "parking_garage.h"
+#include "vehicle.h"
+#include "queue.h"
 
 void clear_slot(ParkingSlot *p_slot);
 
