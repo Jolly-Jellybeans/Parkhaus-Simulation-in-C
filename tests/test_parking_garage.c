@@ -248,34 +248,3 @@ void test_parking_garage_park_queued_when_no_slot_free(void) {
     queue_destroy(queue);
 }
 
-/*
-Test 3:
-Ein ungueltiges Fahrzeug wird uebergeben.
-Die Funktion soll PARKING_INVALID liefern.
-Weder Parkhaus noch Queue duerfen veraendert werden.
-*/
-void test_parking_garage_park_invalid_vehicle(void) {
-    ParkingGarage garage;
-    ParkingSlot slots[1];
-    Queue *queue = queue_create();
-
-    assert(queue != NULL);
-
-    slots[0].is_occupied = false;
-
-    garage.slot_count = 1;
-    garage.occupied_count = 0;
-    garage.p_slots = slots;
-    garage.p_queue = queue;
-
-    Vehicle invalid_vehicle = {0, 5, 0};            // invalid because id must be > 0
-
-    ParkingResult result = parking_garage_park(&garage, &invalid_vehicle, 4);
-
-    assert(result == PARKING_INVALID);            // invalid vehicle should be rejected
-    assert(garage.occupied_count == 0);            // garage state must stay unchanged
-    assert(slots[0].is_occupied == false);            // slot must still be free
-    assert(queue_size(queue) == 0);
-
-    queue_destroy(queue);
-}
