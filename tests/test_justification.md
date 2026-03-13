@@ -39,3 +39,12 @@ Eine solche Ausgabeprüfung wäre hier zudem fehleranfällig (Formatierung, Rund
 
 Die für die Endausgabe verwendeten Statistikwerte werden bereits über die Tests der Berechnungsfunktionen (z. B. "statistics_step_update", "statistics_on_departure", "statistics_on_parked_from_queue") abgesichert.
 Daher wird "statistics_print" aktuell über manuelle Sichtprüfung der Terminalausgabe validiert.
+
+
+## Ticket 81 – Review test requirement for "print_result_message"
+
+Die Funktion "print_result_message" erzeugt ausschließlich Konsolenausgaben über "printf" und enthält keine eigenständige Fachlogik. Direkte Assert-Tests wären im aktuellen Projektaufbau nur mit zusätzlicher Testinfrastruktur sinnvoll, um "stdout" umzuleiten und die Ausgabetexte automatisiert zu vergleichen.
+
+Da ein solcher Testaufbau hier nicht vorhanden ist, würden entsprechende Tests unnötig aufwendig und fehleranfällig werden. Die eigentliche Programmlogik wird bereits über die Rückgabewerte wie "PARKING_SUCCESS", "PARKING_QUEUED" und "PARKING_QUEUE_FULL" in anderen Funktionen geprüft.
+
+Deshalb wird für "print_result_message" aktuell keine direkte Assert-Testdatei ergänzt. Die Funktion wird stattdessen über manuelle Sichtprüfung der Konsolenausgabe validiert.
