@@ -53,3 +53,30 @@ void test_queue_create() {
     queue_destroy(q);
 }
 
+/* Test queue_destroy:
+Bei fehlerhaften Funktionen stürzt das Programm ab, 
+eine Überprüfung ob Speicher freigegeben wurde, ist mit assert nicht möglich
+*/
+void test_queue_destroy() {
+
+    // Test 1: NULL-Pointer 
+    // Überprüfung ob NULL-Pointer ignoriert wird
+    queue_destroy(NULL);
+  
+
+    // Test 2: Gefüllte Queue 
+    // Prüft, ob die while-Schleife auf keine fehlerhaften Adressen zeigt
+    Queue *q_filled = queue_create();
+    assert(q_filled != NULL);
+
+    Vehicle v1 = {.id = 101, .entry_time = 5};
+    Vehicle v2 = {.id = 102, .entry_time = 6};
+    Vehicle v3 = {.id = 103, .entry_time = 7};
+
+    enqueue(q_filled, &v1);
+    enqueue(q_filled, &v2);
+    enqueue(q_filled, &v3);
+
+    queue_destroy(q_filled);
+
+}
