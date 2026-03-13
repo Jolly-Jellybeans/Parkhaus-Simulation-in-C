@@ -80,3 +80,23 @@ void test_queue_destroy() {
     queue_destroy(q_filled);
 
 }
+
+/* Test queue_is_empty:
+Überprüft die korrekte Zustandserkennung der Warteschlange.
+*/
+void test_queue_is_empty() {
+    Queue *q = queue_create();
+
+    // Test 1: NULL-Pointer und leere Queue
+    // Prüft, ob fehlende oder frisch initialisierte Queues als leer gewertet werden
+    assert(queue_is_empty(NULL) == true);
+    assert(queue_is_empty(q) == true);
+
+    // Test 2: Gefüllte Queue
+    // Prüft, ob nach dem Einfügen eines Elements false zurückgegeben wird
+    Vehicle v1 = {.id = 101, .entry_time = 5};
+    queue_enqueue(q, &v1);
+    assert(queue_is_empty(q) == false);
+
+    queue_destroy(q);
+}
