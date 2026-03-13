@@ -105,6 +105,27 @@ void test_queue_dequeue() {
     queue_destroy(q);
 }
 
+/* Test queue_is_empty:
+Überprüft die korrekte Zustandserkennung der Warteschlange.
+*/
+
+void test_queue_is_empty() {
+    Queue *q = queue_create();
+
+    // Test 1: NULL-Pointer und leere Queue
+    // Prüft, ob fehlende oder frisch initialisierte Queues als leer gewertet werden
+    assert(queue_is_empty(NULL) == true);
+    assert(queue_is_empty(q) == true);
+
+    // Test 2: Gefüllte Queue
+    // Prüft, ob nach dem Einfügen eines Elements false zurückgegeben wird
+    Vehicle v1 = {.id = 101, .entry_time = 5};
+    queue_enqueue(q, &v1);
+    assert(queue_is_empty(q) == false);
+
+    queue_destroy(q);
+}
+
 /* Test queue_enqueue:
 Überprüft das korrekte Einfügen von Elementen und die Zeiger-Verkettung.
 */
@@ -125,6 +146,30 @@ void test_queue_enqueue() {
     assert(q->p_head == q->p_tail);
     queue_enqueue(q, &v2);
     assert(q->p_tail->data.id == 102);
+
+    queue_destroy(q);
+}
+
+/* Test queue_size:
+Überprüft die exakte Zähllogik der Warteschlangen-Elemente.
+*/
+
+void test_queue_size() {
+    Queue *q = queue_create();
+    Vehicle v1 = {.id = 101, .entry_time = 5};
+
+    // Test 1: NULL-Pointer und leere Queue
+    // Prüft, ob leere und ungültige Queues sicher die Größe 0 zurückgeben
+    assert(queue_size(NULL) == 0);
+    assert(queue_size(q) == 0);
+
+    // Test 2: Gefüllte Queue
+    // Prüft die dynamische Größenanpassung beim Hinzufügen und Entfernen
+    queue_enqueue(q, &v1);
+    assert(queue_size(q) == 1);
+    Vehicle out_v;
+    queue_dequeue(q, &out_v);
+    assert(queue_size(q) == 0);
 
     queue_destroy(q);
 }

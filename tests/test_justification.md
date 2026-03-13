@@ -41,7 +41,13 @@ Ein automatisierter Assert-Test wäre in diesem Fall nur mit zusätzlichem Testa
 Deshalb wird für "get_config_from_user" aktuell keine direkte Assert-Testdatei ergänzt. 
 Die Funktion wird stattdessen über manuelle Eingaben im laufenden Programm geprüft.
 
-## Ticket 81 – Review test requirement for "simulation"
+## Ticket 81 – Review test requirement for "print_result_message"
+
+Die Funktion "print_result_message" erzeugt ausschließlich Konsolenausgaben über "printf" und enthält keine eigenständige Fachlogik. Direkte Assert-Tests wären im aktuellen Projektaufbau nur mit zusätzlicher Testinfrastruktur sinnvoll, um "stdout" umzuleiten und die Ausgabetexte automatisiert zu vergleichen.
+Da ein solcher Testaufbau hier nicht vorhanden ist, würden entsprechende Tests unnötig aufwendig und fehleranfällig werden. Die eigentliche Programmlogik wird bereits über die Rückgabewerte wie "PARKING_SUCCESS", "PARKING_QUEUED" und "PARKING_QUEUE_FULL" in anderen Funktionen geprüft.
+Deshalb wird für "print_result_message" aktuell keine direkte Assert-Testdatei ergänzt. Die Funktion wird stattdessen über manuelle Sichtprüfung der Konsolenausgabe validiert.
+
+## Ticket 82 – Review test requirement for "simulation"
 
 Die Funktion "simulation" fungiert als reine Steuerfunktion. Sie besitzt keine eigene Logik, sondern ruft lediglich andere Unterfunktionen auf und verknüpft diese.
 Da alle Unterfunktionen bereits isoliert getestet wurden, ist ein zusätzlicher Unit-Test für die aufrufende Funktion nicht sinnvoll und  umsetzbar.
