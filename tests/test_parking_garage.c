@@ -1,6 +1,8 @@
 #include <assert.h>
 #include <stddef.h>
 #include "parking_garage.h"
+#include "vehicle.h"
+#include "queue.h"
 
 void clear_slot(ParkingSlot *p_slot);
 
@@ -173,3 +175,76 @@ void test_parking_garage_remove_departing_keeps_future_vehicles() {
     assert(slots[1].vehicle.id == 12);
     assert(slots[1].departure_time == 9);
 }
+
+
+/*
+Test 1:
+Es gibt mindestens einen freien Stellplatz.
+Das Fahrzeug soll direkt eingeparkt werden.
+Rueckgabewert muss PARKING_SUCCESS sein.
+Belegung und Slot-Daten muessen korrekt gesetzt werden.
+*/
+void test_parking_garage_park_direct_success(void) {
+    ParkingGarage garage;
+    ParkingSlot slots[2];
+    Queue *queue = queue_create();
+
+    assert(queue != NULL);            // queue must be created successfully
+
+    slots[0].is_occupied = false;
+    slots[1].is_occupied = false;
+
+    garage.slot_count = 2;
+    garage.occupied_count = 0;
+    garage.p_slots = slots;
+    garage.p_queue = queue;
+
+    Vehicle vehicle = {1, 5, 0};
+
+    ParkingResult result = parking_garage_park(&garage, &vehicle, 10);
+
+    assert(result == PARKING_SUCCESS);            // vehicle should park directly
+    assert(garage.occupied_count == 1);            // one slot should now be occupied
+    assert(slots[0].is_occupied == true);
+    assert(slots[0].vehicle.id == 1);            // vehicle id should be copied into slot
+    assert(slots[0].vehicle.remaining_duration == 5);
+    assert(slots[0].vehicle.entry_time == 10);            // entry time should be set
+    assert(slots[0].departure_time == 15);            // departure time = current_time + duration
+
+    queue_destroy(queue);
+}
+
+/*
+Test 2:
+Alle Stellplaetze sind bereits belegt.
+Das Fahrzeug soll in die Queue aufgenommen werden.
+Rueckgabewert muss PARKING_QUEUED sein.
+Belegung im Parkhaus darf sich nicht aendern.
+Queue-Groesse muss danach 1 sein.
+*/
+void test_parking_garage_park_queued_when_no_slot_free(void) {
+    ParkingGarage garage;
+    ParkingSlot slots[2];
+    Queue *queue = queue_create();
+
+    assert(queue != NULL);
+
+    slots[0].is_occupied = true;
+    slots[1].is_occupied = true;
+
+    garage.slot_count = 2;
+    garage.occupied_count = 2;
+    garage.p_slots = slots;
+    garage.p_queue = queue;
+
+    Vehicle vehicle = {2, 3, 0};
+
+    ParkingResult result = parking_garage_park(&garage, &vehicle, 7);
+
+    assert(result == PARKING_QUEUED);            // vehicle should be added to queue
+    assert(garage.occupied_count == 2);            // occupied slots should stay unchanged
+    assert(queue_size(queue) == 1);            // queue should now contain one vehicle
+
+    queue_destroy(queue);
+}
+
