@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stddef.h>
 #include "parking_garage.h"
 
 void clear_slot(ParkingSlot *p_slot);
@@ -82,3 +83,54 @@ void test_clear_slot_with_null_pointer() {
 
     assert(1);
 }
+
+/*
+Test 1:
+Zwei belegte Slots haben ihre Abfahrtszeit bereits erreicht.
+Die Funktion soll beide Fahrzeuge entfernen und die Belegung anpassen.
+*/
+void test_parking_garage_remove_departing_removes_due_vehicles() {
+
+    ParkingSlot slots[3] = {0};
+    ParkingGarage garage = {0};
+
+    slots[0].vehicle.id = 1;
+    slots[0].vehicle.remaining_duration = 3;
+    slots[0].vehicle.entry_time = 2;
+    slots[0].departure_time = 5;
+    slots[0].is_occupied = true;
+
+    slots[1].vehicle.id = 2;
+    slots[1].vehicle.remaining_duration = 4;
+    slots[1].vehicle.entry_time = 3;
+    slots[1].departure_time = 8;
+    slots[1].is_occupied = true;
+
+    slots[2].vehicle.id = 3;
+    slots[2].vehicle.remaining_duration = 6;
+    slots[2].vehicle.entry_time = 4;
+    slots[2].departure_time = 10;
+    slots[2].is_occupied = true;
+
+    garage.p_slots = slots;
+    garage.slot_count = 3;
+    garage.occupied_count = 3;
+
+    int removed_count = parking_garage_remove_departing(&garage, 8);
+
+    assert(removed_count == 2);
+    assert(garage.occupied_count == 1);
+
+    assert(slots[0].is_occupied == false);
+    assert(slots[0].vehicle.id == 0);
+    assert(slots[0].departure_time == 0);
+
+    assert(slots[1].is_occupied == false);
+    assert(slots[1].vehicle.id == 0);
+    assert(slots[1].departure_time == 0);
+
+    assert(slots[2].is_occupied == true);
+    assert(slots[2].vehicle.id == 3);
+    assert(slots[2].departure_time == 10);
+}
+
