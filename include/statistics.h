@@ -1,5 +1,6 @@
 #ifndef STATISTICS_H
 #define STATISTICS_H
+#include "parking_garage.h"
 /*
 STRUCTURE Statistics
 
@@ -86,5 +87,5 @@ void statistics_print_step(const Statistics *p_statistics,int current_step,int t
  * @param[in] p_statistics Statistikstruktur, die ausgegeben wird.
  * @param[in] p_filename Dateiname fuer die Ausgabedatei, oder NULL fuer nur Konsolenausgabe.
  */
-void statistics_print(const Statistics *p_statistics, const char *p_filename);
+void statistics_print(const Statistics *p_statistics, const ParkingGarage *p_garage, const char *p_filename);
 #endif /* STATISTICS_H */

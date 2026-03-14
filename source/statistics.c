@@ -551,7 +551,7 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
             {
                 fprintf(p_out, "-");
             }
-            fprintf(p_out, " |\n");
+            fprintf(p_out, "         |\n");
         }
         fprintf(p_out, "|\n");
 
@@ -572,7 +572,7 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
             {
                 fprintf(p_out, "-");
             }
-            fprintf(p_out, " |\n");
+            fprintf(p_out, "         |\n");
         }
         fprintf(p_out, "|\n");
 
@@ -597,7 +597,7 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
             {
                 fprintf(p_out, "-");
             }
-            fprintf(p_out, " |\n");
+            fprintf(p_out, "         |\n");
         }
         fprintf(p_out, "|\n");
 
@@ -624,7 +624,7 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
             }
             fprintf(p_out, " |\n");
         }
-        fprintf(p_out, "|\n");
+        fprintf(p_out, "         |\n");
 
         // 5. Aktuelle durchschn. Wartedauer + Balken relativ zu total_steps.
         fprintf(p_out, "| %-42s|%11.1f | Zeitschritte    |\n", "5. Aktuelle durchschn. Wartedauer", current_avg_wait_duration);
@@ -647,7 +647,7 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
             {
                 fprintf(p_out, "-");
             }
-            fprintf(p_out, " |\n");
+            fprintf(p_out, "         |\n");
         }
 
         fprintf(p_out, "+--------------------------------------------+------------+-----------------+\n");
@@ -661,7 +661,7 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
 
 
 
-void statistics_print(const Statistics *p_statistics, const char *p_filename)
+void statistics_print(const Statistics *p_statistics, const ParkingGarage *p_garage, const char *p_filename)
 {
     // Ohne Statistikdaten keine Ausgabe.
     if (p_statistics == NULL)
@@ -701,6 +701,20 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
         avg_wait_duration = (double)p_statistics->total_wait_duration / p_statistics->queued_vehicle_count_served;
     }
 
+    // Referenz fuer Fahrzeug-bezogene Balken: user-konfigurierte Garagenkapazitaet.
+    int max_slots_for_bar = 1;
+    if (p_garage != NULL && p_garage->slot_count > 0)
+    {
+        max_slots_for_bar = p_garage->slot_count;
+    }
+
+    // Referenz fuer Dauer-Balken: user-konfigurierte maximale Parkdauer.
+    int max_park_duration_for_bar = 1;
+    if (p_garage != NULL && p_garage->max_park_duration > 0)
+    {
+        max_park_duration_for_bar = p_garage->max_park_duration;
+    }
+
     // Immer Terminal; optional zusaetzlich Gesamtauswertung in Datei.
     int target_count = (p_filename != NULL) ? 2 : 1; // 1=Terminal, 2=Terminal+Datei
     for (int t = 0; t < target_count; t++)
@@ -728,14 +742,11 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
         fprintf(p_out, "| %-42s| Wert       | Einheit         |\n", "Kennzahl");
         fprintf(p_out, "+-------------------------------------------+------------+-----------------+\n");
 
-        // 1. Durchschnittl. parkende Autos + Balken relativ zu time_samples.
+        // 1. Durchschnittl. parkende Autos + Balken relativ zur Garagenkapazitaet.
         fprintf(p_out, "| %-42s|%11.1f | Fahrzeuge       |\n", "1. Durchschnittl. parkende Autos", avg_parked_vehicles);
         {
             int bar_filled = 0;
-            if (p_statistics->time_samples > 0)
-            {
-                bar_filled = (int)(avg_parked_vehicles / p_statistics->time_samples * BAR_WIDTH + 0.5);
-            }
+            bar_filled = (int)(avg_parked_vehicles / max_slots_for_bar * BAR_WIDTH + 0.5);
             if (bar_filled > BAR_WIDTH)
             {
                 bar_filled = BAR_WIDTH; // Balken auf max. BAR_WIDTH Zeichen begrenzen
@@ -776,14 +787,11 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
         }
         fprintf(p_out, "|\n");
 
-        // 3. Durchschnittl. wartende Fahrzeuge + Balken relativ zu time_samples.
+        // 3. Durchschnittl. wartende Fahrzeuge + Balken relativ zur Garagenkapazitaet.
         fprintf(p_out, "| %-42s|%11.1f | Fahrzeuge       |\n", "3. Durchschnittl. wartende Fahrzeuge", avg_queued_vehicles);
         {
             int bar_filled = 0;
-            if (p_statistics->time_samples > 0)
-            {
-                bar_filled = (int)(avg_queued_vehicles / p_statistics->time_samples * BAR_WIDTH + 0.5);
-            }
+            bar_filled = (int)(avg_queued_vehicles / max_slots_for_bar * BAR_WIDTH + 0.5);
             if (bar_filled > BAR_WIDTH)
             {
                 bar_filled = BAR_WIDTH; // Balken auf max. BAR_WIDTH Zeichen begrenzen
@@ -802,14 +810,11 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
         }
         fprintf(p_out, "|\n");
 
-        // 4. Gesamte durchschn. Parkdauer + Balken relativ zu time_samples.
+        // 4. Gesamte durchschn. Parkdauer + Balken relativ zur max. Parkdauer.
         fprintf(p_out, "| %-42s|%11.1f | Zeitschritte    |\n", "4. Gesamte durchschn. Parkdauer", avg_park_duration);
         {
             int bar_filled = 0;
-            if (p_statistics->time_samples > 0)
-            {
-                bar_filled = (int)(avg_park_duration / p_statistics->time_samples * BAR_WIDTH + 0.5);
-            }
+            bar_filled = (int)(avg_park_duration / max_park_duration_for_bar * BAR_WIDTH + 0.5);
             if (bar_filled > BAR_WIDTH)
             {
                 bar_filled = BAR_WIDTH; // Balken auf max. BAR_WIDTH Zeichen begrenzen
@@ -828,14 +833,11 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
         }
         fprintf(p_out, "|\n");
 
-        // 5. Gesamte durchschn. Wartedauer + Balken relativ zu time_samples.
+        // 5. Gesamte durchschn. Wartedauer + Balken relativ zur max. Parkdauer.
         fprintf(p_out, "| %-42s|%11.1f | Zeitschritte    |\n", "5. Gesamte durchschn. Wartedauer", avg_wait_duration);
         {
             int bar_filled = 0;
-            if (p_statistics->time_samples > 0)
-            {
-                bar_filled = (int)(avg_wait_duration / p_statistics->time_samples * BAR_WIDTH + 0.5);
-            }
+            bar_filled = (int)(avg_wait_duration / max_park_duration_for_bar * BAR_WIDTH + 0.5);
             if (bar_filled > BAR_WIDTH)
             {
                 bar_filled = BAR_WIDTH; // Balken auf max. BAR_WIDTH Zeichen begrenzen

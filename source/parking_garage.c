@@ -155,6 +155,7 @@ ParkingGarage *parking_garage_create(int slot_count)
 
     p_garage->slot_count = slot_count;
     p_garage->occupied_count = 0;
+    p_garage->max_park_duration = 0;
 
     return p_garage;
 }

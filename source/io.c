@@ -165,6 +165,16 @@ SimulationConfig get_config_from_user(void)
         }
     } while (config.arrival_prob < 0 || config.arrival_prob > 100);
 
+    // Seed >= 0; 0 bedeutet zeitbasierter Seed (zufaellig).
+    do
+    {
+        config.seed = user_input("Random-Seed (>=0, 0 = zeitbasiert): ");
+        if (config.seed < 0)
+        {
+            printf("Bitte eine Zahl >= 0 eingeben.\n");
+        }
+    } while (config.seed < 0);
+
     return config;
 }
 
