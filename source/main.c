@@ -11,6 +11,7 @@
 #include "io.h"
 #include "simulation.h"
 #include <stdlib.h>
+#include <time.h>
 
 
 /*
@@ -25,7 +26,7 @@ FUNCTION main
   config ← CALL get_config_from_user()
 
   // 2. INITIALISIERUNG
-  CALL srand(config.seed)
+  CALL srand(config.seed != 0 ? config.seed : time(NULL))
 
   p_garage ← CALL parking_garage_create(config.slots)
   IF p_garage ist NULL THEN
@@ -62,7 +63,14 @@ int main(void)
 
     config = get_config_from_user();            // read user settings
 
-    srand(config.seed);            // initialize random generator
+    if (config.seed != 0)
+    {
+        srand((unsigned int)config.seed);  // fester Seed fuer Reproduzierbarkeit
+    }
+    else
+    {
+        srand((unsigned int)time(NULL));    // zeitbasierter Seed fuer zufaellige Ergebnisse
+    }
 
     p_garage = parking_garage_create(config.slots);            // create garage
     if (p_garage == NULL)
