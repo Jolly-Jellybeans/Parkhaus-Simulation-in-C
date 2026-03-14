@@ -32,16 +32,34 @@ END FUNCTION
 ---------------------------------------------------------------
 FUNCTION get_config_from_user() RETURNS SimulationConfig
 ---------------------------------------------------------------  
-    NEW config (Type SimulationConfig)  // create new config object
-
-    config.slots            <- CALL user_input("Anzahl der Stellplätze: ")
-    config.max_park_duration<- CALL user_input("Maximale Parkdauer (pro Auto): ")
-    config.sim_duration     <- CALL user_input("Gesamte Simulationsdauer: ")
-    config.arrival_prob     <- CALL user_input("Ankunftswahrscheinlichkeit (0-100): ")
-    config.seed             <- CALL user_input("Zufalls-Seed: ")
-
-    RETURN config                      // return all user values
-END FUNCTION
+  LOOP until config.slots > 0
+        config.slots <- CALL user_input("Anzahl der Stellplaetze: ")
+        IF config.slots <= 0 THEN
+            PRINT "Bitte eine Zahl groesser 0 eingeben."
+        END IF
+    END LOOP
+ 
+    LOOP until config.max_park_duration > 0
+        config.max_park_duration <- CALL user_input("Maximale Parkdauer (pro Auto): ")
+        IF config.max_park_duration <= 0 THEN
+            PRINT "Bitte eine Zahl groesser 0 eingeben."
+        END IF
+    END LOOP
+ 
+    LOOP until config.sim_duration > 0
+        config.sim_duration <- CALL user_input("Gesamte Simulationsdauer: ")
+        IF config.sim_duration <= 0 THEN
+            PRINT "Bitte eine Zahl groesser 0 eingeben."
+        END IF
+    END LOOP
+ 
+    LOOP until 0 <= config.arrival_prob <= 100
+        config.arrival_prob <- CALL user_input("Ankunftswahrscheinlichkeit (0-100): ")
+        IF config.arrival_prob < 0 OR config.arrival_prob > 100 THEN
+            PRINT "Bitte einen Wert zwischen 0 und 100 eingeben."
+        END IF
+    END LOOP
+    END FUNCTION
 */
 /*
 -----------------------------------------------------------
@@ -103,11 +121,37 @@ SimulationConfig get_config_from_user(void)
 {
     SimulationConfig config;        // config object for all inputs
 
-    config.slots = user_input("Anzahl der Stellplaetze: ");      // number of parking slots
-    config.max_park_duration = user_input("Maximale Parkdauer (pro Auto): ");    // max parking duration
-    config.sim_duration = user_input("Gesamte Simulationsdauer: ");        // total simulation time
-    config.arrival_prob = user_input("Ankunftswahrscheinlichkeit (0-100): ");    // arrival probability
-    config.seed = user_input("Zufalls-Seed: ");      // random seed
+    // Gueltige Slot-Anzahl erzwingen, da ein Parkhaus mindestens 1 Stellplatz braucht.
+    do {
+        config.slots = user_input("Anzahl der Stellplaetze: ");
+        if (config.slots <= 0) {
+            printf("Bitte eine Zahl groesser 0 eingeben.\n");
+        }
+    } while (config.slots <= 0);
+ 
+    // >0 verhindert spaeter ungueltige Modulo-Operationen bei der Zufallsdauer.
+    do {
+        config.max_park_duration = user_input("Maximale Parkdauer (pro Auto): ");
+        if (config.max_park_duration <= 0) {
+            printf("Bitte eine Zahl groesser 0 eingeben.\n");
+        }
+    } while (config.max_park_duration <= 0);
+ 
+    // Simulation muss mindestens einen Zeitschritt laufen.
+    do {
+        config.sim_duration = user_input("Gesamte Simulationsdauer: ");
+        if (config.sim_duration <= 0) {
+            printf("Bitte eine Zahl groesser 0 eingeben.\n");
+        }
+    } while (config.sim_duration <= 0);
+ 
+    // Wahrscheinlichkeit immer im Bereich 0..100 halten.
+    do {
+        config.arrival_prob = user_input("Ankunftswahrscheinlichkeit (0-100): ");
+        if (config.arrival_prob < 0 || config.arrival_prob > 100) {
+            printf("Bitte einen Wert zwischen 0 und 100 eingeben.\n");
+        }
+    } while (config.arrival_prob < 0 || config.arrival_prob > 100);
 
     return config;
 }
