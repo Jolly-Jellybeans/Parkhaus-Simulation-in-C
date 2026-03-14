@@ -1,5 +1,5 @@
 #include "vehicle.h"
-#include <stdlib.h>
+#include <stddef.h>
 
 bool vehicle_is_valid(const Vehicle *p_vehicle)
 {
