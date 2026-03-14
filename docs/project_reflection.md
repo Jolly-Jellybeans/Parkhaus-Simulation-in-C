@@ -61,3 +61,17 @@ Darüber hinaus war es wichtig, eine gemeinsame Struktur für den Code festzuleg
 Insgesamt waren wir jedoch sehr zufrieden mit der Zusammenarbeit. Abgesehen von konstruktiven Diskussionen über die genannten Themen traten keine größeren Probleme auf.
 
 ## 5. Was ist Ihnen im Team einfach gefallen bzw. sehr gut gelungen?
+
+Die Zusammenarbeit innerhalb unseres dreiköpfigen Teams verlief über den gesamten Projektzeitraum hinweg sehr strukturiert und produktiv. Bereits zu Beginn der Bearbeitung haben wir uns darauf verständigt, die Arbeit klar in einzelne Themenbereiche zu unterteilen und diese über ein gemeinsames GitHub-Projekt zu organisieren. Dazu wurden einzelne Aufgaben als Issues erstellt und in einem Kanban-Board verwaltet.
+ 
+Während des ersten Teils des Projekts haben wir bereits mit dieser Struktur gearbeitet, jedoch festgestellt, dass die Namensgebung unserer Branches nicht immer vollständig einheitlich war. Aus diesem Grund haben wir uns im zweiten Teil des Projekts bewusst dazu entschieden, die Branch-Namen systematisch direkt an das jeweilige Ticket beziehungsweise die Issue-Bezeichnungen anzulehnen.
+ 
+Ein weiterer wichtiger Faktor für die erfolgreiche Zusammenarbeit war unsere sehr enge Kommunikation im Team. Zwei von uns wohnen in derselben Wohnung, während das dritte Teammitglied nur eine kurze Entfernung entfernt wohnt. Dadurch hatten wir häufig die Möglichkeit, uns persönlich zu treffen und gemeinsam am Projekt zu arbeiten.
+ 
+Neben den persönlichen Treffen haben wir zusätzlich sehr intensiv über Microsoft Teams kommuniziert. Wenn ein Treffen vor Ort nicht möglich war, haben wir regelmäßig längere Telefonate oder gemeinsame Sessions über Teams durchgeführt.
+ 
+Durch diese Arbeitsweise konnten wir sicherstellen, dass alle Teammitglieder jederzeit über den aktuellen Stand des Projekts informiert waren. Außerdem konnten wir unsere jeweiligen Teilbereiche optimal aufeinander abstimmen, sodass beispielsweise Funktionsschnittstellen, Datenstrukturen und Modulgrenzen konsistent definiert wurden.
+ 
+Zusätzlich haben wir Pull Requests und die Kommentarfunktion genutzt, um Änderungen vor dem Zusammenführen in den Hauptbranch zu überprüfen. Dieser Prozess hat nicht nur zur Qualitätssicherung beigetragen, sondern auch dazu, dass alle Mitglieder einen guten Überblick über die verschiedenen Teile des Projekts behalten konnten.
+ 
+Insgesamt hat sich unsere Kombination aus klarer Aufgabenstruktur, Versionsverwaltung über GitHub, regelmäßigen persönlichen Treffen und intensiver Kommunikation über Microsoft Teams als sehr effektiv erwiesen. Diese Arbeitsweise hat es uns ermöglicht, das Projekt koordiniert zu bearbeiten, Probleme schnell zu lösen und eine konsistente Gesamtstruktur des Programms sicherzustellen.
