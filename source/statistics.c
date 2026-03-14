@@ -724,9 +724,9 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
         fprintf(p_out, "| %-61s |\n", "GESAMT-STATISTIK (Durchschnittswerte)");
         fprintf(p_out, "+---------------------------------------------------------------+\n");
         fprintf(p_out, "\n");
-        fprintf(p_out, "+--------------------------------------------+------------+-----------------+\n");
+        fprintf(p_out, "+-------------------------------------------+------------+-----------------+\n");
         fprintf(p_out, "| %-42s| Wert       | Einheit         |\n", "Kennzahl");
-        fprintf(p_out, "+--------------------------------------------+------------+-----------------+\n");
+        fprintf(p_out, "+-------------------------------------------+------------+-----------------+\n");
 
         // 1. Durchschnittl. parkende Autos + Balken relativ zu time_samples.
         fprintf(p_out, "| %-42s|%11.1f | Fahrzeuge       |\n", "1. Durchschnittl. parkende Autos", avg_parked_vehicles);
@@ -749,7 +749,8 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
             {
                 fprintf(p_out, "-");
             }
-            fprintf(p_out, " |\n");
+           
+            fprintf(p_out, "         |\n");
         }
         fprintf(p_out, "|\n");
 
@@ -770,7 +771,8 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
             {
                 fprintf(p_out, "-");
             }
-            fprintf(p_out, " |\n");
+           
+            fprintf(p_out, "         |\n");
         }
         fprintf(p_out, "|\n");
 
@@ -795,7 +797,8 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
             {
                 fprintf(p_out, "-");
             }
-            fprintf(p_out, " |\n");
+           
+            fprintf(p_out, "         |\n");
         }
         fprintf(p_out, "|\n");
 
@@ -820,7 +823,8 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
             {
                 fprintf(p_out, "-");
             }
-            fprintf(p_out, " |\n");
+          
+            fprintf(p_out, "         |\n");
         }
         fprintf(p_out, "|\n");
 
@@ -845,10 +849,11 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
             {
                 fprintf(p_out, "-");
             }
-            fprintf(p_out, " |\n");
+            
+            fprintf(p_out, "         |\n");
         }
 
-        fprintf(p_out, "+--------------------------------------------+------------+-----------------+\n");
+        fprintf(p_out, "+-------------------------------------------+------------+-----------------+\n");
 
         if (t != 0)
         {
