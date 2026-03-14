@@ -35,7 +35,6 @@ typedef struct {
     int total_wait_duration;
 } Statistics;
 
-//Hier Programm:
 /**
  * @brief Initialisiert die Statistikdaten vor dem Start der Simulation.
  *

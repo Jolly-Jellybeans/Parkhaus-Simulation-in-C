@@ -63,7 +63,6 @@ TYPE ParkingResult
 
 END TYPE
 */
-//Hier Programm:
 /**
  * @brief Erstellt eine neue Parkhausstruktur mit einer gegebenen Anzahl an Stellplätzen.
  *

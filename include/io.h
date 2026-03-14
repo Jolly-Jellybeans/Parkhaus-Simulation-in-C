@@ -23,7 +23,6 @@ STRUCT SimulationConfig
 END STRUCT
 */
 
-//Hier Programm:
 /**
  * @brief Leert verbleibende Zeichen im Eingabepuffer bis Zeilenende/EOF.
  *
