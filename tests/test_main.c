@@ -2,7 +2,7 @@
 
 /*
 Kompilieren und Ausführen aller Unit-Tests:
-cc -g -I./include ./tests/*.c ./source/parking_garage.c ./source/queue.c 
+cc -g -I./include ./tests/\\*.c ./source/parking_garage.c ./source/queue.c \
 ./source/vehicle.c ./source/statistics.c -o ./tests/unit_tests && ./tests/unit_tests
 */
 
