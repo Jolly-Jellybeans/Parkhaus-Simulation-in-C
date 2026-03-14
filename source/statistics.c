@@ -551,7 +551,7 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
             {
                 fprintf(p_out, "-");
             }
-            fprintf(p_out, " |\n");
+            fprintf(p_out, "         |\n");
         }
         fprintf(p_out, "|\n");
 
@@ -572,7 +572,7 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
             {
                 fprintf(p_out, "-");
             }
-            fprintf(p_out, " |\n");
+            fprintf(p_out, "         |\n");
         }
         fprintf(p_out, "|\n");
 
@@ -597,7 +597,7 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
             {
                 fprintf(p_out, "-");
             }
-            fprintf(p_out, " |\n");
+            fprintf(p_out, "         |\n");
         }
         fprintf(p_out, "|\n");
 
@@ -624,7 +624,7 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
             }
             fprintf(p_out, " |\n");
         }
-        fprintf(p_out, "|\n");
+        fprintf(p_out, "         |\n");
 
         // 5. Aktuelle durchschn. Wartedauer + Balken relativ zu total_steps.
         fprintf(p_out, "| %-42s|%11.1f | Zeitschritte    |\n", "5. Aktuelle durchschn. Wartedauer", current_avg_wait_duration);
@@ -647,7 +647,7 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
             {
                 fprintf(p_out, "-");
             }
-            fprintf(p_out, " |\n");
+            fprintf(p_out, "         |\n");
         }
 
         fprintf(p_out, "+--------------------------------------------+------------+-----------------+\n");
