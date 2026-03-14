@@ -78,6 +78,8 @@ int main(void)
         return EXIT_FAILURE;
     }
 
+    p_garage->max_park_duration = config.max_park_duration;
+
     statistics_init(&stats);            // initialize statistics
 
     simulation(
@@ -88,7 +90,7 @@ int main(void)
         config.max_park_duration
     );
 
-    statistics_print(&stats, "statistics_output.txt");            // print final statistics and export to text file
+    statistics_print(&stats, p_garage, "statistics_output.txt");            // print final statistics and export to text file
     parking_garage_destroy(p_garage);            // free memory
 
     return 0;

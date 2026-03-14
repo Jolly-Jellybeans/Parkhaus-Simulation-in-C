@@ -28,6 +28,7 @@ typedef struct
 {
     int slot_count;          // Gesamtanzahl der Stellplätze
     int occupied_count;      // Anzahl aktuell belegter Stellplätze
+    int max_park_duration;   // Konfigurierter Maximalwert fuer Parkdauer
     ParkingSlot *p_slots;        // Dynamisches Array: Stellplätze
     Queue *p_queue;          // Warteschlange für Fahrzeuge
 } ParkingGarage;
@@ -36,6 +37,7 @@ typedef struct
 TYPE Parking Garage
     slot_count               // Gesamtanzahl der Stellplätze
     occupied_count           // Anzahl aktuell belegter Stellplätze
+    max_park_duration        // Konfigurierter Maximalwert fuer Parkdauer
     p_slots                  // Dynamisches Array: Stellplätze
     p_queue                  // Warteschlange für Fahrzeuge
 
