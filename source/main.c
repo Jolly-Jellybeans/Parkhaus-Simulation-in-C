@@ -1,3 +1,9 @@
+/*
+ * File: main.c
+ * Description: Einstiegspunkt der Parkhaus-Simulation.
+ *              Liest die Konfiguration, initialisiert alle Strukturen,
+ *              startet die Simulation und gibt die Endstatistik aus.
+ */
 #include "parking_garage.h"
 #include "statistics.h"
 #include "queue.h"
@@ -50,9 +56,9 @@ END FUNCTION
 
 int main(void)
 {
-    SimulationConfig config;
-    ParkingGarage *p_garage;
-    Statistics stats;
+    SimulationConfig config = {0};
+    ParkingGarage *p_garage = NULL;
+    Statistics stats = {0};
 
     config = get_config_from_user();            // read user settings
 

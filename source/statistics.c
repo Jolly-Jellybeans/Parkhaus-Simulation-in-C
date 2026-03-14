@@ -1,5 +1,14 @@
+/*
+ * File: statistics.c
+ * Description: Erfassung, Aktualisierung und Ausgabe aller Simulationsstatistiken.
+ *              Gibt Schrittauswertungen und die Gesamtstatistik auf dem Terminal
+ *              sowie optional in Textdateien aus.
+ */
 #include <stdio.h>
 #include "statistics.h"
+
+/* Breite des ASCII-Balkens in Zeichen. */
+#define BAR_WIDTH 20
 
 /*
 FUNCTION statistics_init(p_statistics)
@@ -319,7 +328,8 @@ FUNCTION statistics_print(p_statistics, p_filename)
 END FUNCTION
 */
 
-void statistics_on_queued(Statistics *p_statistics){
+void statistics_on_queued(Statistics *p_statistics)
+{
     // Ohne gueltige Zielstruktur keine Aktualisierung moeglich.
     if (p_statistics == NULL)
     {
@@ -338,7 +348,8 @@ void statistics_on_queued(Statistics *p_statistics){
 }
     
 
-void statistics_init(Statistics *p_statistics){
+void statistics_init(Statistics *p_statistics)
+{
     // Sicherheitspruefung gegen NULL-Zeiger.
     if (p_statistics == NULL)
     {
@@ -403,7 +414,8 @@ void statistics_on_departure(Statistics *p_statistics, int park_duration)
     p_statistics->departed_vehicle_count += 1;         // eine weitere Abfahrt registrieren
 }
 
-void statistics_step_update(Statistics *p_statistics,int occupied_slots,int total_slots,int queued_vehicles){
+void statistics_step_update(Statistics *p_statistics, int occupied_slots, int total_slots, int queued_vehicles)
+{
     // Ohne gueltige Struktur keine Schrittauswertung.
     if (p_statistics == NULL)
     {
@@ -454,9 +466,18 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
     }
 
     // Negative Anzeigeparameter auf 0 begrenzen.
-    if (current_step < 0) { current_step = 0; } // negative Schrittanzeige verhindern
-    if (total_steps < 0)  { total_steps  = 0; } // negative Simulationslaenge verhindern
-    if (total_slots < 0)  { total_slots  = 0; } // negative Slot-Anzahl verhindern
+    if (current_step < 0)
+    {
+        current_step = 0; // negative Schrittanzeige verhindern
+    }
+    if (total_steps < 0)
+    {
+        total_steps = 0; // negative Simulationslaenge verhindern
+    }
+    if (total_slots < 0)
+    {
+        total_slots = 0; // negative Slot-Anzahl verhindern
+    }
 
     // Kennzahl 2: aktuelle prozentuale Auslastung.
     double current_occupancy_percent = 0.0;
@@ -483,7 +504,7 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
     int target_count = (p_filename != NULL) ? 2 : 1; // 1=Terminal, 2=Terminal+Datei
     for (int t = 0; t < target_count; t++)
     {
-        FILE *p_out;
+        FILE *p_out = NULL;
         if (t == 0)
         {
             p_out = stdout; // erster Durchlauf immer Konsole
@@ -492,7 +513,10 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
         {
             // Schritt 1 startet mit neuer Datei, danach anhaengen.
             p_out = fopen(p_filename, current_step <= 1 ? "w" : "a");
-            if (p_out == NULL) { continue; }
+            if (p_out == NULL)
+            {
+                continue;
+            }
         }
 
         char header[64]; // enthaelt den Schritttext fuer Kopfzeile
@@ -511,11 +535,22 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
         {
             int bar_filled = 0;
             if (total_slots > 0)
-                bar_filled = (int)((double)p_statistics->currently_parked / total_slots * 20.0 + 0.5);
-            if (bar_filled > 20) bar_filled = 20; // nie mehr als Balkenbreite
+            {
+                bar_filled = (int)((double)p_statistics->currently_parked / total_slots * BAR_WIDTH + 0.5);
+            }
+            if (bar_filled > BAR_WIDTH)
+            {
+                bar_filled = BAR_WIDTH; // nie mehr als Balkenbreite
+            }
             fprintf(p_out, "|    %-38s | ", "Belegungsbalken");
-            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
-            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            for (int i = 0; i < bar_filled; i++)
+            {
+                fprintf(p_out, "#");
+            }
+            for (int i = bar_filled; i < BAR_WIDTH; i++)
+            {
+                fprintf(p_out, "-");
+            }
             fprintf(p_out, " |\n");
         }
         fprintf(p_out, "|\n");
@@ -523,11 +558,20 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
         // 2. Aktuelle Auslastung + Balken relativ zu 100 Prozent.
         fprintf(p_out, "| %-42s|%11.1f | Prozent         |\n", "2. Aktuelle Auslastung", current_occupancy_percent);
         {
-            int bar_filled = (int)(current_occupancy_percent / 100.0 * 20.0 + 0.5);
-            if (bar_filled > 20) bar_filled = 20; // oberes Limit fuer Balkenlaenge
+            int bar_filled = (int)(current_occupancy_percent / 100.0 * BAR_WIDTH + 0.5);
+            if (bar_filled > BAR_WIDTH)
+            {
+                bar_filled = BAR_WIDTH; // oberes Limit fuer Balkenlaenge
+            }
             fprintf(p_out, "|    %-38s | ", "Prozentbalken");
-            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
-            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            for (int i = 0; i < bar_filled; i++)
+            {
+                fprintf(p_out, "#");
+            }
+            for (int i = bar_filled; i < BAR_WIDTH; i++)
+            {
+                fprintf(p_out, "-");
+            }
             fprintf(p_out, " |\n");
         }
         fprintf(p_out, "|\n");
@@ -537,11 +581,22 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
         {
             int bar_filled = 0;
             if (total_slots > 0)
-                bar_filled = (int)((double)p_statistics->currently_queued / total_slots * 20.0 + 0.5);
-            if (bar_filled > 20) bar_filled = 20; // deckeln auf 20 Zeichen
+            {
+                bar_filled = (int)((double)p_statistics->currently_queued / total_slots * BAR_WIDTH + 0.5);
+            }
+            if (bar_filled > BAR_WIDTH)
+            {
+                bar_filled = BAR_WIDTH; // deckeln auf BAR_WIDTH Zeichen
+            }
             fprintf(p_out, "|    %-38s | ", "Warteschlangenbalken");
-            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
-            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            for (int i = 0; i < bar_filled; i++)
+            {
+                fprintf(p_out, "#");
+            }
+            for (int i = bar_filled; i < BAR_WIDTH; i++)
+            {
+                fprintf(p_out, "-");
+            }
             fprintf(p_out, " |\n");
         }
         fprintf(p_out, "|\n");
@@ -551,11 +606,22 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
         {
             int bar_filled = 0;
             if (total_steps > 0)
-                bar_filled = (int)(current_avg_park_duration / total_steps * 20.0 + 0.5);
-            if (bar_filled > 20) bar_filled = 20; // maximale Balkenbreite
+            {
+                bar_filled = (int)(current_avg_park_duration / total_steps * BAR_WIDTH + 0.5);
+            }
+            if (bar_filled > BAR_WIDTH)
+            {
+                bar_filled = BAR_WIDTH; // maximale Balkenbreite
+            }
             fprintf(p_out, "|    %-38s | ", "Dauerbalken");
-            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
-            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            for (int i = 0; i < bar_filled; i++)
+            {
+                fprintf(p_out, "#");
+            }
+            for (int i = bar_filled; i < BAR_WIDTH; i++)
+            {
+                fprintf(p_out, "-");
+            }
             fprintf(p_out, " |\n");
         }
         fprintf(p_out, "|\n");
@@ -565,17 +631,31 @@ void statistics_print_step(const Statistics *p_statistics, int current_step, int
         {
             int bar_filled = 0;
             if (total_steps > 0)
-                bar_filled = (int)(current_avg_wait_duration / total_steps * 20.0 + 0.5);
-            if (bar_filled > 20) bar_filled = 20; // maximale Balkenbreite
+            {
+                bar_filled = (int)(current_avg_wait_duration / total_steps * BAR_WIDTH + 0.5);
+            }
+            if (bar_filled > BAR_WIDTH)
+            {
+                bar_filled = BAR_WIDTH; // maximale Balkenbreite
+            }
             fprintf(p_out, "|    %-38s | ", "Wartezeitbalken");
-            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
-            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            for (int i = 0; i < bar_filled; i++)
+            {
+                fprintf(p_out, "#");
+            }
+            for (int i = bar_filled; i < BAR_WIDTH; i++)
+            {
+                fprintf(p_out, "-");
+            }
             fprintf(p_out, " |\n");
         }
 
         fprintf(p_out, "+--------------------------------------------+------------+-----------------+\n");
 
-        if (t != 0) { fclose(p_out); } // nur Datei-Handle schliessen
+        if (t != 0)
+        {
+            fclose(p_out); // nur Datei-Handle schliessen
+        }
     }
 }
 
@@ -625,7 +705,7 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
     int target_count = (p_filename != NULL) ? 2 : 1; // 1=Terminal, 2=Terminal+Datei
     for (int t = 0; t < target_count; t++)
     {
-        FILE *p_out;
+        FILE *p_out = NULL;
         if (t == 0)
         {
             p_out = stdout; // erster Ausgabekanal: Konsole
@@ -634,7 +714,10 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
         {
             // Endauswertung immer neu schreiben (nicht anhaengen).
             p_out = fopen(p_filename, "w");
-            if (p_out == NULL) { continue; }
+            if (p_out == NULL)
+            {
+                continue;
+            }
         }
 
         fprintf(p_out, "+---------------------------------------------------------------+\n");
@@ -650,11 +733,22 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
         {
             int bar_filled = 0;
             if (p_statistics->time_samples > 0)
-                bar_filled = (int)(avg_parked_vehicles / p_statistics->time_samples * 20.0 + 0.5);
-            if (bar_filled > 20) bar_filled = 20; // Balken auf max. 20 Zeichen begrenzen
+            {
+                bar_filled = (int)(avg_parked_vehicles / p_statistics->time_samples * BAR_WIDTH + 0.5);
+            }
+            if (bar_filled > BAR_WIDTH)
+            {
+                bar_filled = BAR_WIDTH; // Balken auf max. BAR_WIDTH Zeichen begrenzen
+            }
             fprintf(p_out, "|    %-38s | ", "Mittelwert-Balken");
-            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
-            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            for (int i = 0; i < bar_filled; i++)
+            {
+                fprintf(p_out, "#");
+            }
+            for (int i = bar_filled; i < BAR_WIDTH; i++)
+            {
+                fprintf(p_out, "-");
+            }
             fprintf(p_out, " |\n");
         }
         fprintf(p_out, "|\n");
@@ -662,11 +756,20 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
         // 2. Durchschnittl. Auslastung + Balken relativ zu 100 Prozent.
         fprintf(p_out, "| %-42s|%11.1f | Prozent         |\n", "2. Durchschnittl. Auslastung", avg_occupancy_percent);
         {
-            int bar_filled = (int)(avg_occupancy_percent / 100.0 * 20.0 + 0.5);
-            if (bar_filled > 20) bar_filled = 20; // Balken auf max. 20 Zeichen begrenzen
+            int bar_filled = (int)(avg_occupancy_percent / 100.0 * BAR_WIDTH + 0.5);
+            if (bar_filled > BAR_WIDTH)
+            {
+                bar_filled = BAR_WIDTH; // Balken auf max. BAR_WIDTH Zeichen begrenzen
+            }
             fprintf(p_out, "|    %-38s | ", "Prozentbalken");
-            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
-            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            for (int i = 0; i < bar_filled; i++)
+            {
+                fprintf(p_out, "#");
+            }
+            for (int i = bar_filled; i < BAR_WIDTH; i++)
+            {
+                fprintf(p_out, "-");
+            }
             fprintf(p_out, " |\n");
         }
         fprintf(p_out, "|\n");
@@ -676,11 +779,22 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
         {
             int bar_filled = 0;
             if (p_statistics->time_samples > 0)
-                bar_filled = (int)(avg_queued_vehicles / p_statistics->time_samples * 20.0 + 0.5);
-            if (bar_filled > 20) bar_filled = 20; // Balken auf max. 20 Zeichen begrenzen
+            {
+                bar_filled = (int)(avg_queued_vehicles / p_statistics->time_samples * BAR_WIDTH + 0.5);
+            }
+            if (bar_filled > BAR_WIDTH)
+            {
+                bar_filled = BAR_WIDTH; // Balken auf max. BAR_WIDTH Zeichen begrenzen
+            }
             fprintf(p_out, "|    %-38s | ", "Warteschlangenbalken");
-            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
-            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            for (int i = 0; i < bar_filled; i++)
+            {
+                fprintf(p_out, "#");
+            }
+            for (int i = bar_filled; i < BAR_WIDTH; i++)
+            {
+                fprintf(p_out, "-");
+            }
             fprintf(p_out, " |\n");
         }
         fprintf(p_out, "|\n");
@@ -690,11 +804,22 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
         {
             int bar_filled = 0;
             if (p_statistics->time_samples > 0)
-                bar_filled = (int)(avg_park_duration / p_statistics->time_samples * 20.0 + 0.5);
-            if (bar_filled > 20) bar_filled = 20; // Balken auf max. 20 Zeichen begrenzen
+            {
+                bar_filled = (int)(avg_park_duration / p_statistics->time_samples * BAR_WIDTH + 0.5);
+            }
+            if (bar_filled > BAR_WIDTH)
+            {
+                bar_filled = BAR_WIDTH; // Balken auf max. BAR_WIDTH Zeichen begrenzen
+            }
             fprintf(p_out, "|    %-38s | ", "Dauerbalken");
-            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
-            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            for (int i = 0; i < bar_filled; i++)
+            {
+                fprintf(p_out, "#");
+            }
+            for (int i = bar_filled; i < BAR_WIDTH; i++)
+            {
+                fprintf(p_out, "-");
+            }
             fprintf(p_out, " |\n");
         }
         fprintf(p_out, "|\n");
@@ -704,16 +829,30 @@ void statistics_print(const Statistics *p_statistics, const char *p_filename)
         {
             int bar_filled = 0;
             if (p_statistics->time_samples > 0)
-                bar_filled = (int)(avg_wait_duration / p_statistics->time_samples * 20.0 + 0.5);
-            if (bar_filled > 20) bar_filled = 20; // Balken auf max. 20 Zeichen begrenzen
+            {
+                bar_filled = (int)(avg_wait_duration / p_statistics->time_samples * BAR_WIDTH + 0.5);
+            }
+            if (bar_filled > BAR_WIDTH)
+            {
+                bar_filled = BAR_WIDTH; // Balken auf max. BAR_WIDTH Zeichen begrenzen
+            }
             fprintf(p_out, "|    %-38s | ", "Wartezeitbalken");
-            for (int i = 0; i < bar_filled; i++)      fprintf(p_out, "#");
-            for (int i = bar_filled; i < 20; i++) fprintf(p_out, "-");
+            for (int i = 0; i < bar_filled; i++)
+            {
+                fprintf(p_out, "#");
+            }
+            for (int i = bar_filled; i < BAR_WIDTH; i++)
+            {
+                fprintf(p_out, "-");
+            }
             fprintf(p_out, " |\n");
         }
 
         fprintf(p_out, "+--------------------------------------------+------------+-----------------+\n");
 
-        if (t != 0) { fclose(p_out); } // nur Datei-Handle schliessen
+        if (t != 0)
+        {
+            fclose(p_out); // nur Datei-Handle schliessen
+        }
     }
 }
