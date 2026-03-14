@@ -11,7 +11,7 @@ Test 1:
 Ein freier Slot existiert.
 Die Funktion sollte den Index des ersten freien Slots zurückgeben.
 */
-void test_find_free_slot_index_free_slot_exists() {
+void test_find_free_slot_index_free_slot_exists(void) {
 
     ParkingSlot slots[3];
 
@@ -34,7 +34,7 @@ Test 2:
 Alle Slots sind belegt.
 Die Funktion sollte -1 zurückgeben.
 */
-void test_find_free_slot_index_no_free_slot() {
+void test_find_free_slot_index_no_free_slot(void) {
 
     ParkingSlot slots[2];
 
@@ -55,7 +55,7 @@ Test 1:
 Ein belegter Slot mit gesetzten Werten wird geleert.
 Alle Slot- und Fahrzeugwerte muessen auf den Ausgangszustand zurueckgesetzt werden.
 */
-void test_clear_slot_resets_all_fields() {
+void test_clear_slot_resets_all_fields(void) {
 
     ParkingSlot slot;
 
@@ -79,7 +79,7 @@ Test 2:
 Ein NULL-Zeiger wird uebergeben.
 Die Funktion darf nicht abstuerzen und muss direkt zurueckkehren.
 */
-void test_clear_slot_with_null_pointer() {
+void test_clear_slot_with_null_pointer(void) {
 
     clear_slot(NULL);
 
@@ -91,7 +91,7 @@ Test 1:
 Zwei belegte Slots haben ihre Abfahrtszeit bereits erreicht.
 Die Funktion soll beide Fahrzeuge entfernen und die Belegung anpassen.
 */
-void test_parking_garage_remove_departing_removes_due_vehicles() {
+void test_parking_garage_remove_departing_removes_due_vehicles(void) {
 
     ParkingSlot slots[3] = {0};
     ParkingGarage garage = {0};
@@ -141,7 +141,7 @@ Test 2:
 Kein Fahrzeug hat den Abfahrtszeitpunkt erreicht.
 Die Funktion darf nichts entfernen und keine Werte veraendern.
 */
-void test_parking_garage_remove_departing_keeps_future_vehicles() {
+void test_parking_garage_remove_departing_keeps_future_vehicles(void) {
 
     ParkingSlot slots[2] = {0};
     ParkingGarage garage = {0};
