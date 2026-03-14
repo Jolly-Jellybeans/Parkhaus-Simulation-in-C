@@ -3,6 +3,8 @@
 
 #include "parking_garage.h"
 #include "statistics.h"
+#include "io.h"
+#include "vehicle.h"
 
 /**
  * @brief Hauptfunktion der Parkhaus-Simulation. Initialisiert die Simulation, führt die Hauptschleife aus und gibt die Ergebnisse aus.
