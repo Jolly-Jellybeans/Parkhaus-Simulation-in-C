@@ -32,16 +32,34 @@ END FUNCTION
 ---------------------------------------------------------------
 FUNCTION get_config_from_user() RETURNS SimulationConfig
 ---------------------------------------------------------------  
-    NEW config (Type SimulationConfig)  // create new config object
-
-    config.slots            <- CALL user_input("Anzahl der Stellplätze: ")
-    config.max_park_duration<- CALL user_input("Maximale Parkdauer (pro Auto): ")
-    config.sim_duration     <- CALL user_input("Gesamte Simulationsdauer: ")
-    config.arrival_prob     <- CALL user_input("Ankunftswahrscheinlichkeit (0-100): ")
-    config.seed             <- CALL user_input("Zufalls-Seed: ")
-
-    RETURN config                      // return all user values
-END FUNCTION
+  LOOP until config.slots > 0
+        config.slots <- CALL user_input("Anzahl der Stellplaetze: ")
+        IF config.slots <= 0 THEN
+            PRINT "Bitte eine Zahl groesser 0 eingeben."
+        END IF
+    END LOOP
+ 
+    LOOP until config.max_park_duration > 0
+        config.max_park_duration <- CALL user_input("Maximale Parkdauer (pro Auto): ")
+        IF config.max_park_duration <= 0 THEN
+            PRINT "Bitte eine Zahl groesser 0 eingeben."
+        END IF
+    END LOOP
+ 
+    LOOP until config.sim_duration > 0
+        config.sim_duration <- CALL user_input("Gesamte Simulationsdauer: ")
+        IF config.sim_duration <= 0 THEN
+            PRINT "Bitte eine Zahl groesser 0 eingeben."
+        END IF
+    END LOOP
+ 
+    LOOP until 0 <= config.arrival_prob <= 100
+        config.arrival_prob <- CALL user_input("Ankunftswahrscheinlichkeit (0-100): ")
+        IF config.arrival_prob < 0 OR config.arrival_prob > 100 THEN
+            PRINT "Bitte einen Wert zwischen 0 und 100 eingeben."
+        END IF
+    END LOOP
+    END FUNCTION
 */
 /*
 -----------------------------------------------------------
