@@ -4,6 +4,7 @@
  *              aus der Warteschlange und zufaellige Neuankuenfte pro Zeitschritt.
  */
 #include "simulation.h"
+#include "io.h"
 #include <stdlib.h>
 /*
 FUNCTION simulation(p_garage, p_stats, config_sim_duration, config_arrival_prob, config_max_duration)
