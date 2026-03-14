@@ -48,4 +48,16 @@ Auch der Einsatz von Git und GitHub als Versionsverwaltungssystem spielte eine w
 
 ## 4. Gab es Schwierigkeiten oder Herausforderungen bei der Zusammenarbeit?
 
+Wie bei vielen Softwareprojekten traten auch während der Entwicklung dieser Parkhaus-Simulation einige Herausforderungen auf. Diese betrafen sowohl technische Aspekte der Implementierung als auch organisatorische Aspekte der Zusammenarbeit im Team.
+ 
+Eine der größten Herausforderungen bestand darin, die Schnittstellen zwischen den einzelnen Modulen sauber zu definieren. Da mehrere Teammitglieder gleichzeitig an unterschiedlichen Teilen des Projekts gearbeitet haben, musste klar festgelegt werden, welche Funktionen welche Daten erwarten, welche Werte sie zurückgeben und vor allem, wer die jeweiligen Funktionen implementiert. Ohne eine klare Definition dieser Schnittstellen hätten sich schnell Inkonsistenzen im Code ergeben können.
+ 
+Auch die Arbeit mit Zeigern und der Speicherverwaltung stellte an einigen Stellen eine zusätzliche Schwierigkeit dar. Da C eine relativ niedrige Abstraktionsebene besitzt, muss der Entwickler viele Aspekte der Speicherverwaltung selbst kontrollieren. Fehler bei der Verwendung von Zeigern können leicht zu unerwartetem Verhalten führen und mussten daher häufig gegenseitig überprüft werden.
+ 
+Eine weitere Herausforderung ergab sich bei der parallelen Arbeit mit Git. Wenn mehrere Teammitglieder gleichzeitig Änderungen an denselben Dateien vorgenommen haben, konnten Merge-Konflikte entstehen, die anschließend manuell aufgelöst werden mussten. Dieser Prozess erforderte ein gutes Verständnis der jeweiligen Codeänderungen und nahm teilweise zusätzliche Zeit in Anspruch.
+ 
+Darüber hinaus war es wichtig, eine gemeinsame Struktur für den Code festzulegen. Dazu gehörten beispielsweise Namenskonventionen für Variablen und Funktionen sowie ein einheitlicher Stil für Kommentare und Einrückungen.
+ 
+Insgesamt waren wir jedoch sehr zufrieden mit der Zusammenarbeit. Abgesehen von konstruktiven Diskussionen über die genannten Themen traten keine größeren Probleme auf.
+
 ## 5. Was ist Ihnen im Team einfach gefallen bzw. sehr gut gelungen?
