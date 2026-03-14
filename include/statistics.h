@@ -1,6 +1,5 @@
 #ifndef STATISTICS_H
 #define STATISTICS_H
-#include "parking_garage.h"
 /*
 STRUCTURE Statistics
 
