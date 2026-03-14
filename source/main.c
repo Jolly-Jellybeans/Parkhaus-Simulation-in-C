@@ -95,3 +95,8 @@ int main(void)
 
     return 0;
 }
+
+/*
+Gesamtes Projekt mit Test kompilieren und ausführen:
+cc -g -I./include ./source/*.c -o ./parkhaus_sim && cc -g -I./include ./tests/*.c ./source/parking_garage.c ./source/queue.c ./source/vehicle.c ./source/statistics.c -o ./tests/unit_tests && ./tests/unit_tests && ./parkhaus_sim
+*/
