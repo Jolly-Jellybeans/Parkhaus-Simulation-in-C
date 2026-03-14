@@ -61,7 +61,7 @@ int main(void)
     p_garage = parking_garage_create(config.slots);            // create garage
     if (p_garage == NULL)
     {
-        return -1;
+        return EXIT_FAILURE;
     }
 
     statistics_init(&stats);            // initialize statistics
