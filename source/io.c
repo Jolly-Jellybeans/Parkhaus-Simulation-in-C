@@ -1,3 +1,7 @@
+/*
+ * File: io.c
+ * Description: Benutzereingaben, Konfigurationsaufbau und Ausgabe von Parkergebnissen.
+ */
 #include "io.h"
 #include <stdio.h>
 
@@ -13,9 +17,9 @@
 ---------------------------------------------
 
 -------------------------------------------------
-FUNCTION user_input(description) RETURNS integer
+FUNCTION user_input(p_description) RETURNS integer
 -------------------------------------------------   
-    PRINT description                   // show prompt text to the user
+    PRINT p_description                   // show prompt text to the user
 
     LOOP forever                        // keep asking until input is valid
         READ value
@@ -89,7 +93,7 @@ FUNCTION get_config_from_user() RETURNS SimulationConfig
 
 void clear_input_buffer(void)
 {
-    int ch;          // variable to store each character
+    int ch = 0;          // variable to store each character
 
     while ((ch = getchar()) != '\n' && ch != EOF)      // read until end of line
     {
@@ -98,13 +102,13 @@ void clear_input_buffer(void)
 }
 
 
-int user_input(const char *description)
+int user_input(const char *p_description)
 {
-    int value;             // variable for the user input
+    int value = 0;             // variable for the user input
 
     while (1)              // repeat until valid number is entered
     {
-        printf("%s", description);         // print input description
+        printf("%s", p_description);         // print input description
 
         if (scanf("%d", &value) == 1)      // try to read integer
         {
@@ -119,36 +123,44 @@ int user_input(const char *description)
 
 SimulationConfig get_config_from_user(void)
 {
-    SimulationConfig config; // config object for all inputs
+    SimulationConfig config = {0}; // config object for all inputs
 
     // Gueltige Slot-Anzahl erzwingen, da ein Parkhaus mindestens 1 Stellplatz braucht.
-    do {
+    do
+    {
         config.slots = user_input("Anzahl der Stellplaetze: ");
-        if (config.slots <= 0) {
+        if (config.slots <= 0)
+        {
             printf("Bitte eine Zahl groesser 0 eingeben.\n");
         }
     } while (config.slots <= 0);
 
     // >0 verhindert spaeter ungueltige Modulo-Operationen bei der Zufallsdauer.
-    do {
+    do
+    {
         config.max_park_duration = user_input("Maximale Parkdauer (pro Auto): ");
-        if (config.max_park_duration <= 0) {
+        if (config.max_park_duration <= 0)
+        {
             printf("Bitte eine Zahl groesser 0 eingeben.\n");
         }
     } while (config.max_park_duration <= 0);
 
     // Simulation muss mindestens einen Zeitschritt laufen.
-    do {
+    do
+    {
         config.sim_duration = user_input("Gesamte Simulationsdauer: ");
-        if (config.sim_duration <= 0) {
+        if (config.sim_duration <= 0)
+        {
             printf("Bitte eine Zahl groesser 0 eingeben.\n");
         }
     } while (config.sim_duration <= 0);
 
     // Wahrscheinlichkeit immer im Bereich 0..100 halten.
-    do {
+    do
+    {
         config.arrival_prob = user_input("Ankunftswahrscheinlichkeit (0-100): ");
-        if (config.arrival_prob < 0 || config.arrival_prob > 100) {
+        if (config.arrival_prob < 0 || config.arrival_prob > 100)
+        {
             printf("Bitte einen Wert zwischen 0 und 100 eingeben.\n");
         }
     } while (config.arrival_prob < 0 || config.arrival_prob > 100);

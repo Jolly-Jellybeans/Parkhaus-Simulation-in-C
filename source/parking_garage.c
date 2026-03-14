@@ -1,3 +1,8 @@
+/*
+ * File: parking_garage.c
+ * Description: Verwaltung des Parkhauses: Erstellen, Zerstoeren, Einparken,
+ *              Abfahrten verarbeiten und Stellplaetze verwalten.
+ */
 #include "parking_garage.h"
 #include <stdlib.h>
 /**
@@ -167,8 +172,10 @@ void parking_garage_destroy(ParkingGarage *p_garage)
     free(p_garage);
 }
 
-void clear_slot(ParkingSlot *p_slot){
-    if (p_slot == NULL) {
+void clear_slot(ParkingSlot *p_slot)
+{
+    if (p_slot == NULL)
+    {
         return;
     }
 
@@ -180,16 +187,20 @@ void clear_slot(ParkingSlot *p_slot){
     p_slot->is_occupied = false;
 }
 
-int parking_garage_remove_departing(ParkingGarage *p_garage,int current_time){
-    if(p_garage == NULL){
+int parking_garage_remove_departing(ParkingGarage *p_garage, int current_time)
+{
+    if (p_garage == NULL)
+    {
         return 0;
     }
 
     int removed_count = 0;
 
     // Alle belegten Plätze prüfen und Fahrzeuge entfernen, deren Abfahrtszeit erreicht ist.
-    for(int i = 0; i < p_garage->slot_count; i++){
-        if(p_garage->p_slots[i].is_occupied && p_garage->p_slots[i].departure_time <= current_time){
+    for (int i = 0; i < p_garage->slot_count; i++)
+    {
+        if (p_garage->p_slots[i].is_occupied && p_garage->p_slots[i].departure_time <= current_time)
+        {
             clear_slot(&p_garage->p_slots[i]);
             // Belegungszähler synchron zum tatsächlichen Slot-Zustand halten.
             p_garage->occupied_count--;
@@ -199,14 +210,18 @@ int parking_garage_remove_departing(ParkingGarage *p_garage,int current_time){
 
     return removed_count;
 }
-int find_free_slot_index(const ParkingGarage *p_garage){
-    if (p_garage == NULL || p_garage->p_slots == NULL) {
+int find_free_slot_index(const ParkingGarage *p_garage)
+{
+    if (p_garage == NULL || p_garage->p_slots == NULL)
+    {
         return -1;
     }
 
     // First-Fit-Strategie: Der erste freie Slot wird sofort zurückgegeben.
-    for (int i = 0; i < p_garage->slot_count; i++) {
-        if (!p_garage->p_slots[i].is_occupied) {
+    for (int i = 0; i < p_garage->slot_count; i++)
+    {
+        if (!p_garage->p_slots[i].is_occupied)
+        {
             return i;
         }
     }

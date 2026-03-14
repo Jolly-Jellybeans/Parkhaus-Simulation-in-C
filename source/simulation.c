@@ -1,4 +1,10 @@
+/*
+ * File: simulation.c
+ * Description: Hauptschleife der Parkhaus-Simulation: Abfahrten, Nachrücken
+ *              aus der Warteschlange und zufaellige Neuankuenfte pro Zeitschritt.
+ */
 #include "simulation.h"
+#include "io.h"
 #include <stdlib.h>
 /*
 FUNCTION simulation(p_garage, p_stats, config_sim_duration, config_arrival_prob, config_max_duration)
@@ -74,12 +80,15 @@ END FUNCTION
 
 */
 
-void simulation(ParkingGarage* p_garage, Statistics* p_stats, int config_sim_duration, int config_arrival_prob, int config_max_duration) {
-    for (int current_time = 0; current_time < config_sim_duration; current_time++) {
-
+void simulation(ParkingGarage *p_garage, Statistics *p_stats, int config_sim_duration, int config_arrival_prob, int config_max_duration)
+{
+    for (int current_time = 0; current_time < config_sim_duration; current_time++)
+    {
         // 1. Abfahrten: Parkdauer je Fahrzeug erfassen, bevor der Slot geräumt wird.
-        for (int i = 0; i < p_garage->slot_count; i++) {
-            if (p_garage->p_slots[i].is_occupied && p_garage->p_slots[i].departure_time <= current_time) {
+        for (int i = 0; i < p_garage->slot_count; i++)
+        {
+            if (p_garage->p_slots[i].is_occupied && p_garage->p_slots[i].departure_time <= current_time)
+            {
                 int park_duration = current_time - p_garage->p_slots[i].vehicle.entry_time;
                 statistics_on_departure(p_stats, park_duration);
             }
@@ -89,8 +98,9 @@ void simulation(ParkingGarage* p_garage, Statistics* p_stats, int config_sim_dur
         parking_garage_remove_departing(p_garage, current_time);
 
         // 2. Nachrücken aus der Warteschlange, solange freie Plätze vorhanden sind.
-        while (p_garage->occupied_count < p_garage->slot_count && !queue_is_empty(p_garage->p_queue)) {
-            Vehicle waiting_vehicle;
+        while (p_garage->occupied_count < p_garage->slot_count && !queue_is_empty(p_garage->p_queue))
+        {
+            Vehicle waiting_vehicle = {0};
             queue_dequeue(p_garage->p_queue, &waiting_vehicle);
 
             int wait_duration = current_time - waiting_vehicle.entry_time;
@@ -103,8 +113,9 @@ void simulation(ParkingGarage* p_garage, Statistics* p_stats, int config_sim_dur
         // 3. Ankunft neuer Fahrzeuge (zufallsbasiert).
         int random_val = rand() % 100;
 
-        if (random_val < config_arrival_prob) {
-            Vehicle new_vehicle;
+        if (random_val < config_arrival_prob)
+        {
+            Vehicle new_vehicle = {0};
             new_vehicle.id = current_time + 1;
             new_vehicle.entry_time = current_time;
             new_vehicle.remaining_duration = (rand() % config_max_duration) + 1;
@@ -112,7 +123,8 @@ void simulation(ParkingGarage* p_garage, Statistics* p_stats, int config_sim_dur
             ParkingResult result = parking_garage_park(p_garage, &new_vehicle, current_time);
             print_result_message(result);
 
-            if (result == PARKING_QUEUED) {
+            if (result == PARKING_QUEUED)
+            {
                 statistics_on_queued(p_stats);
             }
         }

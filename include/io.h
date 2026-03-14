@@ -23,7 +23,6 @@ STRUCT SimulationConfig
 END STRUCT
 */
 
-//Hier Programm:
 /**
  * @brief Leert verbleibende Zeichen im Eingabepuffer bis Zeilenende/EOF.
  *
@@ -37,10 +36,10 @@ void clear_input_buffer(void);
  * Displays the given description text in the console,
  * reads a value from the user and returns it.
  *
- * @param description Text shown to the user as input prompt.
+ * @param[in] p_description Text shown to the user as input prompt.
  * @return The numeric value entered by the user.
  */
-int user_input(const char *description);
+int user_input(const char *p_description);
 
 /**
  * @brief Reads all simulation parameters from the user.

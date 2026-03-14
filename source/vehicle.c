@@ -1,3 +1,7 @@
+/*
+ * File: vehicle.c
+ * Description: Validierungsfunktion fuer Fahrzeugdaten.
+ */
 #include "vehicle.h"
 #include <stddef.h>
 

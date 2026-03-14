@@ -1,6 +1,5 @@
 #ifndef STATISTICS_H
 #define STATISTICS_H
-#include "parking_garage.h"
 /*
 STRUCTURE Statistics
 
@@ -36,7 +35,6 @@ typedef struct {
     int total_wait_duration;
 } Statistics;
 
-//Hier Programm:
 /**
  * @brief Initialisiert die Statistikdaten vor dem Start der Simulation.
  *

@@ -1,3 +1,7 @@
+/*
+ * File: queue.c
+ * Description: Implementierung einer verketteten FIFO-Warteschlange fuer Fahrzeuge.
+ */
 #include "queue.h"
 #include <stdlib.h>
 
@@ -158,22 +162,27 @@ END FUNCTION
 */
 
 
-QueueNode *node_create(const Vehicle *p_vehicle) {
-    QueueNode *p_node = (QueueNode *)malloc(sizeof(QueueNode));
-    if (p_node != NULL) {
+QueueNode *node_create(const Vehicle *p_vehicle)
+{
+    QueueNode *p_node = malloc(sizeof(QueueNode));
+    if (p_node != NULL)
+    {
         p_node->data = *p_vehicle; // Kopiere die Fahrzeugdaten
         p_node->p_next = NULL;     // Nächster Knoten ist zunächst NULL
     }
     return p_node;
 }
 
-void queue_destroy(Queue *p_queue) {
-    if (p_queue == NULL) {
+void queue_destroy(Queue *p_queue)
+{
+    if (p_queue == NULL)
+    {
         return;
     }
 
     QueueNode *p_current = p_queue->p_head;
-    while (p_current != NULL) {
+    while (p_current != NULL)
+    {
         QueueNode *p_next_node = p_current->p_next; // Nächsten Knoten merken
         node_destroy(p_current); // Aktuellen Knoten freigeben
         p_current = p_next_node; // Zum nächsten Knoten wechseln
@@ -185,38 +194,47 @@ void queue_destroy(Queue *p_queue) {
     free(p_queue);
 }
 
-Queue *queue_create() {
-    Queue *p_queue = (Queue *)malloc(sizeof(Queue));
-    if (p_queue != NULL) {
-        p_queue->p_head = NULL; 
-        p_queue->p_tail = NULL; 
+Queue *queue_create(void)
+{
+    Queue *p_queue = malloc(sizeof(Queue));
+    if (p_queue != NULL)
+    {
+        p_queue->p_head = NULL;
+        p_queue->p_tail = NULL;
     }
     return p_queue;
 }
 
-void node_destroy(QueueNode *p_node) {
-    if (p_node != NULL) {
+void node_destroy(QueueNode *p_node)
+{
+    if (p_node != NULL)
+    {
         free(p_node); // Speicher für den Knoten freigeben
         p_node = NULL; // Dangling Pointer vermeiden
     }
 }
 
-bool queue_enqueue(Queue *p_queue, const Vehicle *p_vehicle) {
-    if (p_queue == NULL || p_vehicle == NULL) {
+bool queue_enqueue(Queue *p_queue, const Vehicle *p_vehicle)
+{
+    if (p_queue == NULL || p_vehicle == NULL)
+    {
         return false; // Ungültige Eingabe
     }
 
     QueueNode *p_new_node = node_create(p_vehicle);
-    if (p_new_node == NULL) {
-        return false; 
+    if (p_new_node == NULL)
+    {
+        return false;
     }
 
-    if (p_queue->p_tail == NULL) {
+    if (p_queue->p_tail == NULL)
+    {
         // Queue ist leer, neuer Knoten wird zum Head und Tail
         p_queue->p_head = p_new_node;
         p_queue->p_tail = p_new_node;
-    } 
-    else {
+    }
+    else
+    {
         // Anfügen am Ende der Queue
         p_queue->p_tail->p_next = p_new_node;
         p_queue->p_tail = p_new_node;
@@ -224,30 +242,37 @@ bool queue_enqueue(Queue *p_queue, const Vehicle *p_vehicle) {
     return true;
 }
 
-int queue_size(const Queue *p_queue) {
-    if (p_queue == NULL || p_queue->p_head == NULL) {
+int queue_size(const Queue *p_queue)
+{
+    if (p_queue == NULL || p_queue->p_head == NULL)
+    {
         return 0; // Keine Elemente in der Queue
     }
 
     int count = 0;
     QueueNode *p_current = p_queue->p_head;
-    while (p_current != NULL) {
+    while (p_current != NULL)
+    {
         count++;
         p_current = p_current->p_next; // Zum nächsten Knoten wechseln
     }
     return count;
 }
 
-bool queue_is_empty(const Queue *p_queue) {
-    if (p_queue == NULL || p_queue->p_head == NULL) {
+bool queue_is_empty(const Queue *p_queue)
+{
+    if (p_queue == NULL || p_queue->p_head == NULL)
+    {
         return true; // Eine NULL-Queue gilt als leer
     }
     return false;
 }
 
-bool queue_dequeue(Queue *p_queue, Vehicle *p_out_vehicle) {
-    if (p_queue == NULL || p_out_vehicle == NULL || p_queue->p_head == NULL) {
-        return false; 
+bool queue_dequeue(Queue *p_queue, Vehicle *p_out_vehicle)
+{
+    if (p_queue == NULL || p_out_vehicle == NULL || p_queue->p_head == NULL)
+    {
+        return false;
     }
 
     QueueNode *p_temp_node = p_queue->p_head; // Ersten Knoten merken
@@ -257,7 +282,8 @@ bool queue_dequeue(Queue *p_queue, Vehicle *p_out_vehicle) {
     p_queue->p_head = p_temp_node->p_next;
 
     // Wenn die Queue jetzt leer ist, Tail auch auf NULL setzen
-    if (p_queue->p_head == NULL) {
+    if (p_queue->p_head == NULL)
+    {
         p_queue->p_tail = NULL;
     }
 

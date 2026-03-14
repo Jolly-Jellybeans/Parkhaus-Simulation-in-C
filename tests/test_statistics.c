@@ -6,7 +6,7 @@ Test 1:
 Die Struktur enthaelt vorab beliebige Werte.
 Nach statistics_init muessen alle Statistikfelder auf 0 bzw. 0.0 zurueckgesetzt sein.
 */
-void test_statistics_init_resets_all_fields() {
+void test_statistics_init_resets_all_fields(void) {
 	Statistics stats;
 
 	stats.currently_parked = 4;
@@ -41,7 +41,7 @@ Test 2:
 Frische Struktur ohne Vorbelegung.
 Es wird nur geprueft, ob statistics_init den erwarteten Startzustand setzt.
 */
-void test_statistics_init_fresh_struct_start_state() {
+void test_statistics_init_fresh_struct_start_state(void) {
 	Statistics stats = {0};
 
 	statistics_init(&stats);
@@ -63,7 +63,7 @@ Test 1:
 Bei gueltigem aktuellen Warteschlangenstand
 soll statistics_on_queued den Wert um 1 erhoehen.
 */
-void test_statistics_on_queued_increments_currently_queued() {
+void test_statistics_on_queued_increments_currently_queued(void) {
 	Statistics stats = {0};
 
 	stats.currently_queued = 3;
@@ -82,7 +82,7 @@ Test 2:
 Bei mehreren Aufrufen soll der Warteschlangenstand
 bei jedem Queue-Ereignis weiter hochgezaehlt werden.
 */
-void test_statistics_on_queued_counts_multiple_queue_events() {
+void test_statistics_on_queued_counts_multiple_queue_events(void) {
 	Statistics stats = {0};
 
 	stats.currently_queued = 0;
@@ -102,7 +102,7 @@ Test 1:
 Bei positiver Wartezeit soll die Wartezeit aufsummiert
 und der Zaehler bedienter Queue-Fahrzeuge um 1 erhoeht werden.
 */
-void test_statistics_on_parked_from_queue_adds_wait_time() {
+void test_statistics_on_parked_from_queue_adds_wait_time(void) {
 	Statistics stats = {0};
 
 	stats.total_wait_duration = 4;
@@ -121,7 +121,7 @@ Test 2:
 Negative und null Wartezeit duerfen die Wartesumme nicht erhoehen.
 Der Zaehler bedienter Queue-Fahrzeuge soll pro Aufruf steigen.
 */
-void test_statistics_on_parked_from_queue_handles_non_positive_wait() {
+void test_statistics_on_parked_from_queue_handles_non_positive_wait(void) {
 	Statistics stats = {0};
 
 	stats.total_wait_duration = 8;
@@ -143,7 +143,7 @@ Test 1:
 Normalfall mit gueltigen Eingaben.
 Momentwerte, Summen und Auslastungswerte sollen korrekt fortgeschrieben werden.
 */
-void test_statistics_step_update_updates_state_and_sums() {
+void test_statistics_step_update_updates_state_and_sums(void) {
     Statistics stats = {0};
 
     stats.parked_vehicle_count_sum = 4;
@@ -171,7 +171,7 @@ negative Queue wird auf 0 gesetzt.
 Die normalisierten Werte muessen anschliessend korrekt in die
 Summen und Auslastungswerte uebernommen werden.
 */
-void test_statistics_step_update_normalizes_invalid_inputs() {
+void test_statistics_step_update_normalizes_invalid_inputs(void) {
     Statistics stats = {0};
 
     stats.parked_vehicle_count_sum = 10;
@@ -198,7 +198,7 @@ Bei positiver Parkdauer soll die Parkdauer aufsummiert
 und der Zaehler ausgefahrener Fahrzeuge um 1 erhoeht werden.
 Andere Werte, die nicht zur Ausfahrt gehoeren, sollen unveraendert bleiben.
 */
-void test_statistics_on_departure_adds_park_duration() {
+void test_statistics_on_departure_adds_park_duration(void) {
     Statistics stats = {0};
 
     stats.total_park_duration = 12;
@@ -219,7 +219,7 @@ Die Parkdauer-Summe bleibt daher unveraendert,
 der Abfahrtszaehler steigt trotzdem um 1.
 Nicht betroffene Werte sollen unveraendert bleiben.
 */
-void test_statistics_on_departure_normalizes_negative_duration() {
+void test_statistics_on_departure_normalizes_negative_duration(void) {
     Statistics stats = {0};
 
     stats.total_park_duration = 20;

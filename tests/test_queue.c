@@ -8,7 +8,7 @@ Ein Knoten wird mit einmal mit normalen und leerem Fahrzeug erstellt.
 Dann wird überprüft ob der Knoten korrekt initialisiert wurde und am Ende freigegeben.
 */
 
-void test_node_create() {
+void test_node_create(void) {
     Vehicle v = {.id = 123, .entry_time = 10};
     
     QueueNode *node1 = node_create(&v);
@@ -41,7 +41,7 @@ void test_node_create() {
 Überprüft on eine leere Schlange richtig erstellt wurde
 */
 
-void test_queue_create() {
+void test_queue_create(void) {
     Queue *q = queue_create();
 
     // Speicherebene prüfen
@@ -59,7 +59,7 @@ Bei fehlerhaften Funktionen stürzt das Programm ab,
 eine Überprüfung ob Speicher freigegeben wurde, ist mit assert nicht möglich
 */
 
-void test_queue_destroy() {
+void test_queue_destroy(void) {
 
     // Test 1: NULL-Pointer 
     // Überprüfung ob NULL-Pointer ignoriert wird
@@ -86,7 +86,7 @@ void test_queue_destroy() {
 Überprüft das sichere Entnehmen von Elementen und das Nachrücken der Zeiger.
 */
 
-void test_queue_dequeue() {
+void test_queue_dequeue(void) {
     Queue *q = queue_create();
     Vehicle out_v = {0};
     Vehicle v1 = {.id = 101, .entry_time = 5};
@@ -110,7 +110,7 @@ void test_queue_dequeue() {
 Überprüft die korrekte Zustandserkennung der Warteschlange.
 */
 
-void test_queue_is_empty() {
+void test_queue_is_empty(void) {
     Queue *q = queue_create();
 
     // Test 1: NULL-Pointer und leere Queue
@@ -131,7 +131,7 @@ void test_queue_is_empty() {
 Überprüft das korrekte Einfügen von Elementen und die Zeiger-Verkettung.
 */
 
-void test_queue_enqueue() {
+void test_queue_enqueue(void) {
     Queue *q = queue_create();
     Vehicle v1 = {.id = 101, .entry_time = 5};
     Vehicle v2 = {.id = 102, .entry_time = 6};
@@ -155,7 +155,7 @@ void test_queue_enqueue() {
 Überprüft die exakte Zähllogik der Warteschlangen-Elemente.
 */
 
-void test_queue_size() {
+void test_queue_size(void) {
     Queue *q = queue_create();
     Vehicle v1 = {.id = 101, .entry_time = 5};
 

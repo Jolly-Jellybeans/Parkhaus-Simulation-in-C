@@ -2,7 +2,6 @@
 #define QUEUE_H
 #include "vehicle.h"
 #include <stdbool.h>
-//Hier Programm:
 // Definition eines einzelnen Knotens
 typedef struct QueueNode {
     Vehicle data;               

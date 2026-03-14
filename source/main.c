@@ -1,3 +1,9 @@
+/*
+ * File: main.c
+ * Description: Einstiegspunkt der Parkhaus-Simulation.
+ *              Liest die Konfiguration, initialisiert alle Strukturen,
+ *              startet die Simulation und gibt die Endstatistik aus.
+ */
 #include "parking_garage.h"
 #include "statistics.h"
 #include "queue.h"
@@ -5,6 +11,7 @@
 #include "io.h"
 #include "simulation.h"
 #include <stdlib.h>
+#include <time.h>
 
 
 /*
@@ -19,7 +26,7 @@ FUNCTION main
   config ← CALL get_config_from_user()
 
   // 2. INITIALISIERUNG
-  CALL srand(config.seed)
+  CALL srand(config.seed != 0 ? config.seed : time(NULL))
 
   p_garage ← CALL parking_garage_create(config.slots)
   IF p_garage ist NULL THEN
@@ -50,13 +57,20 @@ END FUNCTION
 
 int main(void)
 {
-    SimulationConfig config;
-    ParkingGarage *p_garage;
-    Statistics stats;
+    SimulationConfig config = {0};
+    ParkingGarage *p_garage = NULL;
+    Statistics stats = {0};
 
     config = get_config_from_user();            // read user settings
 
-    srand(config.seed);            // initialize random generator
+    if (config.seed != 0)
+    {
+        srand((unsigned int)config.seed);  // fester Seed fuer Reproduzierbarkeit
+    }
+    else
+    {
+        srand((unsigned int)time(NULL));    // zeitbasierter Seed fuer zufaellige Ergebnisse
+    }
 
     p_garage = parking_garage_create(config.slots);            // create garage
     if (p_garage == NULL)
