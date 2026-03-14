@@ -34,6 +34,18 @@ In den Kommentaren der Pull Requests lässt sich außerdem erkennen, dass auch d
 
 ## 3. Warum haben Sie sich gegen die anderen Optionen entschieden bzw. für die gewählte Variante gemeinsam entschieden?
 
+Die gewählte Lösung wurde aus mehreren Gründen bevorzugt. Ein zentraler Faktor war die klare Strukturierung des Programms in verschiedene Module. Diese modulare Architektur erleichtert sowohl die Entwicklung als auch die spätere Erweiterung des Systems. Gleichzeitig ermöglichte sie eine faire und gut strukturierte Aufgabenverteilung innerhalb des Teams.
+ 
+Durch die Aufteilung in mehrere Module konnten einzelne Komponenten unabhängig voneinander entwickelt und getestet werden, ohne dass die Struktur zu komplex oder unübersichtlich wurde. Beispielsweise kann die Warteschlangenlogik unabhängig vom Parkhausmodul implementiert werden, ohne dass sie wiederum auf mehrere Dateien aufgeteilt werden muss. Dadurch wurde die Komplexität des Gesamtsystems reduziert und die Fehlersuche erleichtert. Außerdem konnten potenzielle Merge-Konflikte möglichst vermieden werden.
+ 
+Ein weiterer Vorteil dieser Struktur liegt in der besseren Lesbarkeit des Codes. Funktionen besitzen klar definierte Aufgaben und sind logisch gruppiert. Dadurch können auch andere Entwickler den Code leichter verstehen und nachvollziehen.
+ 
+Für die aktuelle Form der Statistikausgabe haben wir uns letztendlich entschieden, weil eine übersichtliche Konsolenausgabe für uns sinnvoller erschien als externe grafische Darstellungen. Gleichzeitig wollten wir jedoch nicht vollständig auf visuelle Elemente verzichten. Daher entschieden wir uns für eine einfache Visualisierung direkt im Terminal mithilfe von ASCII-Zeichen. Diese Lösung stellte für uns den besten Kompromiss zwischen Übersichtlichkeit, Umsetzbarkeit und dem in der Vorlesung behandelten technischen Umfang dar.
+ 
+Um möglichst sauber und stabil zu arbeiten, haben wir uns außerdem dafür entschieden, Pointer sowie Eingabewerte des Benutzers grundsätzlich zu überprüfen. Dadurch sollten Fehler vermieden werden, die während der Simulation zu unerwartetem Verhalten führen könnten.
+ 
+Auch der Einsatz von Git und GitHub als Versionsverwaltungssystem spielte eine wichtige Rolle bei der gewählten Projektstruktur. Durch die Verwendung mehrerer Branches konnten verschiedene Funktionen parallel entwickelt werden, ohne dass es zu Konflikten im `main`-Branch kam. Pull Requests ermöglichten zusätzlich eine Überprüfung der Änderungen, bevor diese in das Hauptprojekt integriert wurden.
+
 ## 4. Gab es Schwierigkeiten oder Herausforderungen bei der Zusammenarbeit?
 
 ## 5. Was ist Ihnen im Team einfach gefallen bzw. sehr gut gelungen?
